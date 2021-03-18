@@ -1,115 +1,148 @@
 #include <stdio.h>
+#include <err.h>
+#include <stdlib.h>
 #include <curl/curl.h>
 #include <curl/easy.h>
 
-int main(void)
-{
-    CURL *curl;
-    CURLcode res;
-
-    curl = curl_easy_init();
-    if(curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, "api.coincap.io/v2/assets/bitcoin");
-
-        /* example.com is redirected, so we tell libcurl to follow redirection */
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-
-        /* create an output file and prepare to write the response */
-        FILE *output_file = fopen("output.txt", "w");
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, output_file);
-
-        /* Perform the request, res will get the return code */
-        res = curl_easy_perform(curl);
-
-        /* Check for errors */
-        if(res != CURLE_OK) {
-            fprintf(stderr, "curl_easy_perform() failed: %sn", 
-                curl_easy_strerror(res));
-        }
-
-        /* always cleanup */
-        curl_easy_cleanup(curl);
-    }
-    return 0;
-}
-
-/*
-
 struct Money
 {
-  gint64      id;
-  gint64      rank;
-  char        *symbol;
-  char        *name;
-  gint64      supply;
-  gint64      maxSupply;
-  gint64      marketCapUsd;
-  gint64      volumeUsd24Hr;
-  gint64      priceUsd;
-  gint64      changePercent24Hr;
-  gint64      vwap24Hr;
+  char     *id;
+  int      rank;
+  char     *symbol;
+  char     *name;
+  float    supply;
+  float    maxSupply;
+  float    marketCapUsd;
+  float    volumeUsd24Hr;
+  float    priceUsd;
+  float    changePercent24Hr;
+  float    vwap24Hr;
 };
 
-
-
-int main()
+char *strcopy(char *tmp, size_t len)
 {
-  // Get each object member and assign it to the struct.
-  struct Money money =
-    {
-     .id = json_object_get_int_member(stuff, "id"),
-     .rank = json_object_get_int_member(stuff, "rank"),
-     // Duplicate the strings to avoid pointing to memory inside the parser.
-     .symbol = g_strdup(json_object_get_string_member(stuff, "symbol")),
-     .name = g_strdup(json_object_get_string_member(stuff, "name")),
-     .supply = json_object_get_int_member(stuff, "supply"),
-     .maxSupply = json_object_get_int_member(stuff, "maxSupply"),
-     .marketCapUsd = json_object_get_int_member(stuff, "marketCapUsd"),
-     .volumeUsd24Hr = json_object_get_int_member(stuff, "volumeUsd24Hr"),
-     .priceUsd = json_object_get_int_member(stuff, "priceUsd"),
-     .changePercent24Hr = json_object_get_int_member(stuff, "changePercent24Hr"),
-     .vwap24Hr = json_object_get_int_member(stuff, "vwap24Hr")
-    };
+    char *str = calloc(len, sizeof(char));
+    for (int i = 0; i < len ; i++) *(str+i) = *(tmp+i);
 
-  printf(
-	 "id = %ld, rank= %ld, symbol = '%s', name = '%s', supply = %ld, maxSupply = %ld, marketCapUsd = '%ld', volumeUsd24Hr = '%ld', priceUsd = %ld, changePercent24Hr = '%ld', vwap24Hr = '%ld'\n",
+    return str;
+}
+
+struct Money getmoney(char *buf)
+{
+    int pick_data = 0;
+    int i_tmp = 0;
+    int a = 0;
+    struct Money money;
+    char tmp[1]; 
+    size_t len = 0;
+
+    printf("Creating struct money...\n");
+
+    for (int i = 1; a < 11; i++)
+    {  
+        printf("%d : char is %c\n", i, *(buf+i)+'\0');
+        if (pick_data == 0 && *(buf+i-1) == ':' && *(buf+i) == '"')
+        {
+            printf("Relevant data found at index %d\n", i);
+            pick_data++;
+            i_tmp = 0;
+            len = 0;
+            printf("Creating temporary buffer for the data.\n");
+            while (*(buf+i+len+1) != '"') len++;
+            char tmp[len+1];
+            printf("Buffer of size %ld created.\n", len+1);
+        }
+        else if (pick_data == 1 && *(buf+i) == '"')
+        {
+            printf("End of data, storing it in struct.\n");
+            pick_data--;
+            *(tmp+i_tmp) = '\0';
+            switch(a)
+            {
+                case 0:
+                    money.id = strcopy(tmp, len+1);
+                    printf("id is now %s\n", tmp);
+                    break;
+                case 1:
+                    money.rank = atof(tmp);
+                    break;
+                case 2:
+                    money.symbol = strcopy(tmp, len+1);
+                    printf("symbol is now %s\n",tmp);
+                    break;
+                case 3:
+                    money.name = strcopy(tmp, len+1);
+                    printf("name is now %s\n", tmp);
+                    break;
+                case 4:
+                    money.supply = atof(tmp);
+                    break;
+                case 5:
+                    money.maxSupply = atof(tmp);
+                    break;
+                case 6:
+                    money.marketCapUsd = atof(tmp);
+                    break;
+                case 7:
+                    money.volumeUsd24Hr = atof(tmp);
+                    break;
+                case 8:
+                    money.priceUsd = atof(tmp);
+                    break;
+                case 9:
+                    money.changePercent24Hr = atof(tmp);
+                    break;
+                case 10:
+                    money.vwap24Hr = atof(tmp);
+                    break;
+                default:
+                    break;
+            }
+            a++;
+        }
+        else if (pick_data == 1)
+        {
+            printf("Adding char %c in the temporary buffer.\n", *(buf+i));
+            *(tmp+i_tmp) = *(buf+i);
+            i_tmp++;
+        }
+    }
+    printf("Struct money created.\n");
+   printf(
+	 "id = %s, rank= %d, symbol = '%s', name = '%s', supply = %f, maxSupply = %f, marketCapUsd = '%f', volumeUsd24Hr = '%f', priceUsd = %f, changePercent24Hr = '%f', vwap24Hr = '%f'\n",
 	 money.id, money.rank, money.symbol, money.name, money.supply, money.maxSupply, money.marketCapUsd, money.volumeUsd24Hr, money.priceUsd, money.changePercent24Hr, money.vwap24Hr
 	 );
+  printf("END OF FOR\n");
 
-  return EXIT_SUCCESS;
+    return money;
 }
 
-
-int Search_and_replace(char *file, char *c)
+struct Money Search_in_File(char *fname)
 {
-  int index;
+    struct Money money;
+    float length;
+    FILE *f = fopen (fname, "r");
 
-  c = strchr(file, c);
-  index = (int)(c - file);
-  *(file+index) = ".";
-  return index;
-}
+    printf("%s is open\n", fname);
 
-
-int Search_in_File(char *fname, char *str)
-{
-  char * buffer = 0;
-  long length;
-  FILE * f = fopen (filename, "rb");
-
-  if (f)
+    if (f)
     {
-      fseek (f, 0, SEEK_END);
-      length = ftell (f);
-      fseek (f, 0, SEEK_SET);
-      buffer = malloc (length);
-      if (buffer)
-	{
-	  fread (buffer, 1, length, f);
-	}
-      fclose (f);
+        fseek(f, 0L, SEEK_END);
+        length = ftell(f);
+        printf("length is %f\n", length);
+        fseek (f, 0, SEEK_SET);
+        char *buffer = calloc(length, sizeof(char)); 
+        if (buffer)
+	    {
+	        if (fread(buffer, length, 1, f) == -1) err(1,"Coufn't read file %s\n", fname);
+            fclose (f);
+            return getmoney(buffer);
+	    }
     }
-
+    return money;
+    err(1,"Coufn't create buffer");
+}
+/*
   if (buffer)
     {
       Search_and_replace(*buffer, "\"");
@@ -145,7 +178,7 @@ int Search_in_File(char *fname, char *str)
   }
 
   if(find_result == 0) {
-    printf("\nSorry, couldn't find a match.\n");
+    printf("\nSorry, coufn't find a match.\n");
   }
 	
   //Close the file if still open.
@@ -154,4 +187,17 @@ int Search_in_File(char *fname, char *str)
   }
   return(0);
 }
+
 */
+
+int main()
+{
+  // Get each object member and assign it to the struct.
+  struct Money money = Search_in_File("output.txt");
+  printf(
+	 "id = %s, rank = %d, symbol = '%s', name = '%s', supply = %f, maxSupply = %f, marketCapUsd = '%f', volumeUsd24Hr = '%f', priceUsd = %f, changePercent24Hr = '%f', vwap24Hr = '%f'\n",
+	 money.id, money.rank, money.symbol, money.name, money.supply, money.maxSupply, money.marketCapUsd, money.volumeUsd24Hr, money.priceUsd, money.changePercent24Hr, money.vwap24Hr
+	 );
+
+  return EXIT_SUCCESS;
+}
