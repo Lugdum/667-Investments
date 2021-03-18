@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <curl/curl.h>
 #include <curl/easy.h>
-int get(void)
+
+int main(void)
 {
     CURL *curl;
     CURLcode res;
@@ -32,9 +33,10 @@ int get(void)
     return 0;
 }
 
+/*
 
-
-struct Money {
+struct Money
+{
   gint64      id;
   gint64      rank;
   char        *symbol;
@@ -50,48 +52,106 @@ struct Money {
 
 
 
-int main(int argc, char** argv) {
-    GError *error = NULL;
-
-    if (argc < 2) {
-        printf("Usage: test <filename.json>\n");
-        return EXIT_FAILURE;
-    }
-
-    // Parse the JSON from the file
-    JsonParser *parser = json_parser_new();
-    json_parser_load_from_file(parser, argv[1], &error);
-    if(error) {
-        printf("Unable to parse `%s': %s\n", argv[1], error->message);
-        g_error_free(error);
-        g_object_unref(parser);
-        return EXIT_FAILURE;
-    }
-
-    // Get the root
-    JsonNode *root = json_parser_get_root(parser);
-
-    // Turn the root into a JSON object
-    JsonObject *stuff = json_node_get_object(root);
-
-    // Get each object member and assign it to the struct.
-    struct Books book = {
-        .set = json_object_get_int_member(stuff, "set"),
-        .low = json_object_get_int_member(stuff, "low"),
-        // Duplicate the strings to avoid pointing to memory inside the parser.
-        .draw_set = g_strdup(json_object_get_string_member(stuff, "draw_set")),
-        .wupet = g_strdup(json_object_get_string_member(stuff, "Wupet"))
+int main()
+{
+  // Get each object member and assign it to the struct.
+  struct Money money =
+    {
+     .id = json_object_get_int_member(stuff, "id"),
+     .rank = json_object_get_int_member(stuff, "rank"),
+     // Duplicate the strings to avoid pointing to memory inside the parser.
+     .symbol = g_strdup(json_object_get_string_member(stuff, "symbol")),
+     .name = g_strdup(json_object_get_string_member(stuff, "name")),
+     .supply = json_object_get_int_member(stuff, "supply"),
+     .maxSupply = json_object_get_int_member(stuff, "maxSupply"),
+     .marketCapUsd = json_object_get_int_member(stuff, "marketCapUsd"),
+     .volumeUsd24Hr = json_object_get_int_member(stuff, "volumeUsd24Hr"),
+     .priceUsd = json_object_get_int_member(stuff, "priceUsd"),
+     .changePercent24Hr = json_object_get_int_member(stuff, "changePercent24Hr"),
+     .vwap24Hr = json_object_get_int_member(stuff, "vwap24Hr")
     };
 
-    printf(
-        "id = %ld, rank= %ld, symbol = '%s', name = '%s', supply = %ld, maxSupply = %ld, marketCapUsd = '%s', volumeUsd24 = '%s', priceUsd = %ld, changePercent24Hr = '%s', vwap24Hr = '%s'\n",
-        book.set, book.low, book.draw_set, book.wupet
-    );
+  printf(
+	 "id = %ld, rank= %ld, symbol = '%s', name = '%s', supply = %ld, maxSupply = %ld, marketCapUsd = '%ld', volumeUsd24Hr = '%ld', priceUsd = %ld, changePercent24Hr = '%ld', vwap24Hr = '%ld'\n",
+	 money.id, money.rank, money.symbol, money.name, money.supply, money.maxSupply, money.marketCapUsd, money.volumeUsd24Hr, money.priceUsd, money.changePercent24Hr, money.vwap24Hr
+	 );
 
-    // We're finished working with the parser. Deallocate the
-    // parser and all the memory it has allocated, including
-    // the nodes.
-    g_object_unref(parser);
-
-    return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }
+
+
+int Search_and_replace(char *file, char *c)
+{
+  int index;
+
+  c = strchr(file, c);
+  index = (int)(c - file);
+  *(file+index) = ".";
+  return index;
+}
+
+
+int Search_in_File(char *fname, char *str)
+{
+  char * buffer = 0;
+  long length;
+  FILE * f = fopen (filename, "rb");
+
+  if (f)
+    {
+      fseek (f, 0, SEEK_END);
+      length = ftell (f);
+      fseek (f, 0, SEEK_SET);
+      buffer = malloc (length);
+      if (buffer)
+	{
+	  fread (buffer, 1, length, f);
+	}
+      fclose (f);
+    }
+
+  if (buffer)
+    {
+      Search_and_replace(*buffer, "\"");
+      Search_and_replace(*buffer, "\"");
+      for (int i = 11; i > 0; i--)
+	{
+	  Search_and_replace(*buffer, "\"");
+	  Search_and_replace(*buffer, "\"");
+	  int first = Search_and_replace(*buffer, "\"")+1;
+	  int sec = Search_and_replace(*buffer, "\"");
+	}
+    }
+  FILE *fp;
+  int line_num = 1;
+  int find_result = 0;
+  char temp[512];
+	
+  gcc users
+    if((fp = fopen(fname, "r")) == NULL) {
+      return(-1);
+    }
+
+  while(fgets(temp, 512, fp) != NULL) {
+    if((strstr(temp, str)) != NULL) {
+      printf("A match found on line: %d\n", line_num);
+      printf("\n%s\n", temp);
+      find_result++;
+      if (find_result == 5)
+	
+			
+    }
+    line_num++;
+  }
+
+  if(find_result == 0) {
+    printf("\nSorry, couldn't find a match.\n");
+  }
+	
+  //Close the file if still open.
+  if(fp) {
+    fclose(fp);
+  }
+  return(0);
+}
+*/
