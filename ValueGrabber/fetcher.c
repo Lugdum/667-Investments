@@ -4,6 +4,41 @@
 #include <curl/curl.h>
 #include <curl/easy.h>
 
+
+
+int update_value(void)
+{
+    CURL *curl;
+    CURLcode res;
+
+    curl = curl_easy_init();
+    if(curl) {
+        curl_easy_setopt(curl, CURLOPT_URL, "api.coincap.io/v2/assets/bitcoin");
+
+        /* example.com is redirected, so we tell libcurl to follow redirection */
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+        /* create an output file and prepare to write the response */
+        FILE *output_file = fopen("output.txt", "w");
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, output_file);
+
+        /* Perform the request, res will get the return code */
+        res = curl_easy_perform(curl);
+
+        /* Check for errors */
+        if(res != CURLE_OK) {
+            fprintf(stderr, "curl_easy_perform() failed: %sn", 
+                curl_easy_strerror(res));
+        }
+
+        /* always cleanup */
+        curl_easy_cleanup(curl);
+    }
+    return 0;
+}
+
+
+
 struct Money
 {
   char     *id;
@@ -19,6 +54,8 @@ struct Money
   float    vwap24Hr;
 };
 
+
+
 char *strcopy(char *tmp, size_t len)
 {
     char *str = calloc(len, sizeof(char));
@@ -26,6 +63,8 @@ char *strcopy(char *tmp, size_t len)
 
     return str;
 }
+
+
 
 struct Money getmoney(char *buf)
 {
@@ -98,7 +137,7 @@ struct Money getmoney(char *buf)
                 default:
                     break;
             }
-            a++;
+	    a++;
         }
         else if (pick_data == 1)
         {
@@ -117,10 +156,12 @@ struct Money getmoney(char *buf)
     return money;
 }
 
+
+
 struct Money Search_in_File(char *fname)
 {
     struct Money money;
-    float length;
+    size_t length;
     FILE *f = fopen (fname, "r");
 
     printf("%s is open\n", fname);
@@ -129,75 +170,33 @@ struct Money Search_in_File(char *fname)
     {
         fseek(f, 0L, SEEK_END);
         length = ftell(f);
-        printf("length is %f\n", length);
+        printf("length is %ld\n", length);
         fseek (f, 0, SEEK_SET);
         char *buffer = calloc(length, sizeof(char)); 
         if (buffer)
 	    {
 	        if (fread(buffer, length, 1, f) == -1) err(1,"Coufn't read file %s\n", fname);
-            fclose (f);
-            return getmoney(buffer);
+		fclose (f);
+		
+		return getmoney(buffer);
 	    }
     }
     return money;
     err(1,"Coufn't create buffer");
 }
-/*
-  if (buffer)
-    {
-      Search_and_replace(*buffer, "\"");
-      Search_and_replace(*buffer, "\"");
-      for (int i = 11; i > 0; i--)
-	{
-	  Search_and_replace(*buffer, "\"");
-	  Search_and_replace(*buffer, "\"");
-	  int first = Search_and_replace(*buffer, "\"")+1;
-	  int sec = Search_and_replace(*buffer, "\"");
-	}
-    }
-  FILE *fp;
-  int line_num = 1;
-  int find_result = 0;
-  char temp[512];
-	
-  gcc users
-    if((fp = fopen(fname, "r")) == NULL) {
-      return(-1);
-    }
 
-  while(fgets(temp, 512, fp) != NULL) {
-    if((strstr(temp, str)) != NULL) {
-      printf("A match found on line: %d\n", line_num);
-      printf("\n%s\n", temp);
-      find_result++;
-      if (find_result == 5)
-	
-			
-    }
-    line_num++;
-  }
 
-  if(find_result == 0) {
-    printf("\nSorry, coufn't find a match.\n");
-  }
-	
-  //Close the file if still open.
-  if(fp) {
-    fclose(fp);
-  }
-  return(0);
-}
-
-*/
 
 int main()
 {
+  // Update value in file
+  int u = update_value();
   // Get each object member and assign it to the struct.
   struct Money money = Search_in_File("output.txt");
   printf(
 	 "id = %s, rank = %d, symbol = '%s', name = '%s', supply = %f, maxSupply = %f, marketCapUsd = '%f', volumeUsd24Hr = '%f', priceUsd = %f, changePercent24Hr = '%f', vwap24Hr = '%f'\n",
 	 money.id, money.rank, money.symbol, money.name, money.supply, money.maxSupply, money.marketCapUsd, money.volumeUsd24Hr, money.priceUsd, money.changePercent24Hr, money.vwap24Hr
 	 );
-
+  
   return EXIT_SUCCESS;
 }
