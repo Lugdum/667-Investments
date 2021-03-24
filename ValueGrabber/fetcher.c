@@ -60,7 +60,7 @@ struct Money
 /* print the struct money */
 void printstruct(struct Money *money)
 {
-    printf("----------------------\nid = %s\nrank = %d\nsymbol = '%s'\nname = '%s'\nsupply = %f\nmaxSupply = %f\nmarketCapUsd = '%f'\nvolumeUsd24Hr = '%f'\npriceUsd = %f\nchangePercent24Hr = '%f'\nvwap24Hr = '%f'\n----------------------\n",
+    printf("---------------------------------------------------------------------\nid = %s\nrank = %d\nsymbol = '%s'\nname = '%s'\nsupply = %f\nmaxSupply = %f\nmarketCapUsd = '%f'\nvolumeUsd24Hr = '%f'\npriceUsd = %f\nchangePercent24Hr = '%f'\nvwap24Hr = '%f'\n---------------------------------------------------------------------\n",
 	 money->id, money->rank, money->symbol, money  ->name, money->supply, money->maxSupply, money->marketCapUsd, money->volumeUsd24Hr, money->priceUsd, money->changePercent24Hr, money->vwap24Hr);
     /*printf("id = %s, rank = %d, symbol = '%s', name = '%s', supply = %f, maxSupply = %f, marketCapUsd = '%f', volumeUsd24Hr = '%f', priceUsd = %f, changePercent24Hr = '%f', vwap24Hr = '%f'\n",
 	 money.id, money.rank, money.symbol, money.name, money.supply, money.maxSupply, money.marketCapUsd, money.volumeUsd24Hr, money.priceUsd, money.changePercent24Hr, money.vwap24Hr);*/
@@ -166,7 +166,6 @@ struct Money *getmoney(char *buf)
     //printf("Struct money created.\n");
     //printf("END OF FOR\n");
 
-    printf("Struct updated\n");
 
     return money;
 }
@@ -226,10 +225,11 @@ int main(int argc, char** argv)
 
     if (money == NULL)
     {
-        printf("Invalid crypto name : %s\n----------------------\n", argv[i]);
+        printf("Invalid crypto's name : %s\n---------------------------------------------------------------------\n", argv[i]);
     }
     else
     {
+        printf("Struct created: %s\n", argv[i]);
         *(l_money+i-1) = money;
         printstruct(money);
 
