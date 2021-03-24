@@ -204,17 +204,22 @@ int main(int argc, char** argv)
 {
   if (argc < 2)
       errx(EXIT_FAILURE,"Usage: ./test {cryptoname}");
-  if (argc > 2)
-      errx(EXIT_FAILURE,"Too many arguments.");
 
-  // Update value in file
-  update_value(argv[1]);
+  struct Money **l_money = malloc((argc-1)*sizeof(struct Money *));
 
-  // Get each object member and assign it to the struct.
-  struct Money *money = Search_in_File("output.txt");
+  for (int i = 1; i < argc; i++)
+  {
+    // Update value in file
+    update_value(argv[i]);
 
-  // Print the struct money
-  printstruct(money);
+    // Get each object member and assign it to the struct.
+    struct Money *money = Search_in_File("output.txt");
+
+    *(l_money+i-1) = money;
+
+    // Print the struct money
+    printstruct(money);
+  }
 
   return EXIT_SUCCESS;
 }
