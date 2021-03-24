@@ -18,10 +18,7 @@ void update_value(char *m_type)
 
     curl = curl_easy_init();
     if(curl) {
-        int i = curl_easy_setopt(curl, CURLOPT_URL, url);
-
-        if(i != 0)
-            errx(EXIT_FAILURE, "Invalid adress: %s", url);
+        curl_easy_setopt(curl, CURLOPT_URL, url);
 
         /* example.com is redirected, so we tell libcurl to follow redirection */
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
@@ -195,11 +192,20 @@ struct Money *Search_in_File(char *fname)
 	    {
 	        if (fread(buffer, length, 1, f) == -1)
             err(1,"Coufn't read file %s\n", fname);
-		      fclose (f);
-
-		      money = getmoney(buffer);
-	    }
+		    fclose (f);
+              
+            if (*(buffer+2) == 'e')
+            {
+                return NULL;
+            }
+            else
+            {
+                money = getmoney(buffer);      
+	        }
+            
+        }
     }
+
     return money;
 }
 
@@ -218,10 +224,16 @@ int main(int argc, char** argv)
     // Get each object member and assign it to the struct.
     struct Money *money = Search_in_File("output.txt");
 
-    *(l_money+i-1) = money;
+    if (money == NULL)
+    {
+        printf("Invalid crypto name : %s\n----------------------\n", argv[i]);
+    }
+    else
+    {
+        *(l_money+i-1) = money;
+        printstruct(money);
 
-    // Print the struct money
-    printstruct(money);
+    }
   }
 
   return EXIT_SUCCESS;
