@@ -18,7 +18,10 @@ void update_value(char *m_type)
 
     curl = curl_easy_init();
     if(curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, url);
+        int i = curl_easy_setopt(curl, CURLOPT_URL, url);
+
+        if(i != 0)
+            errx(EXIT_FAILURE, "Invalid adress: %s", url);
 
         /* example.com is redirected, so we tell libcurl to follow redirection */
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
