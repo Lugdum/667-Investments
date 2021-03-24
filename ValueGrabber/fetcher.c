@@ -202,7 +202,11 @@ struct Money *Search_in_File(char *fname)
 
 int main(int argc, char** argv)
 {
-    printf("srdgfsdfsd");
+  if (argc < 2)
+      errx(EXIT_FAILURE,"Usage: ./test {cryptoname}");
+  if (argc > 2)
+      errx(EXIT_FAILURE,"Too many arguments.");
+
   // Update value in file
   update_value(argv[1]);
 
