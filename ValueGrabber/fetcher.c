@@ -281,7 +281,7 @@ int main(int argc, char** argv)
 
     char** cpt_list = malloc((argc-1)*sizeof(char*));
     for (int i = 1; i < argc; i++)
-        *(cpt_list) = argv[i];
+        *(cpt_list+i) = argv[i];
 
     struct Money **money = get_strc_list(argc-1, cpt_list);
 
