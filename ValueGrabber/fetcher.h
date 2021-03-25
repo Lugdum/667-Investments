@@ -1,5 +1,5 @@
-#ifndef FETCHER_H_
-#define FETCHER_H_
+#ifndef FETCHER_H
+#define FETCHER_H
 
 struct Money **get_strc_list(int argc, char** argv);
 

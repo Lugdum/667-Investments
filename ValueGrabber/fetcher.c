@@ -87,7 +87,7 @@ void print_all_struct(struct Money **l_money, int len)
 char *strcopy(char *tmp, size_t len)
 {
     char *str = calloc(len, sizeof(char));
-    for (int i = 0; i < len ; i++) *(str+i) = *(tmp+i);
+    for (size_t i = 0; i < len ; i++) *(str+i) = *(tmp+i);
 
     return str;
 }
@@ -206,8 +206,9 @@ struct Money *Search_in_File(char *fname)
         char *buffer = calloc(length, sizeof(char));
         if (buffer)
 	    {
-	        if (fread(buffer, length, 1, f) == -1)
-            err(1,"Coufn't read file %s\n", fname);
+            int e = fread(buffer, length, 1, f);
+	        if (e == -1)
+                err(1,"Coufn't read file %s\n", fname);
 		    fclose (f);
               
             if (*(buffer+2) == 'e')
@@ -238,6 +239,50 @@ int checkspell(char *arg)
 }
 
 struct Money **get_strc_list(int argc, char** argv)
+{
+  struct Money **l_money = malloc((argc)*sizeof(struct Money *));
+
+  for (int i = 0; i < argc; i++)
+  {
+    if (checkspell(argv[i]) == 0)
+    {
+        printf("Invalid argument : %s\n---------------------------------------------------------------------\n", argv[i]);
+        continue;
+    }
+
+    // Update value in file
+    update_value(argv[i]);
+
+    // Get each object member and assign it to the struct.
+    struct Money *money = Search_in_File("output.txt");
+
+    if (money == NULL)
+    {
+        printf("Invalid crypto's name : %s\n---------------------------------------------------------------------\n", argv[i]);
+    }
+    else
+    {
+        printf("Struct created: %s\n", argv[i]);
+        *(l_money+i-1) = money;
+        printstruct(money);
+
+    }
+  }
+  printf("\n\n\n\n\n");
+  //print_all_struct(l_money, argc-1);
+
+  return l_money;
+}
+
+int main(int argc, char** argv)
+{
+    struct Money **money = get_strc_list(argc, argv);
+
+    return 0;
+}
+
+/*
+struct main(int argc, char** argv)
 {
   if (argc < 2)
       errx(EXIT_FAILURE,"Usage: ./test {cryptoname}");
@@ -275,3 +320,4 @@ struct Money **get_strc_list(int argc, char** argv)
 
   return l_money;
 }
+*/

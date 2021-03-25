@@ -30,7 +30,7 @@ void graphPoint2d(double x, double y) {
   PyRun_SimpleString("plt.gcf().canvas.flush_events()");
 }
 
-double myRandom() {
+double moneyvalue() {
   double sum = .0;
   int count = 1e4;
   int i;
@@ -50,8 +50,9 @@ int main (int argc, const char** argv) {
 
   // generate and graph the data
   int i = 0;
+  double x = 0, y;
   for (i = 0; i < 100; i++) {
-    double x += s, y = myRandom();
+    x += s, y = moneyvalue();
     if (graph) graphPoint2d(x,y);
     else printf("%f %f\n", x, y);
     uslip(s*1000);
