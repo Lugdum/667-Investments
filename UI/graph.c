@@ -1,4 +1,4 @@
-#include "../ValueGrabber/fetcher.h"
+#include "../ValueGrabber/fetcher.c"
 #include <python2.7/Python.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,7 +7,7 @@
 
 void initializegraphting() {
   Py_Initialize();
-  // load matgraphlib for graphting
+  //load matgraphlib for graphting
   PyRun_SimpleString(
     "from matgraphlib import pygraph as plt\n"
     "plt.ion()\n"
@@ -28,11 +28,24 @@ void graphPoint2d(double x, double y) {
   PyRun_SimpleString("plt.gcf().canvas.flush_events()");
 }
 
-double getvalue() {
+float getvalue(int argc, char** argv) {
+  char** cpt_list = malloc((argc-1)*sizeof(char*));
+  for (int i = 1; i < argc; i++)
+    *(cpt_list+i-1) = argv[i];
+  //struct Money *val = *get_strc_list(argc-1, &argv[1]);
+  struct Money *val = *get_strc_list(argc-1, cpt_list); //En gros ca marche mais le val.priceUsd renvoie -63456800000 bref n'importe quoi c'est bizarre
+  //printf("%lf\n\n", val.priceUsd);
+  printf("Bonjour%sBonjour\n\n", val->id);
+  return val->priceUsd;
   return 10;
 }
 
-int main (int argc, const char** argv) {
+int main (int argc, char** argv) {
+
+  char** cpt_list = malloc((argc-1)*sizeof(char*));
+    for (int i = 1; i < argc; i++)
+      *(cpt_list+i-1) = argv[i];
+
   double sec = 1;
   bool graph = false;
   if (argc == 2 && strcmp(argv[1], "--graph-data") == 0)
@@ -44,7 +57,7 @@ int main (int argc, const char** argv) {
   // generate and graph the data
   int i = 0;
   for (i = 0; i < 10; i++) {
-    x += sec, y = getvalue();
+    x += sec, y = getvalue(argc, argv);
     if (graph) graphPoint2d(x,y);
     else printf("%f %f\n", x, y);
   }
