@@ -20,6 +20,5 @@ fetcher.o: fetcher.c fetcher.h
 clean:
 	${RM} ${OBJ}
 	${RM} ${DEP}
-	${RM} test
 
 # END
