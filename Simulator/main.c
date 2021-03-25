@@ -31,7 +31,7 @@ long buy(long amount_eur, long price_cpt, long * wallet)
 
 int main(int argc, char** argv)
 {
-    if (argc <= 3)
+    if (argc < 3)
         errx(EXIT_FAILURE, "Usage: ./main {sold} {crypto}");
 
     unsigned long *wallet;
