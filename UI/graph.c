@@ -28,32 +28,27 @@ void graphPoint2d(double x, double y) {
   PyRun_SimpleString("plt.gcf().canvas.flush_events()");
 }
 
-double moneyvalue(int argc, char **argv) {
-  return sum;
+double getvalue() {
+  return 10;
 }
 
 int main (int argc, const char** argv) {
-  int s = atoi(argv[2]);
+  double sec = 1;
   bool graph = false;
   if (argc == 2 && strcmp(argv[1], "--graph-data") == 0)
     graph = true;
 
-  if (graph)
-    initializegraphting();
+  if (graph) initializegraphting();
 
+  double x = 0, y;
   // generate and graph the data
   int i = 0;
-  double x = 0, y;
-  for (i = 0; i < 100; i++) {
-    x += s, y = moneyvalue(argc-1, argv);
-    if (graph)
-      graphPoint2d(x,y);
-    else
-      printf("%f %f\n", x, y);
-    sleep(s);
+  for (i = 0; i < 10; i++) {
+    x += sec, y = getvalue();
+    if (graph) graphPoint2d(x,y);
+    else printf("%f %f\n", x, y);
   }
 
-  if (graph)
-    uninitializegraphting();
+  if (graph) uninitializegraphting();
   return 0;
 }

@@ -1,4 +1,5 @@
 from matplotlib import pyplot as plt
+import time
 plt.ion()
 plt.show(block=False)
 while True:
@@ -9,3 +10,4 @@ while True:
   # plot the data
   plt.plot([x],[y],'r.')
   plt.gcf().canvas.flush_events()
+  time.sleep(1)
