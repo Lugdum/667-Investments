@@ -273,7 +273,7 @@ struct Money **get_strc_list(int argc, char** argv)
 
   return l_money;
 }
-
+/*
 int main(int argc, char** argv)
 {
     if (argc < 2)
@@ -288,7 +288,6 @@ int main(int argc, char** argv)
     return 0;
 }
 
-/*
 struct main(int argc, char** argv)
 {
   if (argc < 2)
