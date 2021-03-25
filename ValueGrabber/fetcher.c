@@ -273,6 +273,7 @@ struct Money **get_strc_list(int argc, char** argv)
 
   return l_money;
 }
+
 /*
 int main(int argc, char** argv)
 {
@@ -286,44 +287,5 @@ int main(int argc, char** argv)
     struct Money **money = get_strc_list(argc-1, cpt_list);
 
     return 0;
-}
-
-struct main(int argc, char** argv)
-{
-  if (argc < 2)
-      errx(EXIT_FAILURE,"Usage: ./test {cryptoname}");
-
-  struct Money **l_money = malloc((argc-1)*sizeof(struct Money *));
-
-  for (int i = 1; i < argc; i++)
-  {
-    if (checkspell(argv[i]) == 0)
-    {
-        printf("Invalid argument : %s\n---------------------------------------------------------------------\n", argv[i]);
-        continue;
-    }
-
-    // Update value in file
-    update_value(argv[i]);
-
-    // Get each object member and assign it to the struct.
-    struct Money *money = Search_in_File("output.txt");
-
-    if (money == NULL)
-    {
-        printf("Invalid crypto's name : %s\n---------------------------------------------------------------------\n", argv[i]);
-    }
-    else
-    {
-        printf("Struct created: %s\n", argv[i]);
-        *(l_money+i-1) = money;
-        printstruct(money);
-
-    }
-  }
-  printf("\n\n\n\n\n");
-  print_all_struct(l_money, argc-1);
-
-  return l_money;
 }
 */

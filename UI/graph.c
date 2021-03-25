@@ -5,8 +5,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-int usleep(useconds_t usec);
-
 void initializegraphting() {
   Py_Initialize();
   // load matgraphlib for graphting
@@ -30,13 +28,7 @@ void graphPoint2d(double x, double y) {
   PyRun_SimpleString("plt.gcf().canvas.flush_events()");
 }
 
-double moneyvalue() {
-  double sum = .0;
-  int count = 1e4;
-  int i;
-  for (i = 0; i < count; i++)
-    sum = sum + rand()/(double)RAND_MAX;
-  sum = sum/count;
+double moneyvalue(int argc, char **argv) {
   return sum;
 }
 
@@ -46,18 +38,22 @@ int main (int argc, const char** argv) {
   if (argc == 2 && strcmp(argv[1], "--graph-data") == 0)
     graph = true;
 
-  if (graph) initializegraphting();
+  if (graph)
+    initializegraphting();
 
   // generate and graph the data
   int i = 0;
   double x = 0, y;
   for (i = 0; i < 100; i++) {
-    x += s, y = moneyvalue();
-    if (graph) graphPoint2d(x,y);
-    else printf("%f %f\n", x, y);
-    uslip(s*1000);
+    x += s, y = moneyvalue(argc-1, argv);
+    if (graph)
+      graphPoint2d(x,y);
+    else
+      printf("%f %f\n", x, y);
+    sleep(s);
   }
 
-  if (graph) uninitializegraphting();
+  if (graph)
+    uninitializegraphting();
   return 0;
 }
