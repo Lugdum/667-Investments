@@ -66,6 +66,22 @@ void printstruct(struct Money *money)
 	 money.id, money.rank, money.symbol, money.name, money.supply, money.maxSupply, money.marketCapUsd, money.volumeUsd24Hr, money.priceUsd, money.changePercent24Hr, money.vwap24Hr);*/
 }
 
+/* print all struct money */
+void print_all_struct(struct Money **l_money, int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        if (*(l_money+i) == NULL)
+            {
+                printf("Struc is NULL\n");
+                continue;
+            }
+        printstruct(*(l_money+i));
+    }
+    if (*(l_money+len) == NULL)
+        printf("---------------------------------------------------------------------\n");
+}
+
 /* copy a string and return it */
 char *strcopy(char *tmp, size_t len)
 {
@@ -208,6 +224,18 @@ struct Money *Search_in_File(char *fname)
     return money;
 }
 
+int checkspell(char *arg)
+{
+    int i = 0;
+    while (*(arg+i) != '\0')
+    {
+        if (!((*(arg+i) >= 'a' && *(arg+i) <= 'z') || (*(arg+i) >= 'A' && *(arg+i) <= 'Z')))
+            return 0;
+        i++;
+    }
+    return i;
+}
+
 int main(int argc, char** argv)
 {
   if (argc < 2)
@@ -217,6 +245,12 @@ int main(int argc, char** argv)
 
   for (int i = 1; i < argc; i++)
   {
+    if (checkspell(argv[i]) == 0)
+    {
+        printf("Invalid argument : %s\n---------------------------------------------------------------------\n", argv[i]);
+        continue;
+    }
+
     // Update value in file
     update_value(argv[i]);
 
@@ -235,6 +269,8 @@ int main(int argc, char** argv)
 
     }
   }
+  printf("\n\n\n\n\n");
+  print_all_struct(l_money, argc-1);
 
   return EXIT_SUCCESS;
 }

@@ -1,1 +1,1 @@
-{"data":{"id":"ethereum","rank":"2","symbol":"ETH","name":"Ethereum","supply":"114930978.0615000000000000","maxSupply":null,"marketCapUsd":"182750443670.4625420755252625","volumeUsd24Hr":"8329988621.8283292481455212","priceUsd":"1590.0886493167411326","changePercent24Hr":"-5.1456102674662446","vwap24Hr":"1675.0458875436777838","explorer":"https://etherscan.io/"},"timestamp":1616630108901}
+{"error":"sdgf not found","timestamp":1616634562743}
