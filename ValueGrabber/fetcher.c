@@ -276,7 +276,14 @@ struct Money **get_strc_list(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-    struct Money **money = get_strc_list(argc, argv);
+    if (argc < 2)
+        errx(EXIT_FAILURE, "Usage: ./test {crypto}");
+
+    char** cpt_list = malloc((argc-1)*sizeof(char*));
+    for (int i = 1; i < argc; i++)
+        *(cpt_list) = argv[i];
+
+    struct Money **money = get_strc_list(argc-1, cpt_list);
 
     return 0;
 }
