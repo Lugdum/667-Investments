@@ -1,3 +1,4 @@
+#include "fetcher.h"
 #include <stdio.h>
 #include <err.h>
 #include <string.h>
@@ -236,7 +237,7 @@ int checkspell(char *arg)
     return i;
 }
 
-int main(int argc, char** argv)
+struct Money **get_strc_list(int argc, char** argv)
 {
   if (argc < 2)
       errx(EXIT_FAILURE,"Usage: ./test {cryptoname}");
@@ -272,5 +273,5 @@ int main(int argc, char** argv)
   printf("\n\n\n\n\n");
   print_all_struct(l_money, argc-1);
 
-  return EXIT_SUCCESS;
+  return l_money;
 }
