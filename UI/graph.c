@@ -28,12 +28,17 @@ void graphPoint2d(double x, double y) {
   PyRun_SimpleString("plt.gcf().canvas.flush_events()");
 }
 
-float getvalue(int argc, char** argv) {
+char **remove_main(int argc, char ** argv)
+{
   char** cpt_list = malloc((argc-1)*sizeof(char*));
   for (int i = 1; i < argc; i++)
     *(cpt_list+i-1) = argv[i];
+  return cpt_list;
+}
+
+float getvalue(int argc, char** argv) {
   //struct Money *val = *get_strc_list(argc-1, &argv[1]);
-  struct Money *val = *get_strc_list(argc-1, cpt_list); //En gros ca marche mais le val.priceUsd renvoie -63456800000 bref n'importe quoi c'est bizarre
+  struct Money *val = *get_strc_list(argc, argv); //En gros ca marche mais le val.priceUsd renvoie -63456800000 bref n'importe quoi c'est bizarre
   //printf("%lf\n\n", val.priceUsd);
   printf("Bonjour%sBonjour\n\n", val->id);
   return val->priceUsd;
@@ -41,11 +46,8 @@ float getvalue(int argc, char** argv) {
 }
 
 int main (int argc, char** argv) {
-
-  char** cpt_list = malloc((argc-1)*sizeof(char*));
-    for (int i = 1; i < argc; i++)
-      *(cpt_list+i-1) = argv[i];
-
+  argv = remove_main(argc, argv);
+  argc--;
   double sec = 1;
   bool graph = false;
   if (argc == 2 && strcmp(argv[1], "--graph-data") == 0)
