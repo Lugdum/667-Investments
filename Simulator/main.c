@@ -27,27 +27,21 @@ long buy(long amount_eur, long price_cpt, long * wallet)
     return amount_eur/price_cpt;
 }
 
-//int open_placement()
-
 int main(int argc, char** argv)
 {
     if (argc < 3)
         errx(EXIT_FAILURE, "Usage: ./main {sold} {crypto}");
 
-    unsigned long *wallet;
-    *wallet = atol(argv[1]);
-    if (*wallet <= 0)
+    long wallet = atol(argv[1]);
+    if (wallet <= 0)
         errx(EXIT_FAILURE, "Invalid argument '%s', you must enter a positive amount.", argv[1]);
     
-    char **cpt_list = malloc((argc-2)*sizeof(char*));
-    
-    for (int i = 2; i < argc; i++)
-        *(cpt_list+i-2) = argv[i];
-    
-    get_strc_list(argc-2, cpt_list);
+    char *arg_list[argc-2];
 
-    long * bought_money_list = calloc((argc-2), sizeof(long));
+    for (int i = 0; i < argc-2; i++)
+        arg_list[i] = argv[i+2];
     
+    struct Money **cpt_list = get_strc_list(argc-2, arg_list);
 
     return 0;
 }

@@ -268,7 +268,6 @@ struct Money **get_strc_list(int argc, char** argv)
 
     }
   }
-  printf("\n\n\n\n\n");
   //print_all_struct(l_money, argc-1);
 
   return l_money;
