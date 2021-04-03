@@ -13,9 +13,11 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 
-GtkWidget *GtkWindow;//we set global variables
+GtkWidget *window;//we set global variables
+GtkWidget *quit_button;
 
 GtkBuilder *builder;
+
 
 int main()
 {
@@ -23,16 +25,16 @@ int main()
 
   builder = gtk_builder_new_from_file("UI.glade");
 
-  GtkWindow = GTK_WIDGET(gtk_builder_get_object(builder,"GtkWindow")); //we pick up all the widget boxes
+  window = GTK_WIDGET(gtk_builder_get_object(builder,"window")); //we pick up all the widget boxes
 
 
- g_signal_connect(GtkWindow,"destroy", G_CALLBACK(gtk_main_quit), NULL);
+ g_signal_connect(window,"destroy", G_CALLBACK(gtk_main_quit), NULL);
 
  gtk_builder_connect_signals(builder,NULL);
 
 
  //TODO
-
+ quit_button = GTK_WIDGET(gtk_builder_get_object(builder,"quit_button"));
 
  gtk_widget_show(window);
 
