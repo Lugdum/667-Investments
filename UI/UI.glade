@@ -53,6 +53,7 @@
             <property name="receives_default">False</property>
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
+            <signal name="toggled" handler="on_btc_graph_button_toggled" swapped="no"/>
           </object>
           <packing>
             <property name="x">20</property>
@@ -69,6 +70,8 @@
             <property name="receives_default">False</property>
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
+            <property name="group">btc_graph_button</property>
+            <signal name="toggled" handler="on_eth_graph_button_toggled" swapped="no"/>
           </object>
           <packing>
             <property name="x">20</property>
@@ -85,6 +88,8 @@
             <property name="receives_default">False</property>
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
+            <property name="group">btc_graph_button</property>
+            <signal name="toggled" handler="on_doge_graph_button_toggled" swapped="no"/>
           </object>
           <packing>
             <property name="x">20</property>
@@ -104,6 +109,176 @@
           <packing>
             <property name="x">922</property>
             <property name="y">643</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Choose your crypto-currency</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 10"/>
+              <attribute name="scale" value="1"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">8</property>
+            <property name="y">145</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">BTC = </property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 10"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">853</property>
+            <property name="y">224</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">ETH =</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 10"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">853</property>
+            <property name="y">300</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">DOGE =</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 10"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">853</property>
+            <property name="y">386</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="btc_possess">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">btc_possess</property>
+          </object>
+          <packing>
+            <property name="x">929</property>
+            <property name="y">224</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="eth_possess">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">eth_possess</property>
+          </object>
+          <packing>
+            <property name="x">929</property>
+            <property name="y">299</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="doge_possess">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">doge_possess</property>
+          </object>
+          <packing>
+            <property name="x">929</property>
+            <property name="y">385</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="buy_button">
+            <property name="label" translatable="yes">BUY</property>
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="on_buy_button_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="y">642</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="sell_button">
+            <property name="label" translatable="yes">SELL</property>
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="on_sell_button_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">101</property>
+            <property name="y">642</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="value_entry">
+            <property name="width_request">203</property>
+            <property name="height_request">46</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">                        Value</property>
+          </object>
+          <packing>
+            <property name="y">593</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFixed" id="image_fixed">
+            <property name="width_request">591</property>
+            <property name="height_request">440</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkImage">
+                <property name="width_request">100</property>
+                <property name="height_request">80</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="stock">gtk-missing-image</property>
+              </object>
+              <packing>
+                <property name="x">277</property>
+                <property name="y">195</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="x">257</property>
+            <property name="y">142</property>
           </packing>
         </child>
       </object>
