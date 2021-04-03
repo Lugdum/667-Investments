@@ -53,6 +53,7 @@
             <property name="receives_default">False</property>
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
+            <signal name="activate" handler="on_btc_graph_button_toggled" swapped="no"/>
             <signal name="toggled" handler="on_btc_graph_button_toggled" swapped="no"/>
           </object>
           <packing>
@@ -279,6 +280,22 @@
           <packing>
             <property name="x">257</property>
             <property name="y">142</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="value_label">
+            <property name="width_request">375</property>
+            <property name="height_request">82</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans 10"/>
+              <attribute name="scale" value="3"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">332</property>
+            <property name="y">34</property>
           </packing>
         </child>
       </object>
