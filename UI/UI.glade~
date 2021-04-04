@@ -323,7 +323,7 @@
             <property name="label" translatable="yes">total_money</property>
           </object>
           <packing>
-            <property name="x">929</property>
+            <property name="x">927</property>
             <property name="y">92</property>
           </packing>
         </child>

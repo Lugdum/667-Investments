@@ -13,7 +13,7 @@
 #include <err.h>
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
-//#include "../ValueGrabber/fetcher.c"
+#include "../ValueGrabber/fetcher.c"
 
 GtkWidget *window;//we set global variables
 
@@ -79,6 +79,11 @@ int main()
  //on convertie wallet_value en char* pour pouvoir etre mis dans un label
  sprintf(val_txt, "%d", wallet_value);
  gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
+
+ 
+
+
+ //End TODO
  
  gtk_widget_show(window);
 
@@ -96,7 +101,13 @@ void on_quit_button_clicked()
 
 void on_btc_graph_button_toggled()
 {
-  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");
+  update_value("bitcoin");
+  struct Money *btc_struct = Get_from_File("output.txt");
+  float val = btc_struct->priceUsd;
+  
+  char array[sizeof(float)];
+  sprintf(array, "%f", val);
+  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
 }
 
 void on_eth_graph_button_toggled()
