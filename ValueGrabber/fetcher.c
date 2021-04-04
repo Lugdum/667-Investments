@@ -188,7 +188,6 @@ struct Money *getmoney(char *buf)
     return money;
 }
 
-
 /* get data in file and write it into buffer */
 struct Money *Get_from_File(char *fname)
 {
@@ -240,35 +239,42 @@ int checkspell(char *arg)
     return i;
 }
 
-struct Money **get_strc_list(int argc, char** argv)
+struct Money *get_strc(char* name)
 {
-  struct Money **l_money = malloc((argc)*sizeof(struct Money *));
-
-  for (int i = 0; i < argc; i++)
-  {
-    if (checkspell(argv[i]) == 0)
+    if (checkspell(name) == 0)
     {
-        printf("Invalid argument : %s\n---------------------------------------------------------------------\n", argv[i]);
-        continue;
+        printf("Invalid argument : %s\n---------------------------------------------------------------------\n", name);
+        return NULL;
     }
 
     // Update value in file
-    update_value(argv[i]);
+    update_value(name);
 
     // Get each object member and assign it to the struct.
     struct Money *money = Get_from_File("output.txt");
 
     if (money == NULL)
     {
-        printf("Invalid crypto's name : %s\n---------------------------------------------------------------------\n", argv[i]);
+        printf("Invalid crypto's name : %s\n---------------------------------------------------------------------\n", name);
     }
     else
     {
-        printf("Struct created: %s\n", argv[i]);
-        *(l_money+i) = money;
+        printf("Struct created: %s\n", name);
         printstruct(money);
 
     }
+
+    return money;
+}
+
+struct Money **get_strc_list(int argc, char** argv)
+{
+  struct Money **l_money = malloc((argc)*sizeof(struct Money *));
+
+  for (int i = 0; i < argc; i++)
+  {
+    struct Money * money = get_strc(argv[i]);
+    *(l_money+i) = money;
     free(money);
   }
   //print_all_struct(l_money, argc-1);

@@ -43,6 +43,7 @@ int main(int argc, char** argv)
     
     struct Money **cpt_list = get_strc_list(argc-2, arg_list);
     free(cpt_list);
+    printf("\n\nYou have : %ld€\n", wallet);
 
     return 0;
 }

@@ -13,7 +13,7 @@
 #include <err.h>
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
-#include "../ValueGrabber/fetcher.c"
+#include "../ValueGrabber/fetcher.h"
 
 GtkWidget *window;//we set global variables
 
@@ -101,10 +101,12 @@ void on_quit_button_clicked()
 
 void on_btc_graph_button_toggled()
 {
-  update_value("bitcoin");
-  struct Money *btc_struct = Get_from_File("output.txt");
-  float val = btc_struct->priceUsd;
-  
+  char **arg = malloc(sizeof(char*));
+  *arg = "bitcoin";
+  struct Money ** btc_struct = get_strc_list(1, arg);
+  struct Money * btc = *btc_struct;
+  float val = *btc.priceUsd;
+
   char array[sizeof(float)];
   sprintf(array, "%f", val);
   gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
