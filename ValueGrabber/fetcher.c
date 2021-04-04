@@ -131,7 +131,7 @@ struct Money *getmoney(char *buf)
             *(tmp+i_tmp) = '\0';
             switch(a)
             {
-                case 0:
+                case 0: ;
                     money->id = strcopy(tmp, len+1);
                     //printf("id is now %s\n", tmp);
                     break;
@@ -184,12 +184,13 @@ struct Money *getmoney(char *buf)
     //printf("END OF FOR\n");
 
 
+    free(tmp);
     return money;
 }
 
 
 /* get data in file and write it into buffer */
-struct Money *Search_in_File(char *fname)
+struct Money *Get_from_File(char *fname)
 {
     struct Money *money;
     size_t length;
@@ -221,6 +222,7 @@ struct Money *Search_in_File(char *fname)
 	        }
             
         }
+        free(buffer);
     }
 
     return money;
@@ -254,7 +256,7 @@ struct Money **get_strc_list(int argc, char** argv)
     update_value(argv[i]);
 
     // Get each object member and assign it to the struct.
-    struct Money *money = Search_in_File("output.txt");
+    struct Money *money = Get_from_File("output.txt");
 
     if (money == NULL)
     {
@@ -263,10 +265,11 @@ struct Money **get_strc_list(int argc, char** argv)
     else
     {
         printf("Struct created: %s\n", argv[i]);
-        *(l_money+i-1) = money;
+        *(l_money+i) = money;
         printstruct(money);
 
     }
+    free(money);
   }
   //print_all_struct(l_money, argc-1);
 

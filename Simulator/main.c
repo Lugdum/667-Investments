@@ -42,6 +42,7 @@ int main(int argc, char** argv)
         arg_list[i] = argv[i+2];
     
     struct Money **cpt_list = get_strc_list(argc-2, arg_list);
+    free(cpt_list);
 
     return 0;
 }
