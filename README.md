@@ -11,7 +11,7 @@ CrypTrade is a crypto trading bot written in c.
 - [X] Cool site
 ## Quick start
 CrypTrade is available on Linux
-```
+```shell
 git clone https://github.com/Viktorounet/667-Investments.git
 cd 667-Investments
 ```
