@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <string.h>
 #include <signal.h>
@@ -31,8 +32,13 @@ GtkWidget *eth_possess;
 GtkWidget *doge_possess;
 
 GtkWidget *value_label;
+GtkWidget *total_money_label;
 
 GtkBuilder *builder;
+
+//on init la value du wallet à 100, et on créer la char* utilisé dans sprintf
+int wallet_value = 100;
+char val_txt[sizeof(int)];
 
 
 int main()
@@ -68,6 +74,11 @@ int main()
  value_label= GTK_WIDGET(gtk_builder_get_object(builder,"value_label"));
  // permet de directement montrer la valeur du BTC
  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");
+ 
+ total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
+ //on convertie wallet_value en char* pour pouvoir etre mis dans un label
+ sprintf(val_txt, "%d", wallet_value);
+ gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
  
  gtk_widget_show(window);
 
@@ -110,7 +121,6 @@ void on_eth_possess();
 
 void on_doge_possess();
 
-void on_value_label();
 
 
 
