@@ -620,4 +620,4 @@ UI.o: UI.c /usr/include/gtk-3.0/gtk/gtk.h /usr/include/gtk-3.0/gdk/gdk.h \
  /usr/include/gtk-3.0/gdk/x11/gdkx11window.h \
  /usr/include/gtk-3.0/gdk/x11/gdkx-autocleanups.h \
  /usr/include/gtk-3.0/gtk/gtkplug.h \
- /usr/include/gtk-3.0/gtk/gtkx-autocleanups.h ../ValueGrabber/fetcher.h
+ /usr/include/gtk-3.0/gtk/gtkx-autocleanups.h
