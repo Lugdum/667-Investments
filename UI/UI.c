@@ -12,7 +12,7 @@
 #include <ctype.h>
 #include <err.h>
 #include "SDL/SDL.h"
-//#include "../ValueGrabber/fetcher.c"
+#include "../ValueGrabber/fetcher.h"
 
 GtkWidget *window;//we set global variables
 
@@ -39,6 +39,74 @@ GtkBuilder *builder;
 int wallet_value = 100;
 char val_txt[sizeof(int)];
 
+void on_quit_button_clicked()
+{
+  gtk_main_quit();
+}
+
+struct Money
+{
+  char     *id;
+  int      rank;
+  char     *symbol;
+  char     *name;
+  float    supply;
+  float    maxSupply;
+  float    marketCapUsd;
+  float    volumeUsd24Hr;
+  float    priceUsd;
+  float    changePercent24Hr;
+  float    vwap24Hr;
+};
+
+void on_btc_graph_button_toggled()
+{
+  
+  //char* l[] = {"bitcoin"};
+  //struct Money **strc = get_strc_list(1, l);
+  struct Money *strc = get_strc("bitcoin");
+  float val = strc->priceUsd;
+  
+  char array[100];
+  sprintf(array, "%f", val);
+  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+}
+
+void on_eth_graph_button_toggled()
+{
+  struct Money *strc = get_strc("ethereum");
+  float val = strc->priceUsd;
+  
+  char array[100];
+  sprintf(array, "%f", val);
+  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+}  
+
+void on_doge_graph_button_toggled()
+{
+  struct Money *strc = get_strc("dogecoin");
+  float val = strc->priceUsd;
+  
+  char array[100];
+  sprintf(array, "%f", val);
+  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+} 
+
+void on_buy_button_clicked();
+
+void on_sell_button_clicked();
+
+void on_value_entry();
+
+void on_btc_possess();
+
+void on_eth_possess();
+
+void on_doge_possess();
+
+
+
+
 
 int main()
 {
@@ -52,6 +120,7 @@ int main()
  g_signal_connect(window,"destroy", G_CALLBACK(gtk_main_quit), NULL);
 
  gtk_builder_connect_signals(builder,NULL);
+ 
 
 
  //TODO
@@ -72,7 +141,8 @@ int main()
 
  value_label= GTK_WIDGET(gtk_builder_get_object(builder,"value_label"));
  // permet de directement montrer la valeur du BTC
- gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");
+ on_btc_graph_button_toggled();
+ //gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");
  
  total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
  //on convertie wallet_value en char* pour pouvoir etre mis dans un label
@@ -80,8 +150,6 @@ int main()
  gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
 
  
-
-
  //End TODO
  
  gtk_widget_show(window);
@@ -91,50 +159,3 @@ int main()
 
  return EXIT_SUCCESS;
 }
-
-void on_quit_button_clicked()
-{
-  gtk_main_quit();
-}
-
-
-void on_btc_graph_button_toggled()
-{
-  
-  //char* l[] = {"bitcoin"};
-  //struct Money **btc_strc = get_strc_list(1, l);
-  //struct Money *btc_strc = get_strc("bitcoin");
-  //printstruct(btc_strc);
-  //float val = btc_strc->priceUsd;
-  
-  //char array[100];
-  //sprintf(array, "%g", val);
-  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"ok");
-}
-
-void on_eth_graph_button_toggled()
-{
-  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 ETH = xxx$");
-}  
-
-void on_doge_graph_button_toggled()
-{
-  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 DOGE = xxx$");
-} 
-
-void on_buy_button_clicked();
-
-void on_sell_button_clicked();
-
-void on_value_entry();
-
-void on_btc_possess();
-
-void on_eth_possess();
-
-void on_doge_possess();
-
-
-
-
-

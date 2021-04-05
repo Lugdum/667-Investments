@@ -13,7 +13,7 @@ void update_value(char *m_type)
 
     CURL *curl;
     CURLcode res;
-    char url[] = "api.coincap.io/v2/assets/";
+    char url[50] = "api.coincap.io/v2/assets/";
     strcat(url, m_type);
     printf("Downloading your data at adress: %s\n", url);
 
@@ -115,7 +115,12 @@ struct Money *getmoney(char *buf)
             i_tmp = 0;
             len = 0;
             //printf("Creating temporary buffer for the data.\n");
-            while (*(buf+i+len+1) != '"') len++;
+            while (*(buf+i+len+1) != '"')
+            {
+                if (*(buf+i+len+1) == '.')
+                    *(buf+i+len+1) = ',';
+                len++;
+            }
             tmp = realloc(tmp, (len+1)*sizeof(char));
             //printf("Buffer of size %ld created.\n", len+1);
         }
@@ -147,7 +152,7 @@ struct Money *getmoney(char *buf)
                     //printf("name is now %s\n", tmp);
                     break;
                 case 4:
-                    money->supply = atof(tmp);
+                    money->supply = atoll(tmp);
                     break;
                 case 5:
                     money->maxSupply = atof(tmp);
@@ -160,6 +165,7 @@ struct Money *getmoney(char *buf)
                     break;
                 case 8:
                     money->priceUsd = atof(tmp);
+                    //printf("price is now %s\n", tmp);
                     break;
                 case 9:
                     money->changePercent24Hr = atof(tmp);
@@ -191,7 +197,7 @@ struct Money *getmoney(char *buf)
 /* get data in file and write it into buffer */
 struct Money *Get_from_File(char *fname)
 {
-    struct Money *money;
+    struct Money *money = NULL;
     size_t length;
     FILE *f = fopen (fname, "r");
 
