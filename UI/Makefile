@@ -2,9 +2,9 @@
                                                                                 
 CPPFLAGS =   `pkg-config --cflags gtk+-3.0` `pkg-config --cflags sdl` -MMD   
 CC = gcc                                                                        
-CFLAGS = -Wall -Wextra -std=c99 -O3                                      
+CFLAGS = -Wall -Wextra -std=c99 -O3                                  
 LDFLAGS = $(PTHREAD) $(GTKLIB) -export-dynamic                              
-LDLIBS = `pkg-config --libs sdl` `pkg-config --libs gtk+-3.0` -lSDL_image -lm 
+LDLIBS = `pkg-config --libs sdl` `pkg-config --libs gtk+-3.0` -lm -lcurl
                                                                                 
 SRC = UI.c ../ValueGrabber/fetcher.c                                                              
 OBJ = ${SRC:.c=.o}                                                              

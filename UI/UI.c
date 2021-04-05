@@ -12,7 +12,6 @@
 #include <ctype.h>
 #include <err.h>
 #include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
 //#include "../ValueGrabber/fetcher.c"
 
 GtkWidget *window;//we set global variables
