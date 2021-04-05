@@ -53,8 +53,7 @@
             <property name="receives_default">False</property>
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
-            <signal name="activate" handler="on_btc_graph_button_toggled" swapped="no"/>
-            <signal name="toggled" handler="on_btc_graph_button_toggled" swapped="no"/>
+            <signal name="clicked" handler="on_btc_graph_button_toggled" swapped="no"/>
           </object>
           <packing>
             <property name="x">20</property>
@@ -72,7 +71,7 @@
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
             <property name="group">btc_graph_button</property>
-            <signal name="toggled" handler="on_eth_graph_button_toggled" swapped="no"/>
+            <signal name="clicked" handler="on_eth_graph_button_toggled" swapped="no"/>
           </object>
           <packing>
             <property name="x">20</property>

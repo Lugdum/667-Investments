@@ -59,37 +59,46 @@ struct Money
   float    vwap24Hr;
 };
 
-void on_btc_graph_button_toggled()
+void on_btc_graph_button_toggled(GtkRadioButton *b)
 {
+  gboolean B = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(b));
+  if (B)
+    {
+      struct Money *strc = get_strc("bitcoin");
+      float val = strc->priceUsd;
   
-  //char* l[] = {"bitcoin"};
-  //struct Money **strc = get_strc_list(1, l);
-  struct Money *strc = get_strc("bitcoin");
-  float val = strc->priceUsd;
-  
-  char array[100];
-  sprintf(array, "%f", val);
-  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+      char array[100];
+      sprintf(array, "%f", val);
+      gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+    }
 }
 
-void on_eth_graph_button_toggled()
+void on_eth_graph_button_toggled(GtkRadioButton *b)
 {
-  struct Money *strc = get_strc("ethereum");
-  float val = strc->priceUsd;
-  
-  char array[100];
-  sprintf(array, "%f", val);
-  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+  gboolean B = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(b));
+  if (B)
+    {
+      struct Money *strc = get_strc("ethereum");
+      float val = strc->priceUsd;
+      
+      char array[100];
+      sprintf(array, "%f", val);
+      gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+    }
 }  
 
-void on_doge_graph_button_toggled()
+void on_doge_graph_button_toggled(GtkRadioButton *b)
 {
-  struct Money *strc = get_strc("dogecoin");
-  float val = strc->priceUsd;
-  
-  char array[100];
-  sprintf(array, "%f", val);
-  gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+  gboolean B = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(b));
+  if (B)
+    {
+      struct Money *strc = get_strc("dogecoin");
+      float val = strc->priceUsd;
+      
+      char array[100];
+      sprintf(array, "%f", val);
+      gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+    }
 } 
 
 void on_buy_button_clicked();
@@ -114,11 +123,13 @@ int main()
   {
     while(True)
     {
+      sleep(10);
       printf("\nupdating value\n\n");
       update_value("bitcoin");
       update_value("ethereum");
       update_value("dogecoin");
-      sleep(10);
+      
+      
     }
   }
   else
@@ -156,7 +167,11 @@ int main()
 
     value_label= GTK_WIDGET(gtk_builder_get_object(builder,"value_label"));
     // permet de directement montrer la valeur du BTC
-    on_btc_graph_button_toggled();
+    struct Money *strc = get_strc("bitcoin");
+    float val = strc->priceUsd;
+    char array[100];
+    sprintf(array, "%f", val);
+    gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
     //gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");
  
     total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
