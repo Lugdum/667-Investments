@@ -119,17 +119,16 @@ void on_doge_possess();
 
 int main()
 {
-  if(fork())
+  int pid = fork();
+  if(pid)
   {
-    while(True)
+    while(1)
     {
       sleep(10);
       printf("\nupdating value\n\n");
       update_value("bitcoin");
       update_value("ethereum");
       update_value("dogecoin");
-      
-      
     }
   }
   else
@@ -185,8 +184,7 @@ int main()
     gtk_widget_show(window);
 
     gtk_main();
-
-
-    return EXIT_SUCCESS;
   }
+  kill(pid, SIGKILL);
+  return EXIT_SUCCESS;
 }
