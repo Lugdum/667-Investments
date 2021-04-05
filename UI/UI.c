@@ -110,52 +110,68 @@ void on_doge_possess();
 
 int main()
 {
-  gtk_init(NULL,NULL); //we initialize the interface
+  if(fork())
+  {
+    while(True)
+    {
+      printf("\nupdating value\n\n");
+      update_value("bitcoin");
+      update_value("ethereum");
+      update_value("dogecoin");
+      sleep(10);
+    }
+  }
+  else
+  {
+    sleep(1);
 
-  builder = gtk_builder_new_from_file("UI.glade");
+    gtk_init(NULL,NULL); //we initialize the interface
 
-  window = GTK_WIDGET(gtk_builder_get_object(builder,"window")); //we pick up all the widget boxes
+    builder = gtk_builder_new_from_file("UI.glade");
+
+    window = GTK_WIDGET(gtk_builder_get_object(builder,"window")); //we pick up all the widget boxes
 
 
- g_signal_connect(window,"destroy", G_CALLBACK(gtk_main_quit), NULL);
+    g_signal_connect(window,"destroy", G_CALLBACK(gtk_main_quit), NULL);
 
- gtk_builder_connect_signals(builder,NULL);
+    gtk_builder_connect_signals(builder,NULL);
  
 
 
- //TODO
- quit_button = GTK_WIDGET(gtk_builder_get_object(builder,"quit_button"));
- btc_graph_button = GTK_WIDGET(gtk_builder_get_object(builder,"btc_graph_button"));
- eth_graph_button = GTK_WIDGET(gtk_builder_get_object(builder,"eth_graph_button"));
- doge_graph_button = GTK_WIDGET(gtk_builder_get_object(builder,"doge_graph_button"));
- buy_button = GTK_WIDGET(gtk_builder_get_object(builder,"buy_button"));
- sell_button = GTK_WIDGET(gtk_builder_get_object(builder,"sell_button"));
+    //TODO
+    quit_button = GTK_WIDGET(gtk_builder_get_object(builder,"quit_button"));
+    btc_graph_button = GTK_WIDGET(gtk_builder_get_object(builder,"btc_graph_button"));
+    eth_graph_button = GTK_WIDGET(gtk_builder_get_object(builder,"eth_graph_button"));
+    doge_graph_button = GTK_WIDGET(gtk_builder_get_object(builder,"doge_graph_button"));
+    buy_button = GTK_WIDGET(gtk_builder_get_object(builder,"buy_button"));
+    sell_button = GTK_WIDGET(gtk_builder_get_object(builder,"sell_button"));
  
- value_entry = GTK_WIDGET(gtk_builder_get_object(builder,"value_entry"));
+    value_entry = GTK_WIDGET(gtk_builder_get_object(builder,"value_entry"));
 
- btc_possess = GTK_WIDGET(gtk_builder_get_object(builder,"btc_possess"));
+    btc_possess = GTK_WIDGET(gtk_builder_get_object(builder,"btc_possess"));
 
- eth_possess= GTK_WIDGET(gtk_builder_get_object(builder,"eth_possess"));
+    eth_possess= GTK_WIDGET(gtk_builder_get_object(builder,"eth_possess"));
 
- doge_possess= GTK_WIDGET(gtk_builder_get_object(builder,"doge_possess"));
+    doge_possess= GTK_WIDGET(gtk_builder_get_object(builder,"doge_possess"));
 
- value_label= GTK_WIDGET(gtk_builder_get_object(builder,"value_label"));
- // permet de directement montrer la valeur du BTC
- on_btc_graph_button_toggled();
- //gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");
+    value_label= GTK_WIDGET(gtk_builder_get_object(builder,"value_label"));
+    // permet de directement montrer la valeur du BTC
+    on_btc_graph_button_toggled();
+    //gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");
  
- total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
- //on convertie wallet_value en char* pour pouvoir etre mis dans un label
- sprintf(val_txt, "%d", wallet_value);
- gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
+    total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
+    //on convertie wallet_value en char* pour pouvoir etre mis dans un label
+    sprintf(val_txt, "%d", wallet_value);
+    gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
 
  
- //End TODO
+    //End TODO
  
- gtk_widget_show(window);
+    gtk_widget_show(window);
 
- gtk_main();
+    gtk_main();
 
 
- return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
+  }
 }

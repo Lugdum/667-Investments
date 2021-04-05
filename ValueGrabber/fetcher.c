@@ -8,14 +8,13 @@
 
 
 /* read the api from "api.coincap.io" and write it into "output.txt" */
-void update_value(char *m_type)
+void update_value(char *name)
 {
-
     CURL *curl;
     CURLcode res;
     char url[50] = "api.coincap.io/v2/assets/";
-    strcat(url, m_type);
-    printf("Downloading your data at adress: %s\n", url);
+    strcat(url, name);
+    //printf("Downloading your data at adress: %s\n", url);
 
     curl = curl_easy_init();
     if(curl) {
@@ -25,7 +24,11 @@ void update_value(char *m_type)
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
         /* create an output file and prepare to write the response */
-        FILE *output_file = fopen("output.txt", "w");
+        char name_txt[20] = "";
+        for (size_t i = 0; *(name+i) != '\0'; i++)
+            name_txt[i] = name[i];
+        strcat(name_txt, ".txt");
+        FILE *output_file = fopen(name_txt, "w");
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, output_file);
 
         /* Perform the request, res will get the return code */
@@ -201,10 +204,9 @@ struct Money *Get_from_File(char *fname)
     size_t length;
     FILE *f = fopen (fname, "r");
 
-    //printf("%s is open\n", fname);
-
     if (f)
     {
+        //printf("%s is open\n", fname);
         fseek(f, 0L, SEEK_END);
         length = ftell(f);
         //printf("length is %ld\n", length);
@@ -253,11 +255,12 @@ struct Money *get_strc(char* name)
         return NULL;
     }
 
-    // Update value in file
-    update_value(name);
-
     // Get each object member and assign it to the struct.
-    struct Money *money = Get_from_File("output.txt");
+    char name_txt[20] = "";
+    for (size_t i = 0; *(name+i) != '\0'; i++)
+        name_txt[i] = name[i];
+    strcat(name_txt, ".txt");
+    struct Money *money = Get_from_File(name_txt);
 
     if (money == NULL)
     {
@@ -265,8 +268,8 @@ struct Money *get_strc(char* name)
     }
     else
     {
-        printf("Struct created: %s\n", name);
-        printstruct(money);
+        //printf("Struct created: %s\n", name);
+        //printstruct(money);
 
     }
 
