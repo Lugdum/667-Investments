@@ -107,7 +107,7 @@ struct Money *getmoney(char *buf)
     size_t len = 0;
 
     //printf("Creating struct money...\n");
-
+    printf("test1\n");
     for (int i = 1; a < 11; i++)
     {
         //printf("%d : char is %c\n", i, *(buf+i)+'\0');
@@ -191,7 +191,6 @@ struct Money *getmoney(char *buf)
 
     //printf("Struct money created.\n");
     //printf("END OF FOR\n");
-
 
     free(tmp);
     return money;
