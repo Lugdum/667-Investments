@@ -42,7 +42,7 @@ char val_txt[sizeof(int)];
 
 volatile int on_money = 0;
 
-char *amount;
+const char *amount;
 
 void on_quit_button_clicked()
 {
@@ -103,7 +103,6 @@ void on_doge_graph_button_toggled()
     {
       struct Money *strc = get_strc("dogecoin");
       float val = strc->priceUsd;
-      
       char array[100];
       sprintf(array, "%f", val);
       gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
@@ -111,39 +110,55 @@ void on_doge_graph_button_toggled()
 } 
 
 
-char* on_value_entry_changed(GtkEntry *e)
+void on_value_entry_changed(GtkEntry *e)
 {
   amount = gtk_entry_get_text(e);
 }
 
-void change_crypt_amount(char *crypt)
+void change_crypt_amount(/*char *crypt*/)
 {
-  struct Money *strc = get_strc(crypt);
-  float btc_price = strc->priceUsd;
-  char array[100];
-  sprintf(array, "%f", val);
+  //struct Money *strc = get_strc(crypt);
+  //float price = strc->priceUsd;
+  //char array[100];
+  //sprintf(array, "%f", amount);
   //TODO
-  gtk_label_set_text(GTK_LABEL(***_possess), (gchar*)array);
+  switch (on_money)
+    {
+      case 0:
+        //gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
+	gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)amount);
+        break;
+      case 1:
+        gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)amount);
+        break;
+      case 2:
+        gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)amount);
+        break;
+    
+      default:
+        break;
+    }
+  
+}
 
 void on_buy_button_clicked()
 {
   switch (on_money)
     {
       case 0:
-	change_crypt_amount("bitcoin");
+	change_crypt_amount();
         break;
       case 1:
-        change_crypt_amount("ethereum");
+        change_crypt_amount();
         break;
       case 2:
-        change_crypt_amount("dogecoin");
+        change_crypt_amount();
         break;
     
       default:
         break;
     }
-  struct Money *strc = get_strc("dogecoin");
-  float btc_price = strc->priceUsd;
+}
   
 
 void on_sell_button_clicked();

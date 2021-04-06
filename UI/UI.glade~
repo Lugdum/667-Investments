@@ -250,6 +250,7 @@
             <property name="height_request">46</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <signal name="changed" handler="on_value_entry_changed" swapped="no"/>
           </object>
           <packing>
             <property name="y">593</property>
