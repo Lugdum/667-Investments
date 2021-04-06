@@ -42,6 +42,8 @@ char val_txt[sizeof(int)];
 
 volatile int on_money = 0;
 
+char *amount;
+
 void on_quit_button_clicked()
 {
   gtk_main_quit();
@@ -108,7 +110,41 @@ void on_doge_graph_button_toggled()
     }
 } 
 
-void on_buy_button_clicked();
+
+char* on_value_entry_changed(GtkEntry *e)
+{
+  amount = gtk_entry_get_text(e);
+}
+
+void change_crypt_amount(char *crypt)
+{
+  struct Money *strc = get_strc(crypt);
+  float btc_price = strc->priceUsd;
+  char array[100];
+  sprintf(array, "%f", val);
+  //TODO
+  gtk_label_set_text(GTK_LABEL(***_possess), (gchar*)array);
+
+void on_buy_button_clicked()
+{
+  switch (on_money)
+    {
+      case 0:
+	change_crypt_amount("bitcoin");
+        break;
+      case 1:
+        change_crypt_amount("ethereum");
+        break;
+      case 2:
+        change_crypt_amount("dogecoin");
+        break;
+    
+      default:
+        break;
+    }
+  struct Money *strc = get_strc("dogecoin");
+  float btc_price = strc->priceUsd;
+  
 
 void on_sell_button_clicked();
 
