@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"data":{"id":"dogecoin","rank":"18","symbol":"DOGE","name":"Dogecoin","supply":"129031337281.0344800000000000","maxSupply":null,"marketCapUsd":"7592154680.6489047223078340","volumeUsd24Hr":"443612913.4272029824768443","priceUsd":"0.0588396186587832","changePercent24Hr":"2.6348007653438099","vwap24Hr":"0.0587814435507065","explorer":"http://dogechain.info/chain/Dogecoin"},"timestamp":1617701265225}
+=======
+{"data":{"id":"dogecoin","rank":"18","symbol":"DOGE","name":"Dogecoin","supply":"129031337281.0344800000000000","maxSupply":null,"marketCapUsd":"8015145564.8096056615897792","volumeUsd24Hr":"788972365.4094068025710690","priceUsd":"0.0621178214045194","changePercent24Hr":"7.1490800722389175","vwap24Hr":"0.0601187911975241","explorer":"http://dogechain.info/chain/Dogecoin"},"timestamp":1617738355938}
+>>>>>>> 74b195f13e3a195de24059c6621802ab1ed8a2ae

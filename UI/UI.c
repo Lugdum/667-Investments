@@ -42,6 +42,8 @@ char val_txt[sizeof(int)];
 
 volatile int on_money = 0;
 
+const char *amount;
+
 void on_quit_button_clicked()
 {
   gtk_main_quit();
@@ -101,14 +103,63 @@ void on_doge_graph_button_toggled()
     {
       struct Money *strc = get_strc("dogecoin");
       float val = strc->priceUsd;
-      
       char array[100];
       sprintf(array, "%f", val);
       gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
     }
 } 
 
-void on_buy_button_clicked();
+
+void on_value_entry_changed(GtkEntry *e)
+{
+  amount = gtk_entry_get_text(e);
+}
+
+void change_crypt_amount(char *crypt)
+{
+  struct Money *strc = get_strc(crypt);
+  double temp = strtod(amount,NULL);
+  printf("%f\n", strc->priceUsd);
+  float price = temp * strc->priceUsd;
+  char array[100];
+  sprintf(array, "%s (%.2f$)", amount, price);
+  //TODO
+  switch (on_money)
+    {
+      case 0:
+    	gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
+        break;
+      case 1:
+        gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
+        break;
+      case 2:
+        gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
+        break;
+    
+      default:
+        break;
+    }
+  
+}
+void on_buy_button_clicked()
+{
+  switch (on_money)
+    {
+      case 0:
+    change_crypt_amount("bitcoin");
+        break;
+      case 1:
+        change_crypt_amount("ethereum");
+        break;
+      case 2:
+        change_crypt_amount("dogecoin");
+        break;
+    
+      default:
+        break;
+    }
+}
+  
 
 void on_sell_button_clicked();
 
@@ -189,12 +240,13 @@ int main()
   iret = pthread_create(&thread, NULL, (void*)loop, NULL);
   if (iret != 0)
     errx(EXIT_FAILURE, "ca bug mais c'est les thread donc c'est chelou");
-  sleep(1);
+  sleep(2);
   
   // permet de directement montrer la valeur du BTC
+
   struct Money *strc = get_strc("bitcoin");
   float val = strc->priceUsd;
-  char array[100];
+  char array[10000];
   sprintf(array, "%f", val);
   gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
   //gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");

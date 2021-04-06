@@ -53,7 +53,7 @@
             <property name="receives_default">False</property>
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
-            <signal name="clicked" handler="on_btc_graph_button_toggled" swapped="no"/>
+            <signal name="toggled" handler="on_btc_graph_button_toggled" swapped="no"/>
           </object>
           <packing>
             <property name="x">20</property>
@@ -71,7 +71,7 @@
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
             <property name="group">btc_graph_button</property>
-            <signal name="clicked" handler="on_eth_graph_button_toggled" swapped="no"/>
+            <signal name="toggled" handler="on_eth_graph_button_toggled" swapped="no"/>
           </object>
           <packing>
             <property name="x">20</property>
@@ -250,7 +250,7 @@
             <property name="height_request">46</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="text" translatable="yes">                        Value</property>
+            <signal name="changed" handler="on_value_entry_changed" swapped="no"/>
           </object>
           <packing>
             <property name="y">593</property>
@@ -324,6 +324,19 @@
           <packing>
             <property name="x">927</property>
             <property name="y">92</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">202</property>
+            <property name="height_request">37</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Enter your amount to buy/sell
+(please float enter "," not " .")</property>
+          </object>
+          <packing>
+            <property name="y">555</property>
           </packing>
         </child>
       </object>

@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"data":{"id":"ethereum","rank":"2","symbol":"ETH","name":"Ethereum","supply":"115318664.3115000000000000","maxSupply":null,"marketCapUsd":"243486452179.3339265938212290","volumeUsd24Hr":"9988115088.3094112764690938","priceUsd":"2111.4227573918627575","changePercent24Hr":"3.6867801597670513","vwap24Hr":"2103.8030226630994500","explorer":"https://etherscan.io/"},"timestamp":1617701264894}
+=======
+{"data":{"id":"ethereum","rank":"2","symbol":"ETH","name":"Ethereum","supply":"115318664.3115000000000000","maxSupply":null,"marketCapUsd":"242987330628.5192645863156951","volumeUsd24Hr":"10025213368.9577700517484311","priceUsd":"2107.0945633931321654","changePercent24Hr":"0.2627229293723417","vwap24Hr":"2111.2854252141616876","explorer":"https://etherscan.io/"},"timestamp":1617738355605}
+>>>>>>> 74b195f13e3a195de24059c6621802ab1ed8a2ae
