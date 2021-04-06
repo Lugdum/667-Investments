@@ -1,5 +1,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <math.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -37,8 +38,9 @@ GtkWidget *total_money_label;
 GtkBuilder *builder;
 
 //on init la value du wallet à 100, et on créer la char* utilisé dans sprintf
-int wallet_value = 100;
-char val_txt[sizeof(int)];
+int wallet_value = 1000;
+char val_txt[8*sizeof(long)];
+volatile int pos = 1;
 
 volatile int on_money = 0;
 
@@ -119,34 +121,59 @@ void change_crypt_amount(char *crypt)
 {
   struct Money *strc = get_strc(crypt);
   double temp = strtod(amount,NULL);
-  printf("%f\n", strc->priceUsd);
-  float price = temp * strc->priceUsd;
-  char array[100];
-  sprintf(array, "%s (%.2f$)", amount, price);
-  //TODO
-  switch (on_money)
+  float price = 0;
+  temp*=pos;
+  if (wallet_value - temp >= 0)
+  {
+    total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
+    sprintf(val_txt, "%d", wallet_value);
+    gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
+    printf("%f\n", strc->priceUsd);
+    char array[100];
+    int arr;
+    //TODO
+    switch (on_money)
     {
       case 0:
-    	gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
+        price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(btc_possess)));
+        arr = (int)round(price*strc->priceUsd);
+        if (arr + temp < -1)
+          break;
+        wallet_value -= temp;
+        sprintf(array, "%f (%d$)", price, arr);
+        gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
         break;
       case 1:
+        price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(eth_possess)));
+        arr = (int)round(price*strc->priceUsd);
+        if (arr + temp < -1)
+          break;
+        wallet_value -= temp;
+        sprintf(array, "%f (%d$)", price, (int)round(price*strc->priceUsd));
         gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
         break;
       case 2:
+        price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(doge_possess)));
+        arr = (int)round(price*strc->priceUsd);
+        if (arr + temp < -1)
+          break;
+        wallet_value -= temp;
+        sprintf(array, "%f (%d$)", price, (int)round(price*strc->priceUsd));
         gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
         break;
     
       default:
         break;
     }
-  
+  }
 }
 void on_buy_button_clicked()
 {
+  pos = 1;
   switch (on_money)
     {
       case 0:
-    change_crypt_amount("bitcoin");
+        change_crypt_amount("bitcoin");
         break;
       case 1:
         change_crypt_amount("ethereum");
@@ -161,7 +188,25 @@ void on_buy_button_clicked()
 }
   
 
-void on_sell_button_clicked();
+void on_sell_button_clicked()
+{
+  pos = -1;
+  switch (on_money)
+    {
+      case 0:
+        change_crypt_amount("bitcoin");
+        break;
+      case 1:
+        change_crypt_amount("ethereum");
+        break;
+      case 2:
+        change_crypt_amount("dogecoin");
+        break;
+    
+      default:
+        break;
+    }
+}
 
 void on_value_entry();
 

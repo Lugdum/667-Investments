@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-{"data":{"id":"bitcoin","rank":"1","symbol":"BTC","name":"Bitcoin","supply":"18672456.0000000000000000","maxSupply":"21000000.0000000000000000","marketCapUsd":"1094659237428.1378001207334336","volumeUsd24Hr":"21123421992.8386898596203915","priceUsd":"58624.2772470926052856","changePercent24Hr":"2.0505251929222886","vwap24Hr":"58637.0131539223401613","explorer":"https://blockchain.info/"},"timestamp":1617701264635}
-=======
-{"data":{"id":"bitcoin","rank":"1","symbol":"BTC","name":"Bitcoin","supply":"18672456.0000000000000000","maxSupply":"21000000.0000000000000000","marketCapUsd":"1085146829471.5261188410568408","volumeUsd24Hr":"22590202748.8697994725553090","priceUsd":"58114.8419614177223843","changePercent24Hr":"-1.3613555496320676","vwap24Hr":"58586.1911377012421495","explorer":"https://blockchain.info/"},"timestamp":1617738355369}
->>>>>>> 74b195f13e3a195de24059c6621802ab1ed8a2ae
