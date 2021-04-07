@@ -2,9 +2,13 @@ html
 {
   font-family: sans-serif ;
 }
-p
+
+.border_page{
+  border: 10px;
+}
+.text
 {
-  text-align: left;
+ text-align: justify;
   width: 50em;
 }
 .flotte
