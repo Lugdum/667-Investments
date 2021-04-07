@@ -4,7 +4,7 @@
 CrypTrade is a crypto trading bot written in c.
 ## Features
 - [X] Fetch crypto values in real-time
-- [ ] Simulate buy/sell
+- [X] Simulate buy/sell
 - [ ] Use different algorithms
 - [X] Nice user interface
 - [ ] Detect Elon Musk's tweet
