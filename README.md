@@ -13,8 +13,11 @@ CrypTrade is a crypto trading bot written in c.
 CrypTrade is available on Linux
 ```shell
 git clone https://github.com/Viktorounet/667-Investments.git
-cd 667-Investments
+cd 667-Investments/UI
+make
+./UI
 ```
+If there is a segmentation fault when executing "./UI" do "valgrind ./UI" instead.
 ## Software requirements
 * [C/C++ compiler](https://en.cppreference.com/w/c/language)
 * [glade](https://glade.gnome.org/)
