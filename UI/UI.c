@@ -126,9 +126,7 @@ void change_crypt_amount(char *crypt)
   if (wallet_value - temp >= 0)
   {
     total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
-    sprintf(val_txt, "%d", wallet_value);
-    gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
-    printf("%f\n", strc->priceUsd);
+    //printf("%f\n", strc->priceUsd);
     char array[100];
     int arr;
     //TODO
@@ -165,6 +163,9 @@ void change_crypt_amount(char *crypt)
       default:
         break;
     }
+
+    sprintf(val_txt, "%d", wallet_value);
+    gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
   }
 }
 void on_buy_button_clicked()
@@ -294,6 +295,7 @@ int main()
   char array[10000];
   sprintf(array, "%f", val);
   gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+  printstruct(strc);
   //gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");
  
   total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));

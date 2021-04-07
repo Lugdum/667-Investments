@@ -42,6 +42,8 @@ int main(int argc, char** argv)
         arg_list[i] = argv[i+2];
     
     struct Money **cpt_list = get_strc_list(argc-2, arg_list);
+    for (int i = 0; i < argc-2; i++)
+        printstruct(cpt_list[i]);
     free(cpt_list);
     printf("\n\nYou have : %ld€\n", wallet);
 
