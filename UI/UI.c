@@ -46,6 +46,9 @@ volatile int pos = 1;
 volatile int on_money = 0;
 
 const char *amount;
+const float f_btc_possess = 0;
+const float f_eth_possess = 0;
+const float f_doge_possess = 0;
 
 void on_quit_button_clicked()
 {
@@ -132,41 +135,59 @@ void change_crypt_amount(char *crypt)
       case 0:
         price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(btc_possess)));
         arr = (int)round(price*strc->priceUsd);
-        if (arr + temp < -1)
+        if (arr + temp < 0)
           break;
         wallet_value -= temp;
         sprintf(array, "%f (%d$)", price, arr);
         gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
         sprintf(val_txt, "%d", wallet_value);
+<<<<<<< HEAD
+        gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
+=======
 		gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
+>>>>>>> 01a232222469984bf440ecfee11e7b2dcf0122d9
         break;
       case 1:
         price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(eth_possess)));
         arr = (int)round(price*strc->priceUsd);
-        if (arr + temp < -1)
+        if (arr + temp < 0)
           break;
         wallet_value -= temp;
         sprintf(array, "%f (%d$)", price, (int)round(price*strc->priceUsd));
         gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
         sprintf(val_txt, "%d", wallet_value);
+<<<<<<< HEAD
+        gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
+=======
 		gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
+>>>>>>> 01a232222469984bf440ecfee11e7b2dcf0122d9
         break;
       case 2:
         price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(doge_possess)));
         arr = (int)round(price*strc->priceUsd);
-        if (arr + temp < -1)
+        if (arr + temp < 0)
           break;
         wallet_value -= temp;
         sprintf(array, "%f (%d$)", price, (int)round(price*strc->priceUsd));
         gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
         sprintf(val_txt, "%d", wallet_value);
+<<<<<<< HEAD
+        gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
+        break;
+=======
 		gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
+>>>>>>> 01a232222469984bf440ecfee11e7b2dcf0122d9
     
       default:
         break;
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 01a232222469984bf440ecfee11e7b2dcf0122d9
   }
 }
+
 void on_buy_button_clicked()
 {
   pos = 1;
@@ -210,12 +231,41 @@ void on_sell_button_clicked()
 
 void on_value_entry();
 
-void on_btc_possess();
+void on_btc_possess()
+{
+    char array[100];
+    struct Money *btc = get_strc("bitcoin");
+    float price = btc->priceUsd * atof(gtk_label_get_text(GTK_LABEL(btc_possess)));
+    sprintf(array, "%f (%f$)", atof(gtk_label_get_text(GTK_LABEL(btc_possess))), price);
+    gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
+}
+void on_eth_possess()
+{
+    char array[100];
+    struct Money *eth = get_strc("ethereum");
+    float price = eth->priceUsd * atof(gtk_label_get_text(GTK_LABEL(eth_possess)));
+    sprintf(array, "%f (%f$)", atof(gtk_label_get_text(GTK_LABEL(eth_possess))), price);
+    gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
+}
 
-void on_eth_possess();
+void on_doge_possess()
+{
+    char array[100];
+    struct Money *doge = get_strc("dogecoin");
+    float price = doge->priceUsd * atof(gtk_label_get_text(GTK_LABEL(doge_possess)));
+    sprintf(array, "%f (%f$)", atof(gtk_label_get_text(GTK_LABEL(doge_possess))), price);
+    gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
+}
 
-void on_doge_possess();
-
+void update_possess_money_price()
+{
+    if (atof(gtk_label_get_text(GTK_LABEL(btc_possess))) > 0)
+        on_btc_possess();
+    if (atof(gtk_label_get_text(GTK_LABEL(eth_possess))) > 0)
+        on_eth_possess();
+    if (atof(gtk_label_get_text(GTK_LABEL(doge_possess))) > 0)
+        on_doge_possess();
+}
 
 void loop()
 {
@@ -226,6 +276,7 @@ void loop()
     update_value("bitcoin");
     update_value("ethereum");
     update_value("dogecoin");
+    update_possess_money_price();
     sleep(1);
     switch (on_money)
     {
