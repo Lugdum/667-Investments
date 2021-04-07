@@ -126,7 +126,7 @@ void change_crypt_amount(char *crypt)
   if (wallet_value - temp >= 0)
   {
     total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
-    //printf("%f\n", strc->priceUsd);
+    printf("%f\n", strc->priceUsd);
     char array[100];
     int arr;
     //TODO
@@ -140,6 +140,8 @@ void change_crypt_amount(char *crypt)
         wallet_value -= temp;
         sprintf(array, "%f (%d$)", price, arr);
         gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
+        sprintf(array, "%f (%d$)", price, arr);
+        gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
         break;
       case 1:
         price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(eth_possess)));
@@ -149,6 +151,8 @@ void change_crypt_amount(char *crypt)
         wallet_value -= temp;
         sprintf(array, "%f (%d$)", price, (int)round(price*strc->priceUsd));
         gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
+        sprintf(array, "%f (%d$)", price, arr);
+        gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
         break;
       case 2:
         price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(doge_possess)));
@@ -158,14 +162,13 @@ void change_crypt_amount(char *crypt)
         wallet_value -= temp;
         sprintf(array, "%f (%d$)", price, (int)round(price*strc->priceUsd));
         gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
+        sprintf(array, "%f (%d$)", price, arr);
+        gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
         break;
     
       default:
         break;
     }
-
-    sprintf(val_txt, "%d", wallet_value);
-    gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
   }
 }
 void on_buy_button_clicked()
@@ -223,7 +226,7 @@ void loop()
   int i = 0;
   while(1)
   {
-    sleep(4);
+    sleep(6);
     //printf("\nupdating value %d\n\n", i);
     update_value("bitcoin");
     update_value("ethereum");
@@ -295,7 +298,6 @@ int main()
   char array[10000];
   sprintf(array, "%f", val);
   gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
-  printstruct(strc);
   //gtk_label_set_text(GTK_LABEL(value_label), (gchar*)"1 BTC = xxx$");
  
   total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
