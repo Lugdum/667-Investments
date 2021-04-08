@@ -141,11 +141,7 @@ void change_crypt_amount(char *crypt)
         sprintf(array, "%f (%d$)", price, arr);
         gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
         sprintf(val_txt, "%d", wallet_value);
-<<<<<<< HEAD
         gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
-=======
-		gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
->>>>>>> 01a232222469984bf440ecfee11e7b2dcf0122d9
         break;
       case 1:
         price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(eth_possess)));
@@ -156,11 +152,7 @@ void change_crypt_amount(char *crypt)
         sprintf(array, "%f (%d$)", price, (int)round(price*strc->priceUsd));
         gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
         sprintf(val_txt, "%d", wallet_value);
-<<<<<<< HEAD
         gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
-=======
-		gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
->>>>>>> 01a232222469984bf440ecfee11e7b2dcf0122d9
         break;
       case 2:
         price = temp / strc->priceUsd + atof(gtk_label_get_text(GTK_LABEL(doge_possess)));
@@ -171,20 +163,12 @@ void change_crypt_amount(char *crypt)
         sprintf(array, "%f (%d$)", price, (int)round(price*strc->priceUsd));
         gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
         sprintf(val_txt, "%d", wallet_value);
-<<<<<<< HEAD
         gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
         break;
-=======
-		gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
->>>>>>> 01a232222469984bf440ecfee11e7b2dcf0122d9
     
       default:
         break;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 01a232222469984bf440ecfee11e7b2dcf0122d9
   }
 }
 
