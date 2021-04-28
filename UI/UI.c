@@ -44,14 +44,22 @@ char val_txt[8*sizeof(long)];
 volatile int pos = 1;
 
 volatile int on_money = 0;
+volatile int open = 0;
 
 const char *amount;
+
 float usd_btc_possess = 0;
 float usd_eth_possess = 0;
 float usd_doge_possess = 0;
 float nb_btc_possess = 0;
 float nb_eth_possess = 0;
 float nb_doge_possess = 0;
+
+const char *limit;
+float btc_limit;
+float eth_limit;
+float doge_limit;
+volatile int active_stoplost = 0;
 
 void on_quit_button_clicked()
 {
@@ -75,44 +83,41 @@ struct Money
 
 void on_btc_graph_button_toggled()
 {
-  on_money = 0;
-  if (1)
-    {
-      struct Money *strc = get_strc("bitcoin");
-      float val = strc->priceUsd;
+    on_money = 0;
+    while (open != 0)
+        continue;
+    struct Money *strc = get_strc("bitcoin");
+    float val = strc->priceUsd;
   
-      char array[100];
-      sprintf(array, "%f", val);
-      gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
-    }
+    char array[100];
+    sprintf(array, "%f", val);
+    gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
 }
 
 void on_eth_graph_button_toggled()
 {
-  on_money = 1;
-  if (1)
-    {
-      struct Money *strc = get_strc("ethereum");
-      float val = strc->priceUsd;
+    on_money = 1;
+    while (open != 0)
+        continue;
+    struct Money *strc = get_strc("ethereum");
+    float val = strc->priceUsd;
       
-      char array[100];
-      sprintf(array, "%f", val);
-      gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
-    }
+    char array[100];
+    sprintf(array, "%f", val);
+    gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
 }  
 
 void on_doge_graph_button_toggled()
 {
-  // Argument was "GtkRadioButton *b"
-  on_money = 2;
-  if (1) // was B
-    {
-      struct Money *strc = get_strc("dogecoin");
-      float val = strc->priceUsd;
-      char array[100];
-      sprintf(array, "%f", val);
-      gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
-    }
+    on_money = 2;
+    while (open != 0)
+        continue;
+    struct Money *strc = get_strc("dogecoin");
+    float val = strc->priceUsd;
+
+    char array[100];
+    sprintf(array, "%f", val);
+    gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
 } 
 
 
@@ -123,6 +128,8 @@ void on_value_entry_changed(GtkEntry *e)
 
 void change_crypt_amount(char *crypt)
 {
+    while (open != 0)
+        continue;
     struct Money *strc = get_strc(crypt);
     float temp = strtod(amount,NULL);
     if (pos > 0 && temp > wallet_value)
@@ -225,11 +232,40 @@ void on_sell_button_clicked()
     }
 }
 
+// JOJO !!! il faut lier la variable lim a l'interface stp
+// c'est la quantité en usd de crypto limite pour le stoplost
+// si tu peux faire un truc similaire a la const char* amount
+// Mais il faudrais aussi une notion de bool pour activer et desactive le stoplost genre un truc a cocher
+void on_stoplost_button_clicked(GtkEntry *lim)
+{
+    active_stoplost++;
+    active_stoplost%=2;
+    
+    if (active_stoplost == 1)
+    {
+        limit = gtk_entry_get_text(lim);
+        switch (on_money)
+        {
+            case 0:
+                btc_limit = strtod(limit,NULL);
+                break;
+            case 1:
+                eth_limit = strtod(limit,NULL);
+                break;
+            case 2:
+                doge_limit = strtod(limit,NULL);
+                break;
+        }
+    }
+}
+
 void on_value_entry();
 
 void on_btc_possess()
 {
     char array[100];
+    while (open != 0)
+        continue;
     struct Money *btc = get_strc("bitcoin");
     usd_btc_possess = nb_btc_possess*btc->priceUsd;
     sprintf(array, "%f : %f$", nb_btc_possess, usd_btc_possess);
@@ -238,6 +274,8 @@ void on_btc_possess()
 void on_eth_possess()
 {
     char array[100];
+    while (open != 0)
+        continue;
     struct Money *eth = get_strc("ethereum");
     usd_eth_possess = nb_eth_possess*eth->priceUsd;
     sprintf(array, "%f : %f$", nb_eth_possess, usd_eth_possess);
@@ -247,6 +285,8 @@ void on_eth_possess()
 void on_doge_possess()
 {
     char array[100];
+    while (open != 0)
+        continue;
     struct Money *doge = get_strc("dogecoin");
     usd_doge_possess = nb_doge_possess*doge->priceUsd;
     sprintf(array, "%f : %f$", nb_doge_possess, usd_doge_possess);
@@ -256,11 +296,34 @@ void on_doge_possess()
 void update_possess_money_price()
 {
     if (nb_btc_possess > 0)
+    {
         on_btc_possess();
+        if (active_stoplost == 1 && usd_btc_possess < btc_limit)
+        {
+            on_money = 0;
+            on_sell_button_clicked();    
+        }
+    }
+    
     if (nb_eth_possess > 0)
+    {
         on_eth_possess();
+        if (active_stoplost == 1 && usd_eth_possess < eth_limit)
+        {
+            on_money = 1;
+            on_sell_button_clicked();    
+        }
+    }
+
     if (nb_doge_possess > 0)
+    {
         on_doge_possess();
+        if (active_stoplost == 1 && usd_doge_possess < doge_limit)
+        {
+            on_money = 2;
+            on_sell_button_clicked();
+        }
+    }
 }
 
 void loop()
@@ -269,10 +332,12 @@ void loop()
   while(1)
   {
     sleep(5);
+    open++;
     update_value("bitcoin");
     update_value("ethereum");
     update_value("dogecoin");
     update_possess_money_price();
+    open--;
     switch (on_money)
     {
       case 0:
@@ -295,8 +360,9 @@ void loop()
 
 int main()
 {
-  gtk_init(NULL,NULL); //we initialize the interface
-
+printf("WHY?\n");
+  gtk_init(NULL, NULL); //we initialize the interface
+printf("WHY?\n");
   builder = gtk_builder_new_from_file("UI.glade");
 
   window = GTK_WIDGET(gtk_builder_get_object(builder,"window")); //we pick up all the widget boxes
@@ -326,6 +392,7 @@ int main()
 
   value_label= GTK_WIDGET(gtk_builder_get_object(builder,"value_label"));
 
+  printf("TEST\n");
   pthread_t thread;
   int  iret;
   iret = pthread_create(&thread, NULL, (void*)loop, NULL);
@@ -335,6 +402,8 @@ int main()
   
   //show exactly the value of the BTC
 
+  while (open != 0)
+      continue;
   struct Money *strc = get_strc("bitcoin");
   printf("TEST\n");
   float val = strc->priceUsd;

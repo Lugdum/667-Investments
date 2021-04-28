@@ -1,5 +1,6 @@
 #include "fetcher.h"
 #include <stdio.h>
+#include <unistd.h>
 #include <err.h>
 #include <string.h>
 #include <stdlib.h>
