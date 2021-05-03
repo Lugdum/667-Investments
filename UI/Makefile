@@ -1,8 +1,8 @@
 #UI Makefile                                                                    
                                                                                 
-CPPFLAGS =   `pkg-config --cflags gtk+-3.0` `pkg-config --cflags sdl` -MMD   
+CPPFLAGS =   `pkg-config --cflags gtk+-3.0` `pkg-config --cflags sdl` -MMD
 CC = gcc                                                                        
-CFLAGS = -Wall -Wextra -std=c99 -O3                                  
+CFLAGS = -Wall -Wextra -std=c99 -O3 -g                                 
 LDFLAGS = $(PTHREAD) $(GTKLIB) -export-dynamic                              
 LDLIBS = `pkg-config --libs sdl` `pkg-config --libs gtk+-3.0` -lm -lcurl -lpthread
                                                                                 

@@ -1,12 +1,11 @@
 #include "fetcher.h"
 #include <stdio.h>
-#include <unistd.h>
 #include <err.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <curl/curl.h>
 #include <curl/easy.h>
-
 
 /* read the api from "api.coincap.io" and write it into "output.txt" */
 void update_value(char *name)
@@ -49,17 +48,20 @@ void update_value(char *name)
 /* money structure declaration */
 struct Money
 {
-  char     *id;
-  int      rank;
-  char     *symbol;
-  char     *name;
-  float    supply;
-  float    maxSupply;
-  float    marketCapUsd;
-  float    volumeUsd24Hr;
-  float    priceUsd;
-  float    changePercent24Hr;
-  float    vwap24Hr;
+  char          *id;
+  int           rank;
+  char          *symbol;
+  char          *name;
+  float         supply;
+  float         maxSupply;
+  float         marketCapUsd;
+  float         volumeUsd24Hr;
+  float         priceUsd;
+  float         changePercent24Hr;
+  float         vwap24Hr;
+  float         usd_possess;
+  float         nb_possess;
+  struct Money  *next;
 };
 
 /* print the struct money */
@@ -103,7 +105,7 @@ struct Money *getmoney(char *buf)
     int pick_data = 0;
     int i_tmp = 0;
     int a = 0;
-    struct Money *money = malloc(sizeof(struct Money));
+    struct Money *money = calloc(1, sizeof(struct Money));
     char *tmp = malloc(1*sizeof(char));
     size_t len = 0;
 
@@ -188,6 +190,10 @@ struct Money *getmoney(char *buf)
             i_tmp++;
         }
     }
+    
+    money->usd_possess = 0;
+    money->nb_possess = 0;
+    money->next = NULL;
 
     //printf("Struct money created.\n");
     //printf("END OF FOR\n");
@@ -213,20 +219,12 @@ struct Money *Get_from_File(char *fname)
         char *buffer = calloc(length, sizeof(char));
         if (buffer)
 	    {
-            int e = fread(buffer, length, 1, f);
+            int e = fread(buffer, length+1, 1, f);
 	        if (e == -1)
                 err(1,"Coufn't read file %s\n", fname);
 		    fclose (f);
 
-            if (*(buffer+2) == 'e')
-            {
-                return NULL;
-            }
-            else
-            {
-                money = getmoney(buffer);      
-	        }
-
+            money = getmoney(buffer);
         }
         free(buffer);
     }
