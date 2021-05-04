@@ -46,6 +46,7 @@ volatile int pos = 1;
 volatile int on_money = 0;
 
 const char *amount;
+const char *stoplost;
 
 struct Money
 {
@@ -62,6 +63,7 @@ struct Money
   float         vwap24Hr;
   float         usd_possess;
   float         nb_possess;
+  float         limit;
   struct Money  *next;
 };
 
@@ -125,6 +127,22 @@ void on_doge_graph_button_toggled()
 void on_value_entry_changed(GtkEntry *e)
 {
   amount = gtk_entry_get_text(e);
+}
+
+void on_stoplost_changed(GtkEntry *e)
+{
+  stoplost = gtk_entry_get_text(e);
+
+  switch (on_money)
+    case 0:
+      btc->limit = strtod(stoplost,NULL);
+      break;
+    case 1:
+      eth->limit = strtod(stoplost,NULL);
+      break;
+    case 2:
+      doge->limit = strtod(stoplost,NULL);
+      break;
 }
 
 void change_crypt_amount(struct Money *strc)
@@ -238,6 +256,16 @@ void on_btc_possess()
     btc->usd_possess = btc->nb_possess*btc->priceUsd;
     sprintf(array, "%f : %f$", btc->nb_possess, btc->usd_possess);
     gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
+    if (btc->limit > 0 && btc->usd_possess < btc->limit)
+    {
+        btc->limit = 0;
+        int tmp = on_money;
+        on_money = 0;
+        sprintf(amount, "%f", btc->usd_possess);
+        on_sell_button_clicked(); 
+        on_money = tmp;
+    }
+
 }
 void on_eth_possess()
 {
@@ -245,6 +273,16 @@ void on_eth_possess()
     eth->usd_possess = eth->nb_possess*eth->priceUsd;
     sprintf(array, "%f : %f$", eth->nb_possess, eth->usd_possess);
     gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
+    if (eth->limit > 0 && eth->usd_possess < eth->limit)
+    {
+        eth->limit = 0;
+        int tmp = on_money;
+        on_money = 1;
+        sprintf(amount, "%f", eth->usd_possess);
+        on_sell_button_clicked(); 
+        on_money = tmp;
+    }
+
 }
 
 void on_doge_possess()
@@ -253,6 +291,15 @@ void on_doge_possess()
     doge->usd_possess = doge->nb_possess*doge->priceUsd;
     sprintf(array, "%f : %f$", doge->nb_possess, doge->usd_possess);
     gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
+    if (doge->limit > 0 && doge->usd_possess < doge->limit)
+    {
+        doge->limit = 0;
+        int tmp = on_money;
+        on_money = 2;
+        sprintf(amount, "%f", doge->usd_possess);
+        on_sell_button_clicked(); 
+        on_money = tmp;
+    }
 }
 
 void update_possess_money_price()
