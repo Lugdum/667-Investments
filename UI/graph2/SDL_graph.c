@@ -91,7 +91,7 @@ void run(SDL_Renderer *graph)
     stop();
 }
 
-int main(void)
+void launch()
 {
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
         errx(EXIT_FAILURE, "Error SDL_Init: %s.", SDL_GetError());
@@ -109,5 +109,4 @@ int main(void)
     SDL_DestroyRenderer(graph);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    return EXIT_SUCCESS;
 }
