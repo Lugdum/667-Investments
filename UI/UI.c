@@ -46,7 +46,7 @@ volatile int pos = 1;
 volatile int on_money = 0;
 
 const char *amount;
-const char *stoplost;
+const char *stoploss;
 
 struct Money
 {
@@ -129,22 +129,26 @@ void on_value_entry_changed(GtkEntry *e)
   amount = gtk_entry_get_text(e);
 }
 
-void on_stoplost_changed(GtkEntry *e)
+void on_stop_loss_changed(GtkEntry *e)
 {
-  stoplost = gtk_entry_get_text(e);
+  stoploss = gtk_entry_get_text(e);
+}
 
+void on_stop_loss_button_clicked()
+{
+  
   switch (on_money)
-  {
+    {
     case 0:
-      btc->limit = strtod(stoplost,NULL);
+      btc->limit = strtod(stoploss,NULL);
       break;
     case 1:
-      eth->limit = strtod(stoplost,NULL);
+      eth->limit = strtod(stoploss,NULL);
       break;
     case 2:
-      doge->limit = strtod(stoplost,NULL);
+      doge->limit = strtod(stoploss,NULL);
       break;
-  }
+    }
 }
 
 void change_crypt_amount(struct Money *strc)
@@ -236,12 +240,15 @@ void on_sell_button_clicked()
   switch (on_money)
     {
       case 0:
+        btc->limit = 0;
         change_crypt_amount(btc);
         break;
       case 1:
+        eth->limit = 0;
         change_crypt_amount(eth);
         break;
       case 2:
+        doge->limit = 0;
         change_crypt_amount(doge);
         break;
     
@@ -264,7 +271,7 @@ void on_btc_possess()
         int tmp = on_money;
         on_money = 0;
         sprintf(amount, "%f", btc->usd_possess);
-        on_sell_button_clicked(); 
+        change_crypt_amount(btc);
         on_money = tmp;
     }
 
@@ -281,7 +288,7 @@ void on_eth_possess()
         int tmp = on_money;
         on_money = 1;
         sprintf(amount, "%f", eth->usd_possess);
-        on_sell_button_clicked(); 
+        change_crypt_amount(eth);
         on_money = tmp;
     }
 
@@ -299,7 +306,7 @@ void on_doge_possess()
         int tmp = on_money;
         on_money = 2;
         sprintf(amount, "%f", doge->usd_possess);
-        on_sell_button_clicked(); 
+        change_crypt_amount(doge);
         on_money = tmp;
     }
 }
