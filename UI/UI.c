@@ -134,6 +134,7 @@ void on_stoplost_changed(GtkEntry *e)
   stoplost = gtk_entry_get_text(e);
 
   switch (on_money)
+  {
     case 0:
       btc->limit = strtod(stoplost,NULL);
       break;
@@ -143,6 +144,7 @@ void on_stoplost_changed(GtkEntry *e)
     case 2:
       doge->limit = strtod(stoplost,NULL);
       break;
+  }
 }
 
 void change_crypt_amount(struct Money *strc)
@@ -312,7 +314,7 @@ void update_possess_money_price()
         on_doge_possess();
 }
 
-(int*, int) get_histo(struct Money *money)
+int* get_histo(struct Money *money)
 {
   int *histo = calloc(1, sizeof(int));
   int i = 0;
@@ -323,7 +325,7 @@ void update_possess_money_price()
     money = money->next;
     i++;
   }
-  return (histo, i);
+  return histo;
 }
 
 void loop()
