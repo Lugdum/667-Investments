@@ -263,8 +263,6 @@ void on_btc_possess()
 {
     char array[100];
     btc->usd_possess = btc->nb_possess*btc->priceUsd;
-    sprintf(array, "%f : %f$", btc->nb_possess, btc->usd_possess);
-    gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
     if (btc->limit > 0 && btc->usd_possess < btc->limit)
     {
         btc->limit = 0;
@@ -274,14 +272,14 @@ void on_btc_possess()
         change_crypt_amount(btc);
         on_money = tmp;
     }
+    sprintf(array, "%f : %f$", btc->nb_possess, btc->usd_possess);
+    gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
 
 }
 void on_eth_possess()
 {
     char array[100];
     eth->usd_possess = eth->nb_possess*eth->priceUsd;
-    sprintf(array, "%f : %f$", eth->nb_possess, eth->usd_possess);
-    gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
     if (eth->limit > 0 && eth->usd_possess < eth->limit)
     {
         eth->limit = 0;
@@ -291,6 +289,8 @@ void on_eth_possess()
         change_crypt_amount(eth);
         on_money = tmp;
     }
+    sprintf(array, "%f : %f$", eth->nb_possess, eth->usd_possess);
+    gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
 
 }
 
@@ -298,8 +298,6 @@ void on_doge_possess()
 {
     char array[100];
     doge->usd_possess = doge->nb_possess*doge->priceUsd;
-    sprintf(array, "%f : %f$", doge->nb_possess, doge->usd_possess);
-    gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
     if (doge->limit > 0 && doge->usd_possess < doge->limit)
     {
         doge->limit = 0;
@@ -309,6 +307,8 @@ void on_doge_possess()
         change_crypt_amount(doge);
         on_money = tmp;
     }
+    sprintf(array, "%f : %f$", doge->nb_possess, doge->usd_possess);
+    gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
 }
 
 void update_possess_money_price()
