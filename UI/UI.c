@@ -80,12 +80,30 @@ void get_price()
 {
   struct Money *tmp = btc;
   btc = get_strc("bitcoin");
+  if(tmp != NULL)
+  {
+  btc->nb_possess = tmp->nb_possess;
+  btc->usd_possess = tmp->usd_possess;
+  btc->limit = tmp->limit;
+  }
   btc->next = tmp;
   tmp = eth;
   eth = get_strc("ethereum");
+  if(tmp != NULL)
+  {
+  eth->nb_possess = tmp->nb_possess;
+  eth->usd_possess = tmp->usd_possess;
+  eth->limit = tmp->limit;
+  }
   eth->next = tmp;
   tmp = doge;
   doge = get_strc("dogecoin");
+  if(tmp != NULL)
+  {
+  doge->nb_possess = tmp->nb_possess;
+  doge->usd_possess = tmp->usd_possess;
+  doge->limit = tmp->limit;
+  }
   doge->next = tmp;
 }
 

@@ -35,6 +35,7 @@ struct Money
   float         vwap24Hr;
   float         usd_possess;
   float         nb_possess;
+  float         limit;
   struct Money  *next;
 };
 

@@ -61,6 +61,7 @@ struct Money
   float         vwap24Hr;
   float         usd_possess;
   float         nb_possess;
+  float         limit;
   struct Money  *next;
 };
 
@@ -193,6 +194,7 @@ struct Money *getmoney(char *buf)
     
     money->usd_possess = 0;
     money->nb_possess = 0;
+    money->limit = 0;
     money->next = NULL;
 
     //printf("Struct money created.\n");
