@@ -81,10 +81,10 @@ void get_price()
   btc->next = tmp;
   tmp = eth;
   eth = get_strc("ethereum");
-  btc->next = tmp;
+  eth->next = tmp;
   tmp = doge;
   doge = get_strc("dogecoin");
-  btc->next = tmp;
+  doge->next = tmp;
 }
 
 void on_btc_graph_button_toggled()
@@ -127,9 +127,8 @@ void on_value_entry_changed(GtkEntry *e)
   amount = gtk_entry_get_text(e);
 }
 
-void change_crypt_amount(char *crypt)
+void change_crypt_amount(struct Money *strc)
 {
-    struct Money *strc = get_strc(crypt);
     float temp = strtod(amount,NULL);
     if (pos > 0 && temp > wallet_value)
         //err(EXIT_FAILURE, "You don't have enough money.");
@@ -196,13 +195,13 @@ void on_buy_button_clicked()
   switch (on_money)
     {
       case 0:
-        change_crypt_amount("bitcoin");
+        change_crypt_amount(btc);
         break;
       case 1:
-        change_crypt_amount("ethereum");
+        change_crypt_amount(eth);
         break;
       case 2:
-        change_crypt_amount("dogecoin");
+        change_crypt_amount(doge);
         break;
     
       default:
@@ -217,13 +216,13 @@ void on_sell_button_clicked()
   switch (on_money)
     {
       case 0:
-        change_crypt_amount("bitcoin");
+        change_crypt_amount(btc);
         break;
       case 1:
-        change_crypt_amount("ethereum");
+        change_crypt_amount(eth);
         break;
       case 2:
-        change_crypt_amount("dogecoin");
+        change_crypt_amount(doge);
         break;
     
       default:
@@ -236,7 +235,6 @@ void on_value_entry();
 void on_btc_possess()
 {
     char array[100];
-    struct Money *btc = get_strc("bitcoin");
     btc->usd_possess = btc->nb_possess*btc->priceUsd;
     sprintf(array, "%f : %f$", btc->nb_possess, btc->usd_possess);
     gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
@@ -244,7 +242,6 @@ void on_btc_possess()
 void on_eth_possess()
 {
     char array[100];
-    struct Money *eth = get_strc("ethereum");
     eth->usd_possess = eth->nb_possess*eth->priceUsd;
     sprintf(array, "%f : %f$", eth->nb_possess, eth->usd_possess);
     gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
@@ -253,7 +250,6 @@ void on_eth_possess()
 void on_doge_possess()
 {
     char array[100];
-    struct Money *doge = get_strc("dogecoin");
     doge->usd_possess = doge->nb_possess*doge->priceUsd;
     sprintf(array, "%f : %f$", doge->nb_possess, doge->usd_possess);
     gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
@@ -269,15 +265,33 @@ void update_possess_money_price()
         on_doge_possess();
 }
 
+(int*, int) get_histo(struct Money *money)
+{
+  int *histo = calloc(1, sizeof(int));
+  int i = 0;
+  while(money->next != NULL)
+  {
+    histo = realloc(histo, (i+1)*sizeof(int));
+    *(histo + i) = money->priceUsd;
+    money = money->next;
+    i++;
+  }
+  return (histo, i);
+}
+
 void loop()
 {
+  int p = 0;
   while(1)
   {
     update_value("bitcoin");
     update_value("ethereum");
     update_value("dogecoin");
-    printf("\nsuper\n\n");
     get_price();
+    if(p)
+      {
+        printf("\n%f\n", (btc->next)->priceUsd);
+      }
     update_possess_money_price();
     switch (on_money)
     {
@@ -295,9 +309,9 @@ void loop()
         break;
     }
     sleep(5);
+    p = 1;
   }
 }
-
 
 int main()
 {
