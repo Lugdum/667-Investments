@@ -107,8 +107,8 @@
             <signal name="clicked" handler="on_quit_button_clicked" swapped="no"/>
           </object>
           <packing>
-            <property name="x">922</property>
-            <property name="y">643</property>
+            <property name="x">929</property>
+            <property name="y">642</property>
           </packing>
         </child>
         <child>
@@ -259,7 +259,7 @@
         <child>
           <object class="GtkFixed" id="image_fixed">
             <property name="width_request">591</property>
-            <property name="height_request">440</property>
+            <property name="height_request">374</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -332,11 +332,155 @@
             <property name="height_request">37</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Enter your amount to buy/sell
-(please for float enter "," not " .")</property>
+            <property name="label" translatable="yes">Enter your amount to buy/sell ($)
+(Please for float enter "," not " .")</property>
           </object>
           <packing>
             <property name="y">555</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">100</property>
+            <property name="height_request">39</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">	           STOP-LOSS
+Please enter a limit value ($)</property>
+          </object>
+          <packing>
+            <property name="x">270</property>
+            <property name="y">555</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="sl_entry">
+            <property name="width_request">170</property>
+            <property name="height_request">46</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+          </object>
+          <packing>
+            <property name="x">270</property>
+            <property name="y">593</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="sl_button">
+            <property name="label" translatable="yes">Place STOP-LOSS</property>
+            <property name="width_request">170</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">270</property>
+            <property name="y">642</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">100</property>
+            <property name="height_request">43</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">	    LEVERAGE
+Please enter a leverage</property>
+          </object>
+          <packing>
+            <property name="x">510</property>
+            <property name="y">555</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkRadioButton">
+            <property name="label" translatable="yes">x 1</property>
+            <property name="width_request">100</property>
+            <property name="height_request">27</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="x">510</property>
+            <property name="y">604</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkRadioButton">
+            <property name="label" translatable="yes">x 2</property>
+            <property name="width_request">100</property>
+            <property name="height_request">27</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="x">510</property>
+            <property name="y">631</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkRadioButton">
+            <property name="label" translatable="yes">x 5</property>
+            <property name="width_request">100</property>
+            <property name="height_request">27</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="x">510</property>
+            <property name="y">660</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkRadioButton">
+            <property name="label" translatable="yes">x 10</property>
+            <property name="width_request">100</property>
+            <property name="height_request">27</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="x">510</property>
+            <property name="y">688</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">100</property>
+            <property name="height_request">24</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">  PENDING
+  Stop-Loss</property>
+          </object>
+          <packing>
+            <property name="x">716</property>
+            <property name="y">555</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFixed">
+            <property name="width_request">131</property>
+            <property name="height_request">117</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="x">703</property>
+            <property name="y">598</property>
           </packing>
         </child>
       </object>
