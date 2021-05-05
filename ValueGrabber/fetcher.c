@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <curl/curl.h>
 #include <curl/easy.h>
+#include "../UI/UI.h"
 
 /* money structure declaration */
 struct Money
@@ -325,15 +326,36 @@ struct Money **get_strc_list(int argc, char** argv)
   return l_money;
 }
 
-/*
-int main(int argc, char** argv)
+void loop()
 {
-    if (argc < 2)
-        errx(EXIT_FAILURE, "Usage: ./test {crypto}");
-    char** cpt_list = malloc((argc-1)*sizeof(char*));
-    for (int i = 1; i < argc; i++)
-        *(cpt_list+i-1) = argv[i];
-    struct Money **money = get_strc_list(argc-1, cpt_list);
-    return 0;
+  int p = 0;
+  while(1)
+  {
+    update_value("bitcoin");
+    update_value("ethereum");
+    update_value("dogecoin");
+    get_price();
+    if(p)
+      {
+        printf("\n%f\n", (btc->next)->priceUsd);
+      }
+    update_possess_money_price();
+    switch (on_money)
+    {
+      case 0:
+        on_btc_graph_button_toggled();
+        break;
+      case 1:
+        on_eth_graph_button_toggled();
+        break;
+      case 2:
+        on_doge_graph_button_toggled();
+        break;
+    
+      default:
+        break;
+    }
+    sleep(5);
+    p = 1;
+  }
 }
-*/

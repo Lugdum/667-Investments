@@ -52,7 +52,7 @@ int wallet_value = 1000;
 char val_txt[8*sizeof(long)];
 volatile int pos = 1;
 
-volatile int on_money = 0;
+int on_money = 0;
 
 const char *amount;
 const char *sl;
@@ -322,52 +322,9 @@ void update_possess_money_price()
         on_doge_possess();
 }
 
-int* get_histo(struct Money *money)
+void begin_loop()
 {
-  int *histo = calloc(1, sizeof(int));
-  int i = 0;
-  while(money->next != NULL)
-  {
-    histo = realloc(histo, (i+1)*sizeof(int));
-    *(histo + i) = money->priceUsd;
-    money = money->next;
-    i++;
-  }
-  return histo;
-}
-
-void loop()
-{
-  int p = 0;
-  while(1)
-  {
-    update_value("bitcoin");
-    update_value("ethereum");
-    update_value("dogecoin");
-    get_price();
-    if(p)
-      {
-        printf("\n%f\n", (btc->next)->priceUsd);
-      }
-    update_possess_money_price();
-    switch (on_money)
-    {
-      case 0:
-        on_btc_graph_button_toggled();
-        break;
-      case 1:
-        on_eth_graph_button_toggled();
-        break;
-      case 2:
-        on_doge_graph_button_toggled();
-        break;
-    
-      default:
-        break;
-    }
-    sleep(5);
-    p = 1;
-  }
+  loop();
 }
 
 int open_interface()
@@ -417,7 +374,7 @@ int open_interface()
 
   pthread_t thread;
   int  iret;
-  iret = pthread_create(&thread, NULL, (void*)loop, NULL);
+  iret = pthread_create(&thread, NULL, (void*)begin_loop, NULL);
   if (iret != 0)
     errx(EXIT_FAILURE, "ca bug mais c'est les thread donc c'est chelou");
   sleep(5);
