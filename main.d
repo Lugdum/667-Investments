@@ -1,6 +1,7 @@
-UI.o: UI.c /usr/include/gtk-3.0/gtk/gtk.h /usr/include/gtk-3.0/gdk/gdk.h \
- /usr/include/gtk-3.0/gdk/gdkconfig.h /usr/include/glib-2.0/glib.h \
- /usr/include/glib-2.0/glib/galloca.h /usr/include/glib-2.0/glib/gtypes.h \
+main: main.c /usr/include/gtk-3.0/gtk/gtk.h \
+ /usr/include/gtk-3.0/gdk/gdk.h /usr/include/gtk-3.0/gdk/gdkconfig.h \
+ /usr/include/glib-2.0/glib.h /usr/include/glib-2.0/glib/galloca.h \
+ /usr/include/glib-2.0/glib/gtypes.h \
  /usr/lib/x86_64-linux-gnu/glib-2.0/include/glibconfig.h \
  /usr/include/glib-2.0/glib/gmacros.h \
  /usr/include/glib-2.0/glib/gversionmacros.h \
@@ -620,4 +621,5 @@ UI.o: UI.c /usr/include/gtk-3.0/gtk/gtk.h /usr/include/gtk-3.0/gdk/gdk.h \
  /usr/include/gtk-3.0/gdk/x11/gdkx11window.h \
  /usr/include/gtk-3.0/gdk/x11/gdkx-autocleanups.h \
  /usr/include/gtk-3.0/gtk/gtkplug.h \
- /usr/include/gtk-3.0/gtk/gtkx-autocleanups.h ../ValueGrabber/fetcher.h
+ /usr/include/gtk-3.0/gtk/gtkx-autocleanups.h ValueGrabber/fetcher.h \
+ UI/UI.h
