@@ -57,7 +57,9 @@ int on_money = 0;
 
 const char *amount;
 const char *sl;
-float btc_init_buy;
+float btc_init_pos;
+float eth_init_pos;
+float doge_init_pos;
 
 struct Money
 {
@@ -75,7 +77,6 @@ struct Money
   float         usd_possess;
   float         nb_possess;
   float         limit;
-  float         init_buy;
   struct Money  *next;
 };
 
@@ -205,7 +206,7 @@ void change_crypt_amount(struct Money *strc)
     {
         case 0:
             btc->usd_possess += temp;
-            btc_init_buy = btc->usd_possess;
+            btc_init_pos = btc->usd_possess;
             btc->nb_possess = btc->usd_possess/strc->priceUsd;  
             //printf("new bitcoin amount is %f\n", btc->nb_possess);
             //printf("new bitcoin wallet is %f\n", btc->usd_possess);
@@ -216,6 +217,7 @@ void change_crypt_amount(struct Money *strc)
 
         case 1:
             eth->usd_possess += temp;
+            eth_init_pos = btc->usd_possess;
             eth->nb_possess = eth->usd_possess/strc->priceUsd;  
             //printf("new ethereum amount is %f\n", eth->nb_possess);
             //printf("new ethereum wallet is %f\n", eth->usd_possess);
@@ -226,6 +228,7 @@ void change_crypt_amount(struct Money *strc)
 
          case 2:
             doge->usd_possess += temp;
+            doge_init_pos = btc->usd_possess;
             doge->nb_possess = doge->usd_possess/strc->priceUsd;  
             //printf("new dogecoin amount is %f\n", doge->nb_possess);
             //printf("new dogecoin wallet is %f\n", doge->usd_possess);
@@ -288,17 +291,21 @@ void on_value_entry();
 
 void on_money_possess(int i_money)
 {   
+    float init_pos = 0;
     struct Money *money;
     switch (i_money)
       {
       case 0: 
 	money = btc;
+    init_pos = btc_init_pos;
 	break;
       case 1:
 	money = eth;
+    init_pos = eth_init_pos;
 	break;
       case 2:
 	money = doge;
+    init_pos = doge_init_pos;
 	break;
       default:
 	break;
@@ -311,11 +318,10 @@ void on_money_possess(int i_money)
     printf("USD possess = %f, nb_possess = %f\n", money->usd_possess, money->nb_possess);
 
     float newPrice = money->nb_possess*money->priceUsd;
-    printf("NP = %f\n", newPrice);
-    float lvlEffectPrice = (newPrice-btc_init_buy)*lev;
-    printf("%f : %d\n", lvlEffectPrice, lev);
-    money->usd_possess = btc_init_buy+lvlEffectPrice;
-    printf("new_usd_possess = %f\n", money->usd_possess);
+    float lvlEffectPrice = (newPrice-init_pos)*lev;
+    printf("Levier : %d\n", lvlEffectPrice, lev);
+    money->usd_possess = init_pos+lvlEffectPrice;
+    printf("Increase of %f%\n", lvlEffectPrice);
     
     // STOPLOSS
     
