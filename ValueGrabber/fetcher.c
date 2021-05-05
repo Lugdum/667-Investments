@@ -337,7 +337,13 @@ void loop()
     update_value("dogecoin");
     get_price();
     if(p)
+    {
         printf("\n%f\n", btc->priceUsd);
+    }
+    if(p > 4)
+        create_graph("graph.png");
+    else
+        create_graph("stonks.jpg");
     update_possess_money_price();
     switch (on_money)
     {
@@ -354,6 +360,7 @@ void loop()
       default:
         break;
     }
+    update_image();
     sleep(5);
     p += 1;
   }

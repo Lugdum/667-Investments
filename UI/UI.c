@@ -15,6 +15,7 @@
 #include <pthread.h>
 #include "SDL2/SDL.h"
 #include "../ValueGrabber/fetcher.h"
+#include "../Algorithms/bot.h"
 
 GtkWidget *window;//we set global variables
 
@@ -45,6 +46,8 @@ GtkWidget *value_label;
 GtkWidget *total_money_label;
 
 GtkBuilder *builder;
+
+GtkWidget *w_graph;
 
 
 //initiation of the wallet's value to 1000 
@@ -81,6 +84,15 @@ struct Money
   float         limit;
   struct Money  *next;
 };
+
+void update_image()
+{
+  w_graph = GTK_WIDGET(gtk_builder_get_object(builder, "graph"));
+  if(hist_len < 5)
+    gtk_image_set_from_file(GTK_IMAGE(w_graph), (gchar*)"stonks.jpg");
+  else
+    gtk_image_set_from_file(GTK_IMAGE(w_graph), (gchar*)"graph.png");
+}
 
 void on_quit_button_clicked()
 {

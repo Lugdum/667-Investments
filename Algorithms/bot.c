@@ -17,6 +17,8 @@
 #include "../ValueGrabber/fetcher.h"
 #include "../UI/UI.h"
 
+int hist_len = 0;
+
 struct Money
 {
   char          *id;
@@ -38,17 +40,17 @@ struct Money
 
 int* get_history(struct Money *money)
 {
-  int *histo = calloc(1, sizeof(int));
+  hist_len++;
+  int* hist = calloc(hist_len, sizeof(int));
   int i = 0;
-  printf("\n\n");
-  while(money->next != NULL)
+  printf("\nmoney: %d\n", hist_len);
+  while(i < hist_len)
   {
-    histo = realloc(histo, (i+1)*sizeof(int));
-    *(histo + i) = money->priceUsd;
+    *(hist + i) = money->priceUsd;
     printf(" ,%f", money->priceUsd);
     money = money->next;
     i++;
   }
   printf("\n\n");
-  return histo;
+  return hist;
 }

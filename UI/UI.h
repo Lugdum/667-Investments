@@ -4,5 +4,6 @@
 int* get_histo(struct Money *money);
 int open_interface();
 extern int on_money;
+void update_image();
 
 #endif
