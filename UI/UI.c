@@ -387,6 +387,11 @@ void loop()
   }
 }
 
+void graph()
+{
+  launch();
+}
+
 int main()
 {
   gtk_init(NULL,NULL); //we initialize the interface
