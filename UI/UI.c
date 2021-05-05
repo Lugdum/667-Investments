@@ -57,6 +57,7 @@ int on_money = 0;
 
 const char *amount;
 const char *sl;
+float btc_init_buy;
 
 struct Money
 {
@@ -74,6 +75,7 @@ struct Money
   float         usd_possess;
   float         nb_possess;
   float         limit;
+  float         init_buy;
   struct Money  *next;
 };
 
@@ -203,6 +205,7 @@ void change_crypt_amount(struct Money *strc)
     {
         case 0:
             btc->usd_possess += temp;
+            btc_init_buy = btc->usd_possess;
             btc->nb_possess = btc->usd_possess/strc->priceUsd;  
             //printf("new bitcoin amount is %f\n", btc->nb_possess);
             //printf("new bitcoin wallet is %f\n", btc->usd_possess);
@@ -309,9 +312,9 @@ void on_money_possess(int i_money)
 
     float newPrice = money->nb_possess*money->priceUsd;
     printf("NP = %f\n", newPrice);
-    float lvlEffectPrice = (newPrice-money->usd_possess)*lev;
+    float lvlEffectPrice = (newPrice-btc_init_buy)*lev;
     printf("%f : %d\n", lvlEffectPrice, lev);
-
+    money->usd_possess = btc_init_buy+lvlEffectPrice;
     printf("new_usd_possess = %f\n", money->usd_possess);
     
     // STOPLOSS
