@@ -51,6 +51,7 @@ GtkBuilder *builder;
 int wallet_value = 1000;
 char val_txt[8*sizeof(long)];
 volatile int pos = 1;
+volatile int lev = 1;
 
 int on_money = 0;
 
@@ -150,6 +151,28 @@ void on_sl_button_clicked()
       doge->limit = strtod(sl,NULL);
       break;
     }
+}
+
+void on_l_x1_button_toggled()
+{
+  printf("x1 active\n");
+  lev = 1;
+}
+
+void on_l_x2_button_toggled()
+{
+  lev = 2;
+}
+
+void on_l_x5_button_toggled()
+{
+  lev = 5;
+}
+
+void on_l_x10_button_toggled()
+{
+  printf("x10 active\n");
+  lev = 10;
 }
 
 void change_crypt_amount(struct Money *strc)
@@ -264,40 +287,60 @@ void on_money_possess(int i_money)
 {   
     struct Money *money;
     switch (i_money)
-    {
-        case 0: 
-            money = btc;
-            break;
-        case 1:
-            money = eth;
-            break;
-        case 2:
-            money = doge;
-            break;
-        default:
-            break;
-    }
-
+      {
+      case 0: 
+	money = btc;
+	break;
+      case 1:
+	money = eth;
+	break;
+      case 2:
+	money = doge;
+	break;
+      default:
+	break;
+      }
+    
+    
+    
+    
     char array[100];
-    money->usd_possess = money->nb_possess*money->priceUsd;
+    printf("USD possess = %f, nb_possess = %f\n", money->usd_possess, money->nb_possess);
 
+    float newPrice = money->nb_possess*money->priceUsd;
+    printf("NP = %f\n", newPrice);
+    float lvlEffectPrice = (newPrice-money->usd_possess)*lev;
+    printf("%f : %d\n", lvlEffectPrice, lev);
+
+    printf("new_usd_possess = %f\n", money->usd_possess);
+    
     // STOPLOSS
     
     if (money->limit > 0 && money->usd_possess < money->limit)
-    {
-        int tmp = on_money;
-        on_money = i_money;
+      {
         money->limit = 0;
-       
+	
         sprintf(amount, "%f", money->usd_possess);
         change_crypt_amount(money);
         
-        on_money = tmp;
-    }
-    
+        
+      }
     sprintf(array, "%f : %f$", money->nb_possess, money->usd_possess);
-    gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
-
+    switch (i_money)
+      {
+      case 0: 
+	gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
+	break;
+      case 1:
+	gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
+	break;
+      case 2:
+	gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
+	break;
+      default:
+	break;
+      }
+    
 }
 
 void update_possess_money_price()

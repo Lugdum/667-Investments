@@ -338,8 +338,6 @@ void loop()
     get_price();
     if(p)
         printf("\n%f\n", btc->priceUsd);
-    if(p > 10)
-        launch();
     update_possess_money_price();
     switch (on_money)
     {
