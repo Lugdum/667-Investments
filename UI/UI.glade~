@@ -481,15 +481,15 @@ Please enter a leverage</property>
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="sl_pending_label">
-            <property name="width_request">165</property>
-            <property name="height_request">127</property>
+          <object class="GtkFixed" id="sl_pending_label">
+            <property name="width_request">131</property>
+            <property name="height_request">117</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
           </object>
           <packing>
-            <property name="x">732</property>
-            <property name="y">593</property>
+            <property name="x">703</property>
+            <property name="y">598</property>
           </packing>
         </child>
       </object>
