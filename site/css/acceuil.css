@@ -1,22 +1,39 @@
 html
 {
+  background-color: wheat;
+}
+
+#body
+{
   font-family: sans-serif ;
+  align-content: center;
+  width: 1000px;
+  margin: 0 auto;
+  text-align: center;
 }
-p
+
+.lien
 {
-  text-align: left;
-  width: 50em;
+ text-decoration: none;
+ color: black;
 }
-.flotte
-{
-  float:left;
-  margin-right: 50px;
+
+#menu li {
+  margin-right:2.5em;
+  padding-left:0;
+  list-style: none;
 }
-table
+
+.lia
 {
-  border-collapse: collapse;
+  margin-bottom:15px;
 }
-td
+.text
 {
-  border: 1px solid black;
+  text-align: justify;
+}
+
+h2
+{
+  text-decoration: underline;
 }

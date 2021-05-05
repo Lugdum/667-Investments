@@ -33,9 +33,9 @@ GtkWidget *sl_button;
 GtkWidget *sl_pending_label;
 
 GtkWidget *l_x1_button;
-GtkWidget *l_x2_button;
-GtkWidget *l_x5_button;
 GtkWidget *l_x10_button;
+GtkWidget *l_x50_button;
+GtkWidget *l_x100_button;
 
 GtkWidget *btc_possess;
 GtkWidget *eth_possess;
@@ -50,8 +50,10 @@ GtkBuilder *builder;
 //initiation of the wallet's value to 1000 
 int wallet_value = 1000;
 char val_txt[8*sizeof(long)];
-volatile int pos = 1;
-volatile int lev = 1;
+int pos = 1;
+int btc_lev=1;
+int eth_lev=1;
+int doge_lev=1;
 
 int on_money = 0;
 
@@ -159,23 +161,78 @@ void on_sl_button_clicked()
 void on_l_x1_button_toggled()
 {
   printf("x1 active\n");
-  lev = 1;
-}
+  switch(on_money)
+  {
+    case 0:
+    btc_lev =1;
+    break;
 
-void on_l_x2_button_toggled()
-{
-  lev = 2;
-}
+    case 1:
+    eth_lev=1;
+    break;
 
-void on_l_x5_button_toggled()
-{
-  lev = 5;
+    case 2:
+    doge_lev=1;
+    break;
+  }
+
 }
 
 void on_l_x10_button_toggled()
 {
   printf("x10 active\n");
-  lev = 10;
+  switch(on_money)
+  {
+    case 0:
+    btc_lev =10;
+    break;
+
+    case 1:
+    eth_lev=10;
+    break;
+
+    case 2:
+    doge_lev=10;
+    break;
+  }
+}
+
+void on_l_x50_button_toggled()
+{
+  printf("x50 active\n");
+  switch(on_money)
+  {
+    case 0:
+    btc_lev =50;
+    break;
+
+    case 1:
+    eth_lev=50;
+    break;
+
+    case 2:
+    doge_lev=50;
+    break;
+  }
+}
+
+void on_l_x100_button_toggled()
+{
+  printf("x100 active\n");
+  switch(on_money)
+  {
+    case 0:
+    btc_lev =100;
+    break;
+
+    case 1:
+    eth_lev=100;
+    break;
+
+    case 2:
+    doge_lev=100;
+    break;
+  }
 }
 
 void change_crypt_amount(struct Money *strc)
@@ -217,7 +274,7 @@ void change_crypt_amount(struct Money *strc)
 
         case 1:
             eth->usd_possess += temp;
-            eth_init_pos = btc->usd_possess;
+            eth_init_pos = eth->usd_possess;
             eth->nb_possess = eth->usd_possess/strc->priceUsd;  
             //printf("new ethereum amount is %f\n", eth->nb_possess);
             //printf("new ethereum wallet is %f\n", eth->usd_possess);
@@ -228,7 +285,7 @@ void change_crypt_amount(struct Money *strc)
 
          case 2:
             doge->usd_possess += temp;
-            doge_init_pos = btc->usd_possess;
+            doge_init_pos = doge->usd_possess;
             doge->nb_possess = doge->usd_possess/strc->priceUsd;  
             //printf("new dogecoin amount is %f\n", doge->nb_possess);
             //printf("new dogecoin wallet is %f\n", doge->usd_possess);
@@ -292,63 +349,80 @@ void on_value_entry();
 void on_money_possess(int i_money)
 {   
     float init_pos = 0;
-    struct Money *money;
+    char array[100];
+    float newPrice;
+    float lvlEffectPrice;
     switch (i_money)
       {
       case 0: 
-	money = btc;
+    printf("USD possess = %f, nb_possess = %f\n", btc->usd_possess, btc->nb_possess);
     init_pos = btc_init_pos;
-	break;
-      case 1:
-	money = eth;
-    init_pos = eth_init_pos;
-	break;
-      case 2:
-	money = doge;
-    init_pos = doge_init_pos;
-	break;
-      default:
-	break;
-      }
-    
-    
-    
-    
-    char array[100];
-    printf("USD possess = %f, nb_possess = %f\n", money->usd_possess, money->nb_possess);
-
-    float newPrice = money->nb_possess*money->priceUsd;
-    float lvlEffectPrice = (newPrice-init_pos)*lev;
-    printf("Levier : %d\n", lvlEffectPrice, lev);
-    money->usd_possess = init_pos+lvlEffectPrice;
+    newPrice = btc->nb_possess*btc->priceUsd;
+    lvlEffectPrice = (newPrice-init_pos)*btc_lev;
+    printf("Levier : %d\n", btc_lev);
+    btc->usd_possess = init_pos+lvlEffectPrice;
     printf("Increase of %f%\n", lvlEffectPrice);
     
-    // STOPLOSS
-    
-    if (money->limit > 0 && money->usd_possess < money->limit)
+    if (btc->limit > 0 && btc->usd_possess < btc->limit)
       {
-        money->limit = 0;
-	
-        sprintf(amount, "%f", money->usd_possess);
-        change_crypt_amount(money);
+        btc->limit = 0;
+  
+        sprintf(amount, "%f", btc->usd_possess);
+        change_crypt_amount(btc);
         
         
       }
-    sprintf(array, "%f : %f$", money->nb_possess, money->usd_possess);
-    switch (i_money)
-      {
-      case 0: 
-	gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
+    sprintf(array, "%f : %f$", btc->nb_possess, btc->usd_possess);
+    gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
 	break;
       case 1:
-	gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
+      printf("USD possess = %f, nb_possess = %f\n", eth->usd_possess, eth->nb_possess);
+    init_pos = eth_init_pos;
+    newPrice = eth->nb_possess*eth->priceUsd;
+    lvlEffectPrice = (newPrice-init_pos)*eth_lev;
+    printf("Levier : %d\n", eth_lev);
+    eth->usd_possess = init_pos+lvlEffectPrice;
+    printf("Increase of %f%\n", lvlEffectPrice);
+    
+    if (eth->limit > 0 && eth->usd_possess < eth->limit)
+      {
+        eth->limit = 0;
+  
+        sprintf(amount, "%f", eth->usd_possess);
+        change_crypt_amount(eth);
+        
+        
+      }
+    sprintf(array, "%f : %f$", eth->nb_possess, eth->usd_possess);
+    gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
 	break;
       case 2:
-	gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
+      printf("USD possess = %f, nb_possess = %f\n", doge->usd_possess, doge->nb_possess);
+    init_pos = doge_init_pos;
+    newPrice = doge->nb_possess*doge->priceUsd;
+    lvlEffectPrice = (newPrice-init_pos)*doge_lev;
+    printf("Levier : %d\n", doge_lev);
+    doge->usd_possess = init_pos+lvlEffectPrice;
+    printf("Increase of %f%\n", lvlEffectPrice);
+    
+    if (doge->limit > 0 && doge->usd_possess < doge->limit)
+      {
+        doge->limit = 0;
+  
+        sprintf(amount, "%f", doge->usd_possess);
+        change_crypt_amount(doge);
+        
+        
+      }
+    sprintf(array, "%f : %f$", doge->nb_possess, doge->usd_possess);
+    gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
 	break;
       default:
 	break;
       }
+
+    
+    // STOPLOSS
     
 }
 
@@ -395,9 +469,9 @@ int open_interface()
   sl_pending_label = GTK_WIDGET(gtk_builder_get_object(builder,"sl_pending_label"));
 
   l_x1_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x1_button"));
-  l_x2_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x2_button")); 
-  l_x5_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x5_button"));
-  l_x10_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x10_button"));
+  l_x10_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x10_button")); 
+  l_x50_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x50_button"));
+  l_x100_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x100_button"));
 
   
   sell_button = GTK_WIDGET(gtk_builder_get_object(builder,"sell_button"));

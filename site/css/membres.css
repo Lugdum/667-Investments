@@ -1,26 +1,40 @@
 html
 {
-  font-family: sans-serif ;
+    background-color: wheat;
 }
 
-.border_page{
-  border: 10px;
+#body
+{
+    font-family: sans-serif ;
+    align-content: center;
+    width: 1000px;
+    margin: 0 auto;
+    text-align: center;
 }
+
+.lien
+{
+    text-decoration: none;
+    color: black;
+}
+
+#menu li {
+    margin-right:2.5em;
+    padding-left:0;
+    list-style: none;
+}
+
+.lia
+{
+    margin-bottom:15px;
+}
+
 .text
 {
- text-align: justify;
-  width: 50em;
+    text-align: justify;
 }
-.flotte
+
+h2
 {
-  float:left;
-  margin-right: 50px;
-}
-table
-{
-  border-collapse: collapse;
-}
-td
-{
-  border: 1px solid black;
+    text-decoration: underline;
 }
