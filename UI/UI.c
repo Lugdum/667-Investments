@@ -13,7 +13,7 @@
 #include <ctype.h>
 #include <err.h>
 #include <pthread.h>
-#include "SDL/SDL.h"
+#include "SDL2/SDL.h"
 #include "../ValueGrabber/fetcher.h"
 
 GtkWidget *window;//we set global variables
@@ -260,66 +260,54 @@ void on_sell_button_clicked()
 
 void on_value_entry();
 
-void on_btc_possess()
-{
-    char array[100];
-    btc->usd_possess = btc->nb_possess*btc->priceUsd;
-    if (btc->limit > 0 && btc->usd_possess < btc->limit)
+void on_money_possess(int i_money)
+{   
+    struct Money *money;
+    switch (i_money)
     {
-        btc->limit = 0;
+        case 0: 
+            money = btc;
+            break;
+        case 1:
+            money = eth;
+            break;
+        case 2:
+            money = doge;
+            break;
+        default:
+            break;
+    }
+
+    char array[100];
+    money->usd_possess = money->nb_possess*money->priceUsd;
+
+    // STOPLOSS
+    
+    if (money->limit > 0 && money->usd_possess < money->limit)
+    {
         int tmp = on_money;
-        on_money = 0;
-        sprintf(amount, "%f", btc->usd_possess);
-        change_crypt_amount(btc);
+        on_money = i_money;
+        money->limit = 0;
+       
+        sprintf(amount, "%f", money->usd_possess);
+        change_crypt_amount(money);
+        
         on_money = tmp;
     }
-    sprintf(array, "%f : %f$", btc->nb_possess, btc->usd_possess);
+    
+    sprintf(array, "%f : %f$", money->nb_possess, money->usd_possess);
     gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
 
-}
-void on_eth_possess()
-{
-    char array[100];
-    eth->usd_possess = eth->nb_possess*eth->priceUsd;
-    if (eth->limit > 0 && eth->usd_possess < eth->limit)
-    {
-        eth->limit = 0;
-        int tmp = on_money;
-        on_money = 1;
-        sprintf(amount, "%f", eth->usd_possess);
-        change_crypt_amount(eth);
-        on_money = tmp;
-    }
-    sprintf(array, "%f : %f$", eth->nb_possess, eth->usd_possess);
-    gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
-
-}
-
-void on_doge_possess()
-{
-    char array[100];
-    doge->usd_possess = doge->nb_possess*doge->priceUsd;
-    if (doge->limit > 0 && doge->usd_possess < doge->limit)
-    {
-        doge->limit = 0;
-        int tmp = on_money;
-        on_money = 2;
-        sprintf(amount, "%f", doge->usd_possess);
-        change_crypt_amount(doge);
-        on_money = tmp;
-    }
-    sprintf(array, "%f : %f$", doge->nb_possess, doge->usd_possess);
-    gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
 }
 
 void update_possess_money_price()
 {
     if (btc->nb_possess > 0)
-        on_btc_possess();
+        on_money_possess(0);
     if (eth->nb_possess > 0)
-        on_eth_possess();
+        on_money_possess(1);
     if (doge->nb_possess > 0)
-        on_doge_possess();
+        on_money_possess(2);
 }
 
 void begin_loop()

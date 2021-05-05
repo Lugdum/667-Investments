@@ -1,7 +1,6 @@
-
+#include "SDL2/SDL.h"
 #ifndef SDL_GRAPH_H
 #define SDL_GRAPH_H
-#include "SDL2/SDL.h"
 
 double valeurs(double x);
 void run(SDL_Renderer *renderer);

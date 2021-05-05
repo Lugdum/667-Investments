@@ -6,7 +6,7 @@
 #include <err.h>
 #include "SDL2/SDL.h"
 #include "../../ValueGrabber/fetcher.h"
-//#include "../UI.h"
+#include "../../Algorithms/bot.h"
 
 #define W 800
 #define H 600
@@ -50,8 +50,9 @@ void color_window(SDL_Renderer *graph, SDL_Color color)
 void stop(void)
 {
     SDL_Event e;
-    while(SDL_WaitEvent(&e) && e.type != SDL_QUIT)
-        sleep(0.1);
+    /*while(SDL_WaitEvent(&e) && e.type != SDL_QUIT)
+        sleep(0.1);*/
+        sleep(6);
 }
 
 void draw_background_lines(SDL_Renderer *graph)
@@ -63,20 +64,19 @@ void draw_background_lines(SDL_Renderer *graph)
 void draw_lines(SDL_Renderer *graph)
 {
     //int* hist = get_histo(btc);
-    int* hist = calloc(5, sizeof(int));
-    *(hist) = 250;
+    int* hist = get_history(btc);
+    /**(hist) = 250;
     *(hist+1) = 220;
     *(hist+2) = 193;
     *(hist+3) = 268;
-    *(hist+4) = 310;
+    *(hist+4) = 310;*/
     int i = 0;
     while(*(hist+i) != '\0')
         i++;
     int j = 0;
-    while(i != 1)
+    while(j != i-1)
     {
-        SDL_RenderDrawLine(graph, 10*j, *(hist+i), 10*j+10, *(hist+i-1));
-        i--;
+        SDL_RenderDrawLine(graph, 10*j, *(hist)+300-*(hist+j), 10*(j+1), *(hist)+300-*(hist+j+1));
         j++;
     }
 }

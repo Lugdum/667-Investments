@@ -7,6 +7,7 @@
 #include <curl/curl.h>
 #include <curl/easy.h>
 #include "../UI/UI.h"
+#include "../UI/graph2/SDL_graph.h"
 
 /* money structure declaration */
 struct Money
@@ -336,9 +337,9 @@ void loop()
     update_value("dogecoin");
     get_price();
     if(p)
-      {
-        printf("\n%f\n", (btc->next)->priceUsd);
-      }
+        printf("\n%f\n", btc->priceUsd);
+    if(p > 10)
+        launch();
     update_possess_money_price();
     switch (on_money)
     {
@@ -356,6 +357,6 @@ void loop()
         break;
     }
     sleep(5);
-    p = 1;
+    p += 1;
   }
 }

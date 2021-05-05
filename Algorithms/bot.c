@@ -17,16 +17,38 @@
 #include "../ValueGrabber/fetcher.h"
 #include "../UI/UI.h"
 
-int* get_histo(struct Money *money)
+struct Money
+{
+  char          *id;
+  int           rank;
+  char          *symbol;
+  char          *name;
+  float         supply;
+  float         maxSupply;
+  float         marketCapUsd;
+  float         volumeUsd24Hr;
+  float         priceUsd;
+  float         changePercent24Hr;
+  float         vwap24Hr;
+  float         usd_possess;
+  float         nb_possess;
+  float         limit;
+  struct Money  *next;
+};
+
+int* get_history(struct Money *money)
 {
   int *histo = calloc(1, sizeof(int));
   int i = 0;
+  printf("\n\n");
   while(money->next != NULL)
   {
     histo = realloc(histo, (i+1)*sizeof(int));
     *(histo + i) = money->priceUsd;
+    printf(" ,%f", money->priceUsd);
     money = money->next;
     i++;
   }
+  printf("\n\n");
   return histo;
 }
