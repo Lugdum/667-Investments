@@ -18,6 +18,10 @@
 #include "../UI/UI.h"
 
 int hist_len = 0;
+int nb_val1 = 5;
+int nb_val2 = 20;
+int indic[3] = {-1, -1, -1};
+float volume = 100;
 
 struct Money
 {
@@ -54,3 +58,58 @@ int* get_history(struct Money *money)
   printf("\n\n");
   return hist;
 }
+
+float moyen(struct Money *money, int nb_val)
+{
+    float sum = 0;
+    for (int i = 0; i < nb_val; i++)
+    {
+        if (money == NULL)
+            return -1;
+        sum += money->priceUsd;
+        money = money->next;
+    }
+    return sum/(float)nb_val;
+}
+
+void average_crossover(struct Money *money)
+{
+    // Le moving average trading consiste à acheter si les valeurs dépasses la courbe des moyennes 
+    // ou de vendre si elles passent en dessous.
+    // indic permet de savoir si les dernières valeur étaient inférieur ou non à la courbe des moyennes sur nb_val valeurs.
+    float av1 = moyen(money, nb_val1);
+    float av2 = moyen(money, nb_val2);
+    int i = -1;
+    if (strcmp(money->symbol,"BTC") == 0)
+        i = 0;
+    if (strcmp(money->symbol,"ETH") == 0)
+        i = 1;
+    if (strcmp(money->symbol,"DOGE") == 0)
+        i = 2;
+    printf("Average5: %f\nAverage20: %f\nIndic: %d\n", av1, av2, indic[i]);
+    if (av1 > 0 && av2 > 0)
+    {    
+        if (indic[i] == -1 && av1 > av2)
+        {
+            indic[i] = 1;
+            if (wallet_value >= volume)
+            {
+                printf("AUTO BUYING\n");
+                buy(money, volume);
+            }
+        }
+        else if (indic[i] == 1 && av1 < av2)
+        {
+            indic[i] = -1;
+            if (money->usd_possess >= volume)
+            {
+                printf("AUTO SELLING\n");
+                sell(money, volume);
+            }
+        }
+
+    }
+}
+
+
+

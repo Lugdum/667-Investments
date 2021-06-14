@@ -361,7 +361,7 @@ void loop()
         break;
     }
     update_image();
-    sleep(5);
     p += 1;
+    sleep(5);
   }
 }
