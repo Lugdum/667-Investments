@@ -59,6 +59,7 @@ int btc_lev=1;
 int eth_lev=1;
 int doge_lev=1;
 
+int bot = 0;
 int on_money = 0;
 
 char *amount;
@@ -85,6 +86,13 @@ struct Money
   float         limit;
   struct Money  *next;
 };
+
+void update_stoploss_display()
+{
+    char buffer[50];
+    sprintf(buffer, "BTC : %f\nETH : %f\nDOGE : %f", btc->limit, eth->limit, doge->limit);
+    gtk_label_set_text(GTK_LABEL(sl_pending_label), (gchar*)buffer);
+}
 
 void update_image(int len)
 {
@@ -147,60 +155,52 @@ void on_sl_entry_changed(GtkEntry *e)
 
 void on_sl_button_clicked()
 {
-  switch (on_money)
+    switch (on_money)
     {
-    case 0: ;
-      if (strtod(sl, NULL) <= btc->usd_possess)
-      {
-        char sl1[20] = "BTC SL = ";
-        strcat(sl1, sl);
-        gtk_label_set_text(GTK_LABEL(sl_pending_label), (gchar*)sl1);
-        btc->limit = strtod(sl,NULL);
-      }
-      break;
-    case 1: ;
-      if (strtod(sl, NULL) <= eth->usd_possess)
-      {
-        char sl2[20] = "ETH SL = ";
-        strcat(sl2, sl);
-        gtk_label_set_text(GTK_LABEL(sl_pending_label), (gchar*)sl2);
-        eth->limit = strtod(sl,NULL);
-      }
-      break;
-    case 2: ;
-      if (strtod(sl, NULL) <= doge->usd_possess)
-      {
-        char sl3[20] = "DOGE SL = ";
-        strcat(sl3, sl);
-        gtk_label_set_text(GTK_LABEL(sl_pending_label), (gchar*)sl3);
-        doge->limit = strtod(sl,NULL);
-      }
-      break;
+        case 0: ;
+            if (strtod(sl, NULL) <= btc->usd_possess)
+            {
+                btc->limit = strtod(sl,NULL);
+            }
+            break;
+        case 1: ;
+            if (strtod(sl, NULL) <= eth->usd_possess)
+            {
+                eth->limit = strtod(sl,NULL);
+            }
+            break;
+        case 2: ;
+            if (strtod(sl, NULL) <= doge->usd_possess)
+            {
+                doge->limit = strtod(sl,NULL);
+            }
+            break;
     }
+    update_stoploss_display();
 }
 
 void on_l_x1_button_toggled()
 {
-  printf("x1 active\n");
-  lev = 1;
+    printf("x1 active\n");
+    lev = 1;
 }
 
 void on_l_x10_button_toggled()
 {
-  printf("x10 active\n");
-  lev = 10;
+    printf("x10 active\n");
+    lev = 10;
 }
 
 void on_l_x50_button_toggled()
 {
-  printf("x50 active\n");
-  lev = 50;
+    printf("x50 active\n");
+    lev = 50;
 }
 
 void on_l_x100_button_toggled()
 {
-  printf("x100 active\n");
-  lev = 100;
+    printf("x100 active\n");
+    lev = 100;
 }
 
 void set_lev(struct Money *money)
@@ -284,6 +284,7 @@ void sell(struct Money *strc, float n)
     pos = -1;
     set_lev(strc);
     change_crypt_amount(strc, n);
+    update_stoploss_display();
 }
 
 
@@ -291,7 +292,7 @@ void sell(struct Money *strc, float n)
 void on_buy_button_clicked()
 {
     pos = 1;
-    if (amount && atof(amount) <= wallet_value)
+    if (amount && atof(amount) <= wallet_value && bot == 0)
     {
         printf("BUYING with %d x%d\n", on_money, lev);
         switch (on_money)
@@ -312,46 +313,60 @@ void on_buy_button_clicked()
                 break;
         }
     }
+    update_stoploss_display();
 }
   
 
 void on_sell_button_clicked()
 {
-  pos = -1;
-  if (amount)
-  {
-        float a = atof(amount);
+    pos = -1;
+    if (amount && bot == 0)
+    {
+        float a = 0;
+
         switch (on_money)
         {
             case 0:
+                if (strcmp(amount, "all") == 0)
+                    a = btc->usd_possess;
+                else 
+                    a = atof(amount);
                 if (a <= btc->usd_possess)
                 {
                     if (btc->usd_possess-a < btc->limit)
                         btc->limit = 0;
-                    change_crypt_amount(btc, -1);
+                    change_crypt_amount(btc, a);
                 }
                 break;
             case 1:
+                if (strcmp(amount, "all") == 0)
+                    a = eth->usd_possess;
+                else 
+                    a = atof(amount);
                 if (a <= eth->usd_possess)
                 {
                     if (eth->usd_possess-a < eth->limit)
                         eth->limit = 0;
-                    change_crypt_amount(eth, -1);
+                    change_crypt_amount(eth, a);
                 }
                 break;
             case 2:
+                if (strcmp(amount, "all") == 0)
+                    a = doge->usd_possess;
+                else 
+                    a = atof(amount);
                 if (a <= doge->usd_possess)
                 {
                     if (doge->usd_possess-a < doge->limit)
                         doge->limit = 0;
-                    change_crypt_amount(doge, -1);
+                    change_crypt_amount(doge, a);
                 }
                 break;
             default:
                 break;
         }
-    
-  }
+        update_stoploss_display();
+    }
 }
 
 void on_value_entry();
@@ -363,75 +378,73 @@ void on_money_possess(int i_money)
     float newPrice;
     float lvlEffectPrice;
     switch (i_money)
-      {
-      case 0: 
-    printf("USD possess = %f, nb_possess = %f\n", btc->usd_possess, btc->nb_possess);
-    init_pos = btc_init_pos;
-    newPrice = btc->nb_possess*btc->priceUsd;
-    lvlEffectPrice = (newPrice-init_pos)*btc_lev;
-    printf("Levier : %d\n", btc_lev);
-    btc->usd_possess = init_pos+lvlEffectPrice;
-    printf("Increase of %f\n", lvlEffectPrice);
+    {
+        case 0: 
+            printf("USD possess = %f, nb_possess = %f\n", btc->usd_possess, btc->nb_possess);
+            init_pos = btc_init_pos;
+            newPrice = btc->nb_possess*btc->priceUsd;
+            lvlEffectPrice = (newPrice-init_pos)*btc_lev;
+            printf("Levier : %d\n", btc_lev);
+            btc->usd_possess = init_pos+lvlEffectPrice;
+            printf("Increase of %f\n", lvlEffectPrice);
     
-    if (btc->limit > 0 && btc->usd_possess < btc->limit)
-      {
-        printf("STOPLOSS ACTION\n");
-        btc->limit = 0;
-        gtk_label_set_text(GTK_LABEL(sl_pending_label), (gchar*)"");
+            if (btc->limit > 0 && btc->usd_possess < btc->limit)
+            {
+                printf("STOPLOSS ACTION\n");
+                btc->limit = 0;
+                update_stoploss_display();
   
-        pos = -1;
-        change_crypt_amount(btc, btc->usd_possess);
-        
-        
-      }
-    sprintf(array, "%f : %f$", btc->nb_possess, btc->usd_possess);
-    gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
-	break;
+                pos = -1;
+                change_crypt_amount(btc, btc->usd_possess);
+            }
+            sprintf(array, "%f : %f$", btc->nb_possess, btc->usd_possess);
+            gtk_label_set_text(GTK_LABEL(btc_possess), (gchar*)array);
+        	break;
       case 1:
-      printf("USD possess = %f, nb_possess = %f\n", eth->usd_possess, eth->nb_possess);
-    init_pos = eth_init_pos;
-    newPrice = eth->nb_possess*eth->priceUsd;
-    lvlEffectPrice = (newPrice-init_pos)*eth_lev;
-    printf("Levier : %d\n", eth_lev);
-    eth->usd_possess = init_pos+lvlEffectPrice;
-    printf("Increase of %f\n", lvlEffectPrice);
+            printf("USD possess = %f, nb_possess = %f\n", eth->usd_possess, eth->nb_possess);
+            init_pos = eth_init_pos;
+            newPrice = eth->nb_possess*eth->priceUsd;
+            lvlEffectPrice = (newPrice-init_pos)*eth_lev;
+            printf("Levier : %d\n", eth_lev);
+            eth->usd_possess = init_pos+lvlEffectPrice;
+            printf("Increase of %f\n", lvlEffectPrice);
     
-    if (eth->limit > 0 && eth->usd_possess < eth->limit)
-      {
-        eth->limit = 0;
-        gtk_label_set_text(GTK_LABEL(sl_pending_label), (gchar*)"");
-        printf("STOPLOSS ACTION");
+            if (eth->limit > 0 && eth->usd_possess < eth->limit)
+            {
+                eth->limit = 0;
+                update_stoploss_display();
+                printf("STOPLOSS ACTION");
   
-        pos = -1;
-        change_crypt_amount(eth, eth->usd_possess);
-      }
-    sprintf(array, "%f : %f$", eth->nb_possess, eth->usd_possess);
-    gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
-	break;
+                pos = -1;
+                change_crypt_amount(eth, eth->usd_possess);
+            }
+            sprintf(array, "%f : %f$", eth->nb_possess, eth->usd_possess);
+            gtk_label_set_text(GTK_LABEL(eth_possess), (gchar*)array);
+	        break;
       case 2:
-      printf("USD possess = %f, nb_possess = %f\n", doge->usd_possess, doge->nb_possess);
-    init_pos = doge_init_pos;
-    newPrice = doge->nb_possess*doge->priceUsd;
-    lvlEffectPrice = (newPrice-init_pos)*doge_lev;
-    printf("Levier : %d\n", doge_lev);
-    doge->usd_possess = init_pos+lvlEffectPrice;
-    printf("Increase of %f\n", lvlEffectPrice);
+            printf("USD possess = %f, nb_possess = %f\n", doge->usd_possess, doge->nb_possess);
+            init_pos = doge_init_pos;
+            newPrice = doge->nb_possess*doge->priceUsd;
+            lvlEffectPrice = (newPrice-init_pos)*doge_lev;
+            printf("Levier : %d\n", doge_lev);
+            doge->usd_possess = init_pos+lvlEffectPrice;
+            printf("Increase of %f\n", lvlEffectPrice);
     
-    if (doge->limit > 0 && doge->usd_possess < doge->limit)
-      {
-        doge->limit = 0;
-        gtk_label_set_text(GTK_LABEL(sl_pending_label), (gchar*)"");
-        printf("STOPLOSS ACTION");
+            if (doge->limit > 0 && doge->usd_possess < doge->limit)
+            {
+                doge->limit = 0;
+                update_stoploss_display();
+            printf("STOPLOSS ACTION");
   
-        pos = -1;
-        change_crypt_amount(doge, doge->usd_possess);
-      }
-    sprintf(array, "%f : %f$", doge->nb_possess, doge->usd_possess);
-    gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
-	break;
+            pos = -1;
+            change_crypt_amount(doge, doge->usd_possess);
+            }
+            sprintf(array, "%f : %f$", doge->nb_possess, doge->usd_possess);
+            gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
+	        break;
       default:
-	break;
-      }
+	        break;
+    }
 }
 
 void update_possess_money_price()
@@ -444,26 +457,29 @@ void update_possess_money_price()
         on_money_possess(2);
     
     // Moving Average Crossover
-    printf("\nBOT EVALUATION\n");
-    average_crossover(btc);
-    average_crossover(eth);
-    average_crossover(doge);
+    if (bot == 1)
+    {
+        printf("\nBOT EVALUATION\n");
+        average_crossover(btc);
+        average_crossover(eth);
+        average_crossover(doge);
+    }
 }
 
 void begin_loop()
 {
-  loop();
+    loop();
 }
 
 int open_interface()
 {
-  gtk_init(NULL,NULL); //we initialize the interface
+    gtk_init(NULL,NULL); //we initialize the interface
 
-  builder = gtk_builder_new_from_file("UI/UI.glade");
+    builder = gtk_builder_new_from_file("UI/UI.glade");
 
-  window = GTK_WIDGET(gtk_builder_get_object(builder,"window")); //we pick up all the widget boxes
+    window = GTK_WIDGET(gtk_builder_get_object(builder,"window")); //we pick up all the widget boxes
 
-  g_signal_connect(window,"destroy", G_CALLBACK(gtk_main_quit), NULL);
+    g_signal_connect(window,"destroy", G_CALLBACK(gtk_main_quit), NULL);
 
   gtk_builder_connect_signals(builder,NULL);
 
@@ -509,13 +525,13 @@ int open_interface()
   
   //show exactly the value of the BTC
 
-  printf("TEST\n");
   char array[10000];
   sprintf(array, "%f", btc->priceUsd);
   gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
  
   total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
-  printf("TEST\n");
+
+  update_stoploss_display();
 
   //we convert wallet_value  in char* to put in a label
   sprintf(val_txt, "%f", wallet_value);
