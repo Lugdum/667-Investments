@@ -8,5 +8,6 @@ void update_value(char *name);
 extern struct Money *btc;
 extern struct Money *eth;
 extern struct Money *doge;
+void loop();
 
 #endif

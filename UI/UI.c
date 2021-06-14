@@ -86,7 +86,7 @@ struct Money
   struct Money  *next;
 };
 
-void update_image()
+void update_image(int len)
 {
   w_graph = GTK_WIDGET(gtk_builder_get_object(builder, "graph"));
   if(hist_len < 5)
@@ -102,6 +102,7 @@ void on_quit_button_clicked()
 
 void on_btc_graph_button_toggled()
 {
+  update_image(0);
   on_money = 0;
   if (1)
     {
@@ -113,6 +114,7 @@ void on_btc_graph_button_toggled()
 
 void on_eth_graph_button_toggled()
 {
+  update_image(0);
   on_money = 1;
   if (1)
     {
@@ -124,6 +126,7 @@ void on_eth_graph_button_toggled()
 
 void on_doge_graph_button_toggled()
 {
+  update_image(0);
   // Argument was "GtkRadioButton *b"
   on_money = 2;
   if (1) // was B

@@ -47,16 +47,25 @@ int* get_history(struct Money *money)
   hist_len++;
   int* hist = calloc(hist_len, sizeof(int));
   int i = 0;
-  printf("\nvalue %d: %f\n", hist_len, money->priceUsd);
+  printf("\nmoney: %d\n", hist_len);
   while(i < hist_len)
   {
     *(hist + i) = money->priceUsd;
-    //printf(" ,%f", money->priceUsd);
+    printf(" ,%f", money->priceUsd);
     money = money->next;
     i++;
   }
-  //printf("\n\n");
+  printf("\n\n");
   return hist;
+}
+
+void write_history(struct Money *money)
+{
+  int* hist = get_history(money);
+  FILE *f = fopen("hist", "wb");
+  fwrite(hist, sizeof(int), 200, f);
+  fclose(f);
+  free(hist);
 }
 
 float moyen(struct Money *money, int nb_val)
@@ -107,6 +116,3 @@ void average_crossover(struct Money *money)
 
     }
 }
-
-
-

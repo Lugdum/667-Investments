@@ -4,6 +4,8 @@
 #include "supportLib.h"
 #include <time.h>
 #include "plot.h"
+#include <err.h>
+#include <pthread.h>
 #include "../../ValueGrabber/fetcher.h"
 #include "../../Algorithms/bot.h"
 
@@ -26,13 +28,23 @@ struct Money
   struct Money  *next;
 };
 
-int create_graph()
+int main(int argc, char *argv[])
 {
-  int* hist = get_history(btc);
+  FILE *f = fopen("hist", "r");
+  int hist[200];
+  fread(hist, sizeof(int), 200, f);
+  fclose(f);
 
-  int point = hist_len;
-  while(*(hist+point) != '\0')
-    point++;
+  int len = 0;
+  while(hist[len] != '\0' || hist[len] != 0)
+    len++;
+  printf("graph: ");
+  for (int i = 0; i < len; i++)
+    printf("%d, ", hist[i]);
+  printf("\n");
+  int point = len;
+  if (len < 4)
+    return EXIT_FAILURE;
 
 	double xs [point];
 	double ys [point];
@@ -41,10 +53,10 @@ int create_graph()
   for(int i = 1; i < point-1; i++)
     xs[i] = xs[i-1]+5;
 
-  //printf("\ngraph: ");
+  printf("\ngraph: ");
   for(int i = 0; i < point; i++)
   {
-    //printf("%d | ", *(hist+i));
+    printf("%d | ", *(hist+i));
     ys[i] = *(hist+i);
   }
 
@@ -53,7 +65,6 @@ int create_graph()
     {
       y[j] = ys[i];
     }
-  free(hist);
 
 	RGBABitmapImageReference *canvasReference = CreateRGBABitmapImageReference();
 	DrawScatterPlot(canvasReference, 600, 400, xs, point-1, y, point-1);
