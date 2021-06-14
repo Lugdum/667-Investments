@@ -102,7 +102,6 @@ void on_quit_button_clicked()
 
 void on_btc_graph_button_toggled()
 {
-  update_image(0);
   on_money = 0;
   if (1)
     {
@@ -114,7 +113,6 @@ void on_btc_graph_button_toggled()
 
 void on_eth_graph_button_toggled()
 {
-  update_image(0);
   on_money = 1;
   if (1)
     {
@@ -126,7 +124,6 @@ void on_eth_graph_button_toggled()
 
 void on_doge_graph_button_toggled()
 {
-  update_image(0);
   // Argument was "GtkRadioButton *b"
   on_money = 2;
   if (1) // was B
