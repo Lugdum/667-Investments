@@ -218,21 +218,6 @@ void change_crypt_amount(struct Money *strc, float volume)
     if (volume == -1)
         volume = atof(amount);
     printf("Money %s: %dx%f %f\n", strc->id, pos, volume, wallet_value);
-    if (pos > 0 && volume > wallet_value)
-        printf("ERR1\n");
-        //err(EXIT_FAILURE, "You don't have enough money.");
-    if (pos < 0)
-    {
-        if (strcmp(strc->symbol, "BTC") == 0 && volume > btc->usd_possess)
-            printf("ERR2\n");
-            //err(EXIT_FAILURE, "You don't have enough Bitcoin.");
-        if (strcmp(strc->symbol, "ETH") == 0 && volume > eth->usd_possess)
-            printf("ERR3\n");
-            //err(EXIT_FAILURE, "You don't have enough Ethereum.");
-        if (strcmp(strc->symbol, "DOGE") == 0 && volume > doge->usd_possess)
-            printf("ERR4\n");
-            //err(EXIT_FAILURE, "You don't have enough Dogecoin.");
-    }
 
     volume*=(float)pos;
     printf("New interaction with pos = %d\n", pos);
@@ -286,8 +271,11 @@ void buy(struct Money *strc, float n)
 {
     printf("Buying %f %s...\n", n, strc->symbol);
     pos = 1;
-    set_lev(strc);
-    change_crypt_amount(strc, n);
+    if (wallet_value >= n)
+    {
+        set_lev(strc);
+        change_crypt_amount(strc, n);    
+    }
 }
 
 void sell(struct Money *strc, float n)
@@ -303,7 +291,7 @@ void sell(struct Money *strc, float n)
 void on_buy_button_clicked()
 {
     pos = 1;
-    if (amount)
+    if (amount && atof(amount) <= wallet_value)
     {
         printf("BUYING with %d x%d\n", on_money, lev);
         switch (on_money)
@@ -330,22 +318,39 @@ void on_buy_button_clicked()
 void on_sell_button_clicked()
 {
   pos = -1;
-  switch (on_money)
+  if (amount)
   {
-      case 0:
-          btc->limit = 0;
-          change_crypt_amount(btc, -1);
-          break;
-      case 1:
-          eth->limit = 0;
-          change_crypt_amount(eth, -1);
-          break;
-      case 2:
-          doge->limit = 0;
-          change_crypt_amount(doge, -1);
-          break;
-      default:
-          break;
+        float a = atof(amount);
+        switch (on_money)
+        {
+            case 0:
+                if (a <= btc->usd_possess)
+                {
+                    if (btc->usd_possess-a < btc->limit)
+                        btc->limit = 0;
+                    change_crypt_amount(btc, -1);
+                }
+                break;
+            case 1:
+                if (a <= eth->usd_possess)
+                {
+                    if (eth->usd_possess-a < eth->limit)
+                        eth->limit = 0;
+                    change_crypt_amount(eth, -1);
+                }
+                break;
+            case 2:
+                if (a <= doge->usd_possess)
+                {
+                    if (doge->usd_possess-a < doge->limit)
+                        doge->limit = 0;
+                    change_crypt_amount(doge, -1);
+                }
+                break;
+            default:
+                break;
+        }
+    
   }
 }
 
