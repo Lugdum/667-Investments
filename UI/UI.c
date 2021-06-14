@@ -182,85 +182,42 @@ void on_sl_button_clicked()
 void on_l_x1_button_toggled()
 {
   printf("x1 active\n");
-  switch(on_money)
-  {
-    case 0:
-    btc_lev =1;
-    break;
-
-    case 1:
-    eth_lev=1;
-    break;
-
-    case 2:
-    doge_lev=1;
-    break;
-  }
-
+  lev = 1;
 }
 
 void on_l_x10_button_toggled()
 {
   printf("x10 active\n");
-  switch(on_money)
-  {
-    case 0:
-        lev = 10;
-        break;
-
-    case 1:
-        lev = 10;
-        break;
-
-    case 2:
-        lev = 10;
-        break;
-  }
+  lev = 10;
 }
 
 void on_l_x50_button_toggled()
 {
   printf("x50 active\n");
-  switch(on_money)
-  {
-    case 0:
-        lev = 50;
-        break;
-
-    case 1:
-        lev = 50;
-        break;
-
-    case 2:
-        lev = 50;
-        break;
-  }
+  lev = 50;
 }
 
 void on_l_x100_button_toggled()
 {
   printf("x100 active\n");
-  switch(on_money)
-  {
-    case 0:
-        lev = 100;
-        break;
+  lev = 100;
+}
 
-    case 1:
-        lev = 100;
-        break;
-
-    case 2:
-        lev = 100;
-        break;
-  }
+void set_lev(struct Money *money)
+{
+    if (strcmp(money->symbol, "BTC") == 0)
+        btc_lev = lev;
+    else if (strcmp(money->symbol, "ETH") == 0)
+        eth_lev = lev;
+    else if (strcmp(money->symbol, "DOGE") == 0)
+        doge_lev = lev;
 }
 
 void change_crypt_amount(struct Money *strc, float volume)
 {
     if (volume == -1)
         volume = atof(amount);
-    printf("Money %d: %s, %f, %d %f\n", on_money, amount, volume, pos, wallet_value);
+    printf("Money %s: %dx%f %f\n", strc->id, pos, volume, wallet_value);
     if (pos > 0 && volume > wallet_value)
         printf("ERR1\n");
         //err(EXIT_FAILURE, "You don't have enough money.");
@@ -329,12 +286,15 @@ void buy(struct Money *strc, float n)
 {
     printf("Buying %f %s...\n", n, strc->symbol);
     pos = 1;
+    set_lev(strc);
     change_crypt_amount(strc, n);
 }
 
 void sell(struct Money *strc, float n)
 {
+    printf("Selling %f %s...\n", n, strc->symbol);
     pos = -1;
+    set_lev(strc);
     change_crypt_amount(strc, n);
 }
 
@@ -349,15 +309,15 @@ void on_buy_button_clicked()
         switch (on_money)
         {
             case 0:
-                btc_lev = lev;
+                set_lev(btc);
                 change_crypt_amount(btc, -1);
                 break;
             case 1:
-                eth_lev = lev;
+                set_lev(eth);
                 change_crypt_amount(eth, -1);
                 break;
             case 2:
-                doge_lev = lev;
+                set_lev(doge);
                 change_crypt_amount(doge, -1);
                 break;
             default:

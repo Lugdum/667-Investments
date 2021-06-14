@@ -47,15 +47,15 @@ int* get_history(struct Money *money)
   hist_len++;
   int* hist = calloc(hist_len, sizeof(int));
   int i = 0;
-  printf("\nmoney: %d\n", hist_len);
+  printf("\nvalue %d: %f\n", hist_len, money->priceUsd);
   while(i < hist_len)
   {
     *(hist + i) = money->priceUsd;
-    printf(" ,%f", money->priceUsd);
+    //printf(" ,%f", money->priceUsd);
     money = money->next;
     i++;
   }
-  printf("\n\n");
+  //printf("\n\n");
   return hist;
 }
 
@@ -82,11 +82,11 @@ void average_crossover(struct Money *money)
     int i = -1;
     if (strcmp(money->symbol,"BTC") == 0)
         i = 0;
-    if (strcmp(money->symbol,"ETH") == 0)
+    else if (strcmp(money->symbol,"ETH") == 0)
         i = 1;
-    if (strcmp(money->symbol,"DOGE") == 0)
+    else if (strcmp(money->symbol,"DOGE") == 0)
         i = 2;
-    printf("Average5: %f\nAverage20: %f\nIndic: %d\n", av1, av2, indic[i]);
+    printf("Average5: %f    Average20: %f   Indic: %d\n", av1, av2, indic[i]);
     if (av1 > 0 && av2 > 0)
     {    
         if (indic[i] == -1 && av1 > av2)
@@ -101,11 +101,8 @@ void average_crossover(struct Money *money)
         else if (indic[i] == 1 && av1 < av2)
         {
             indic[i] = -1;
-            if (money->usd_possess >= volume)
-            {
-                printf("AUTO SELLING\n");
-                sell(money, volume);
-            }
+            printf("AUTO SELLING\n");
+            sell(money, money->usd_possess);
         }
 
     }

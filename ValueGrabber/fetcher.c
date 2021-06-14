@@ -8,6 +8,7 @@
 #include <curl/easy.h>
 #include "../UI/UI.h"
 #include "../UI/graph2/SDL_graph.h"
+#include "../UI/graph/plot.h"
 
 /* money structure declaration */
 struct Money
@@ -336,29 +337,28 @@ void loop()
     update_value("ethereum");
     update_value("dogecoin");
     get_price();
-    if(p)
+    if (p > 4)
     {
-        printf("\n%f\n", btc->priceUsd);
-    }
-    if(p > 4)
         create_graph("graph.png");
+    }  
     else
+    {
         create_graph("stonks.jpg");
+    }
     update_possess_money_price();
     switch (on_money)
     {
-      case 0:
-        on_btc_graph_button_toggled();
-        break;
-      case 1:
-        on_eth_graph_button_toggled();
-        break;
-      case 2:
-        on_doge_graph_button_toggled();
-        break;
-    
-      default:
-        break;
+        case 0:
+            on_btc_graph_button_toggled();
+            break;
+        case 1:
+            on_eth_graph_button_toggled();
+            break;
+        case 2:
+            on_doge_graph_button_toggled();
+            break;
+        default:
+            break;
     }
     update_image();
     p += 1;

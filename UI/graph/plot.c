@@ -41,10 +41,10 @@ int create_graph()
   for(int i = 1; i < point-1; i++)
     xs[i] = xs[i-1]+5;
 
-  printf("\ngraph: ");
+  //printf("\ngraph: ");
   for(int i = 0; i < point; i++)
   {
-    printf("%d | ", *(hist+i));
+    //printf("%d | ", *(hist+i));
     ys[i] = *(hist+i);
   }
 
