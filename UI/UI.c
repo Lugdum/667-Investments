@@ -38,6 +38,8 @@ GtkWidget *l_x10_button;
 GtkWidget *l_x50_button;
 GtkWidget *l_x100_button;
 
+GtkWidget *bot_button;
+
 GtkWidget *btc_possess;
 GtkWidget *eth_possess;
 GtkWidget *doge_possess;
@@ -59,8 +61,9 @@ int btc_lev=1;
 int eth_lev=1;
 int doge_lev=1;
 
-int bot = 0;
 int on_money = 0;
+
+int manual = 1;
 
 char *amount;
 const char *sl;
@@ -101,6 +104,16 @@ void update_image(int len)
     gtk_image_set_from_file(GTK_IMAGE(w_graph), (gchar*)"stonks.jpg");
   else
     gtk_image_set_from_file(GTK_IMAGE(w_graph), (gchar*)"graph.png");
+}
+
+
+void on_bot_button_clicked()
+{
+  printf("I CLICK ON manual BUTTON \n");
+  if (manual == 1)
+    manual = 0;
+  else
+    manual = 1;
 }
 
 void on_quit_button_clicked()
@@ -292,7 +305,7 @@ void sell(struct Money *strc, float n)
 void on_buy_button_clicked()
 {
     pos = 1;
-    if (amount && atof(amount) <= wallet_value && bot == 0)
+    if (amount && atof(amount) <= wallet_value && manual == 1)
     {
         printf("BUYING with %d x%d\n", on_money, lev);
         switch (on_money)
@@ -320,7 +333,7 @@ void on_buy_button_clicked()
 void on_sell_button_clicked()
 {
     pos = -1;
-    if (amount && bot == 0)
+    if (amount && manual == 1)
     {
         float a = 0;
 
@@ -457,9 +470,9 @@ void update_possess_money_price()
         on_money_possess(2);
     
     // Moving Average Crossover
-    if (bot == 1)
+    if (manual == 0)
     {
-        printf("\nBOT EVALUATION\n");
+        printf("\nbot EVALUATION\n");
         average_crossover(btc);
         average_crossover(eth);
         average_crossover(doge);
@@ -504,7 +517,7 @@ int open_interface()
   l_x100_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x100_button"));
 
   
-  sell_button = GTK_WIDGET(gtk_builder_get_object(builder,"sell_button"));
+  bot_button = GTK_WIDGET(gtk_builder_get_object(builder,"bot_button"));
   
   value_entry = GTK_WIDGET(gtk_builder_get_object(builder,"value_entry"));
 
