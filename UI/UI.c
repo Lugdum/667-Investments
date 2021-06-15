@@ -97,17 +97,27 @@ struct Money
 // affichage du stoplost
 void update_stoploss_display()
 {
-    char buffer[50];
+    char buffer[100];
     printf("UPDATING STOPLOSS\n");
-    sprintf(buffer, "%f", btc->limit);
-    gtk_label_set_text(GTK_LABEL(btc_sl), (gchar*)buffer);
-    printf("BUFFER: %s\n", buffer);
-    sprintf(buffer, "%f", eth->limit);
-    gtk_label_set_text(GTK_LABEL(eth_sl), (gchar*)buffer);
-    printf("BUFFER: %s\n", buffer);
-    sprintf(buffer, "%f", doge->limit);
-    gtk_label_set_text(GTK_LABEL(doge_sl), (gchar*)buffer);
-    printf("BUFFER: %s\n", buffer);
+    if(on_money==0){
+        printf("%f\n", btc->limit);
+        sprintf(buffer, "%f", btc->limit);
+        printf("%s\n",buffer);
+        gtk_label_set_text(GTK_LABEL(btc_sl), (gchar*)buffer);
+        printf("BUFFER: %s\n", buffer);
+    }
+    
+    if (on_money==1){
+        sprintf(buffer, "%f", eth->limit);
+        gtk_label_set_text(GTK_LABEL(eth_sl), (gchar*)buffer);
+        printf("BUFFER: %s\n", buffer);
+    }
+
+    if(on_money==2){
+        sprintf(buffer, "%f", doge->limit);
+        gtk_label_set_label(GTK_LABEL(doge_sl), (gchar*)buffer);
+        printf("BUFFER: %s\n", buffer);
+    }
 }
 
 // update le graph
@@ -189,26 +199,28 @@ void on_sl_button_clicked()
 {
     switch (on_money)
     {
-        case 0: ;
-            if (strtod(sl, NULL) <= btc->usd_possess)
+        case 0: 
+            if (atof(sl) <= btc->usd_possess)
             {
-                btc->limit = strtod(sl,NULL);
+                btc->limit = atof(sl);
             }
+            update_stoploss_display();
             break;
         case 1: ;
-            if (strtod(sl, NULL) <= eth->usd_possess)
+            if (atof(sl) <= eth->usd_possess)
             {
-                eth->limit = strtod(sl,NULL);
+                eth->limit = atof(sl);
             }
+            update_stoploss_display();
             break;
         case 2: ;
-            if (strtod(sl, NULL) <= doge->usd_possess)
+            if (atof(sl) <= doge->usd_possess)
             {
-                doge->limit = strtod(sl,NULL);
+                doge->limit = atof(sl);
             }
+            update_stoploss_display();
             break;
     }
-    update_stoploss_display();
 }
 
 // levier x1
@@ -543,6 +555,10 @@ int open_interface()
   l_x10_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x10_button")); 
   l_x50_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x50_button"));
   l_x100_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x100_button"));
+
+  btc_sl = GTK_WIDGET(gtk_builder_get_object(builder, "btc_possess"));
+  eth_sl = GTK_WIDGET(gtk_builder_get_object(builder, "eth_possess"));
+  doge_sl = GTK_WIDGET(gtk_builder_get_object(builder, "doge_possess"));
 
   
   bot_button = GTK_WIDGET(gtk_builder_get_object(builder,"bot_button"));
