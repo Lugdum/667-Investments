@@ -42,6 +42,7 @@ struct Money
   struct Money  *next;
 };
 
+// parcours la structure monney pour creer l'historique sous forme de liste
 int* get_history(struct Money *money)
 {
   hist_len++;
@@ -59,6 +60,7 @@ int* get_history(struct Money *money)
   return hist;
 }
 
+// ecrit la liste historique dans un fichier
 void write_history(struct Money *money)
 {
   int* hist = get_history(money);
@@ -68,6 +70,7 @@ void write_history(struct Money *money)
   free(hist);
 }
 
+// calcul de la moyenne des x valeurs
 float moyen(struct Money *money, int nb_val)
 {
     float sum = 0;

@@ -34,6 +34,7 @@ struct Money *btc;
 struct Money *eth;
 struct Money *doge;
 
+// update struct
 void get_price()
 {
   struct Money *tmp = btc;
@@ -138,7 +139,7 @@ char *strcopy(char *tmp, size_t len)
 }
 
 
-
+// analyse le fichier telecharge de l'api pour le mettre dans une struct
 struct Money *getmoney(char *buf)
 {
     int pick_data = 0;
@@ -272,6 +273,7 @@ struct Money *Get_from_File(char *fname)
     return money;
 }
 
+// verifie si c'est dans l'alphabet
 int checkspell(char *arg)
 {
     int i = 0;
@@ -284,6 +286,7 @@ int checkspell(char *arg)
     return i;
 }
 
+// recupere la structure
 struct Money *get_strc(char* name)
 {
     if (checkspell(name) == 0)
@@ -313,6 +316,7 @@ struct Money *get_strc(char* name)
     return money;
 }
 
+// recupere une liste de structure
 struct Money **get_strc_list(int argc, char** argv)
 {
   struct Money **l_money = malloc((argc)*sizeof(struct Money *));
@@ -328,10 +332,11 @@ struct Money **get_strc_list(int argc, char** argv)
   return l_money;
 }
 
+// pour executer le programme
 static int exec_prog(const char **argv)
 {
     pid_t   my_pid;
-    int     status, timeout /* unused ifdef WAIT_FOR_COMPLETION */;
+    int     status, timeout;
 
     if (0 == (my_pid = fork())) {
             if (-1 == execve(argv[0], (char **)argv , NULL)) {
@@ -363,6 +368,7 @@ static int exec_prog(const char **argv)
     return 0;
 }
 
+// bah loop quoi
 void loop()
 {
   int p = 0;

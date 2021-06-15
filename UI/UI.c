@@ -90,6 +90,7 @@ struct Money
   struct Money  *next;
 };
 
+// affichage du stoplost
 void update_stoploss_display()
 {
     char buffer[50];
@@ -97,6 +98,7 @@ void update_stoploss_display()
     gtk_label_set_text(GTK_LABEL(sl_pending_label), (gchar*)buffer);
 }
 
+// update le graph
 void update_image(int len)
 {
   w_graph = GTK_WIDGET(gtk_builder_get_object(builder, "graph"));
@@ -121,6 +123,7 @@ void on_quit_button_clicked()
   gtk_main_quit();
 }
 
+// choix de la monnaie bitcoin
 void on_btc_graph_button_toggled()
 {
   on_money = 0;
@@ -132,6 +135,7 @@ void on_btc_graph_button_toggled()
     }
 }
 
+// choix de la monnaie ethereum
 void on_eth_graph_button_toggled()
 {
   on_money = 1;
@@ -143,6 +147,7 @@ void on_eth_graph_button_toggled()
     }
 }  
 
+// choix de la monnaie doge
 void on_doge_graph_button_toggled()
 {
   // Argument was "GtkRadioButton *b"
@@ -155,17 +160,19 @@ void on_doge_graph_button_toggled()
     }
 } 
 
-
+// nombre de monnaie entre
 void on_value_entry_changed(GtkEntry *e)
 {
   amount = gtk_entry_get_text(e);
 }
 
+// stop loss nb
 void on_sl_entry_changed(GtkEntry *e)
 {
   sl = gtk_entry_get_text(e);
 }
 
+// stop loss setup
 void on_sl_button_clicked()
 {
     switch (on_money)
@@ -192,30 +199,35 @@ void on_sl_button_clicked()
     update_stoploss_display();
 }
 
+// levier x1
 void on_l_x1_button_toggled()
 {
     printf("x1 active\n");
     lev = 1;
 }
 
+// levier x10
 void on_l_x10_button_toggled()
 {
     printf("x10 active\n");
     lev = 10;
 }
 
+// levier x50
 void on_l_x50_button_toggled()
 {
     printf("x50 active\n");
     lev = 50;
 }
 
+// levier x100
 void on_l_x100_button_toggled()
 {
     printf("x100 active\n");
     lev = 100;
 }
 
+// activer le levier
 void set_lev(struct Money *money)
 {
     if (strcmp(money->symbol, "BTC") == 0)
@@ -226,6 +238,7 @@ void set_lev(struct Money *money)
         doge_lev = lev;
 }
 
+// modifie la valeur de monnaie possede
 void change_crypt_amount(struct Money *strc, float volume)
 {
     if (volume == -1)
@@ -280,6 +293,7 @@ void change_crypt_amount(struct Money *strc, float volume)
     printf("DONE\n");
 }
 
+// appel de change_crypt_amount a l'achat
 void buy(struct Money *strc, float n)
 {
     printf("Buying %f %s...\n", n, strc->symbol);
@@ -291,6 +305,7 @@ void buy(struct Money *strc, float n)
     }
 }
 
+// appel de change_crypt_amount a la vente
 void sell(struct Money *strc, float n)
 {
     printf("Selling %f %s...\n", n, strc->symbol);
@@ -300,8 +315,7 @@ void sell(struct Money *strc, float n)
     update_stoploss_display();
 }
 
-
-
+// quand on clique manuellement sur buy
 void on_buy_button_clicked()
 {
     pos = 1;
@@ -328,8 +342,8 @@ void on_buy_button_clicked()
     }
     update_stoploss_display();
 }
-  
 
+// quand on clique manuellement sur sell
 void on_sell_button_clicked()
 {
     pos = -1;
@@ -384,6 +398,7 @@ void on_sell_button_clicked()
 
 void on_value_entry();
 
+// update le nb de monnaie possede
 void on_money_possess(int i_money)
 {   
     float init_pos = 0;
@@ -479,11 +494,13 @@ void update_possess_money_price()
     }
 }
 
+// thread qui appelle la fonction loop
 void begin_loop()
 {
     loop();
 }
 
+// fonction primaire ouvre l'interface et lance les bails
 int open_interface()
 {
     gtk_init(NULL,NULL); //we initialize the interface
@@ -494,7 +511,7 @@ int open_interface()
 
     g_signal_connect(window,"destroy", G_CALLBACK(gtk_main_quit), NULL);
 
-  gtk_builder_connect_signals(builder,NULL);
+    gtk_builder_connect_signals(builder,NULL);
 
  
 
