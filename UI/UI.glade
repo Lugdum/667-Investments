@@ -128,8 +128,8 @@
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="width_request">100</property>
-            <property name="height_request">80</property>
+            <property name="width_request">45</property>
+            <property name="height_request">-1</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">BTC = </property>
@@ -138,30 +138,30 @@
             </attributes>
           </object>
           <packing>
-            <property name="x">853</property>
-            <property name="y">224</property>
+            <property name="x">870</property>
+            <property name="y">260</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="width_request">100</property>
-            <property name="height_request">80</property>
+            <property name="width_request">45</property>
+            <property name="height_request">-1</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">ETH =</property>
+            <property name="label" translatable="yes">ETH = </property>
             <attributes>
               <attribute name="font-desc" value="Sans Bold 10"/>
             </attributes>
           </object>
           <packing>
-            <property name="x">853</property>
-            <property name="y">300</property>
+            <property name="x">870</property>
+            <property name="y">310</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="width_request">100</property>
-            <property name="height_request">80</property>
+            <property name="width_request">8</property>
+            <property name="height_request">-1</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">DOGE =</property>
@@ -170,47 +170,47 @@
             </attributes>
           </object>
           <packing>
-            <property name="x">853</property>
-            <property name="y">386</property>
+            <property name="x">870</property>
+            <property name="y">360</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="btc_possess">
             <property name="width_request">100</property>
-            <property name="height_request">80</property>
+            <property name="height_request">-1</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">btc_possess</property>
           </object>
           <packing>
-            <property name="x">929</property>
-            <property name="y">224</property>
+            <property name="x">915</property>
+            <property name="y">260</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="eth_possess">
             <property name="width_request">100</property>
-            <property name="height_request">80</property>
+            <property name="height_request">-1</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">eth_possess</property>
           </object>
           <packing>
-            <property name="x">929</property>
-            <property name="y">299</property>
+            <property name="x">915</property>
+            <property name="y">310</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="doge_possess">
             <property name="width_request">100</property>
-            <property name="height_request">80</property>
+            <property name="height_request">-1</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">doge_possess</property>
           </object>
           <packing>
-            <property name="x">929</property>
-            <property name="y">385</property>
+            <property name="x">930</property>
+            <property name="y">360</property>
           </packing>
         </child>
         <child>
@@ -468,7 +468,7 @@ Please enter a leverage</property>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="width_request">100</property>
+            <property name="width_request">17</property>
             <property name="height_request">24</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -476,20 +476,8 @@ Please enter a leverage</property>
   Stop-Loss</property>
           </object>
           <packing>
-            <property name="x">716</property>
+            <property name="x">695</property>
             <property name="y">555</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="sl_pending_label">
-            <property name="width_request">165</property>
-            <property name="height_request">127</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-          <packing>
-            <property name="x">732</property>
-            <property name="y">593</property>
           </packing>
         </child>
         <child>
@@ -544,6 +532,93 @@ manually</property>
           <packing>
             <property name="x">8</property>
             <property name="y">364</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">-1</property>
+            <property name="height_request">-1</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">btc = </property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 10"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">700</property>
+            <property name="y">610</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="sl-btc">
+            <property name="width_request">44</property>
+            <property name="height_request">-1</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">stop-loss btc</property>
+          </object>
+          <packing>
+            <property name="x">745</property>
+            <property name="y">610</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">-1</property>
+            <property name="height_request">-1</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">eth = </property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 10"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">700</property>
+            <property name="y">645</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="sl-eth">
+            <property name="width_request">44</property>
+            <property name="height_request">-1</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">stop-loss eth</property>
+          </object>
+          <packing>
+            <property name="x">745</property>
+            <property name="y">645</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">26</property>
+            <property name="height_request">-1</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">doge = </property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 10"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">700</property>
+            <property name="y">680</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="sl-doge">
+            <property name="width_request">87</property>
+            <property name="height_request">-1</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">stop-loss doge</property>
+          </object>
+          <packing>
+            <property name="x">760</property>
+            <property name="y">680</property>
           </packing>
         </child>
       </object>
