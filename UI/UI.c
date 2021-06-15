@@ -94,8 +94,12 @@ struct Money
 void update_stoploss_display()
 {
     char buffer[50];
-    sprintf(buffer, "BTC : %f\nETH : %f\nDOGE : %f", btc->limit, eth->limit, doge->limit);
-    gtk_label_set_text(GTK_LABEL(sl_pending_label), (gchar*)buffer);
+    sprintf(buffer, "%f", btc->limit);
+    gtk_label_set_text(GTK_LABEL(sl-btc), (gchar*)buffer);
+    sprintf(buffer, "%f", eth->limit);
+    gtk_label_set_text(GTK_LABEL(sl-eth), (gchar*)buffer);
+    sprintf(buffer, "%f", doge->limit);
+    gtk_label_set_text(GTK_LABEL(sl-doge), (gchar*)buffer);
 }
 
 // update le graph
