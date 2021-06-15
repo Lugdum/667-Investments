@@ -551,7 +551,7 @@ manually</property>
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="sl-btc">
+          <object class="GtkLabel" id="btc_sl">
             <property name="width_request">44</property>
             <property name="height_request">-1</property>
             <property name="visible">True</property>
@@ -580,7 +580,7 @@ manually</property>
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="sl-eth">
+          <object class="GtkLabel" id="eth_sl">
             <property name="width_request">44</property>
             <property name="height_request">-1</property>
             <property name="visible">True</property>
@@ -609,7 +609,7 @@ manually</property>
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="sl-doge">
+          <object class="GtkLabel" id="doge_sl">
             <property name="width_request">87</property>
             <property name="height_request">-1</property>
             <property name="visible">True</property>

@@ -29,6 +29,10 @@ GtkWidget *buy_button;
 GtkWidget *sell_button;
 GtkWidget *value_entry;
 
+GtkWidget *btc_sl;
+GtkWidget *eth_sl;
+GtkWidget *doge_sl;
+
 GtkWidget *sl_entry;
 GtkWidget *sl_button;
 GtkWidget *sl_pending_label;
@@ -94,12 +98,16 @@ struct Money
 void update_stoploss_display()
 {
     char buffer[50];
+    printf("UPDATING STOPLOSS\n");
     sprintf(buffer, "%f", btc->limit);
-    gtk_label_set_text(GTK_LABEL(sl-btc), (gchar*)buffer);
+    gtk_label_set_text(GTK_LABEL(btc_sl), (gchar*)buffer);
+    printf("BUFFER: %s\n", buffer);
     sprintf(buffer, "%f", eth->limit);
-    gtk_label_set_text(GTK_LABEL(sl-eth), (gchar*)buffer);
+    gtk_label_set_text(GTK_LABEL(eth_sl), (gchar*)buffer);
+    printf("BUFFER: %s\n", buffer);
     sprintf(buffer, "%f", doge->limit);
-    gtk_label_set_text(GTK_LABEL(sl-doge), (gchar*)buffer);
+    gtk_label_set_text(GTK_LABEL(doge_sl), (gchar*)buffer);
+    printf("BUFFER: %s\n", buffer);
 }
 
 // update le graph
@@ -344,7 +352,6 @@ void on_buy_button_clicked()
                 break;
         }
     }
-    update_stoploss_display();
 }
 
 // quand on clique manuellement sur sell
@@ -466,10 +473,10 @@ void on_money_possess(int i_money)
             {
                 doge->limit = 0;
                 update_stoploss_display();
-            printf("STOPLOSS ACTION");
+                printf("STOPLOSS ACTION");
   
-            pos = -1;
-            change_crypt_amount(doge, doge->usd_possess);
+                pos = -1;
+                change_crypt_amount(doge, doge->usd_possess);
             }
             sprintf(array, "%f : %f$", doge->nb_possess, doge->usd_possess);
             gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
@@ -564,8 +571,6 @@ int open_interface()
   gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
  
   total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
-
-  update_stoploss_display();
 
   //we convert wallet_value  in char* to put in a label
   sprintf(val_txt, "%f", wallet_value);
