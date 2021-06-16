@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 
   // recupere sa longueur
   int len = 0;
-  while(hist[len] != '\0' || hist[len] != 0)
+  while((hist[len] != '\0' || hist[len] != 0) && len < 200)
     len++;
   printf("graph: ");
   for (int i = 0; i < len; i++)
@@ -220,5 +220,6 @@ int main(int argc, char *argv[])
 	WriteToFile(pngdata, length, "graph.png");
 	DeleteImage(imageReference->image);
 
+  exit(0);
 	return EXIT_SUCCESS;
 }
