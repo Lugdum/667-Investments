@@ -18,6 +18,10 @@
 #include "../Algorithms/bot.h"
 
 GtkWidget *window;//we set global variables
+GtkWidget *about;
+
+GtkWidget *about_button;
+GtkWidget *a_close_button;
 
 GtkWidget *quit_button;
 
@@ -103,6 +107,12 @@ struct Money
   struct Money  *next;
 };
 
+void on_about_button_clicked()
+{
+    //a_close_button = GTK_WIDGET(gtk_builder_get_object(builder,"a_close_button"));
+    gtk_widget_show(about);
+}
+
 // affichage du stoplost
 void update_stoploss_display()
 {
@@ -143,6 +153,12 @@ void on_quit_button_clicked()
 {
   gtk_main_quit();
 }
+
+/*void on_a_close_button_clicked()
+{
+  gtk_widget_hide(about);
+}*/
+
 
 // choix de la monnaie bitcoin
 void on_btc_graph_button_toggled()
@@ -571,6 +587,8 @@ int open_interface()
     builder = gtk_builder_new_from_file("UI/UI.glade");
 
     window = GTK_WIDGET(gtk_builder_get_object(builder,"window")); //we pick up all the widget boxes
+    about_button = GTK_WIDGET(gtk_builder_get_object(builder,"about_button"));
+    about = GTK_WIDGET(gtk_builder_get_object(builder,"about"));
 
     g_signal_connect(window,"destroy", G_CALLBACK(gtk_main_quit), NULL);
 
@@ -580,6 +598,8 @@ int open_interface()
 
 
   //Can touch
+
+
   quit_button = GTK_WIDGET(gtk_builder_get_object(builder,"quit_button"));
   btc_graph_button = GTK_WIDGET(gtk_builder_get_object(builder,"btc_graph_button"));
   eth_graph_button = GTK_WIDGET(gtk_builder_get_object(builder,"eth_graph_button"));
@@ -623,7 +643,8 @@ int open_interface()
   
   //on récupere les valeurs enregistrées dans save
   char wall[100] = "";
-  fgets(wall, 100, save); 
+  if (fgets(wall, 100, save) == NULL)
+    errx(EXIT_FAILURE, "can't read file");
   printf("save wallet is = %s\n", wall);
   wallet_value = (float)strtod(wall,NULL);
 
@@ -638,13 +659,16 @@ int open_interface()
 
   //on récupere les valeurs enregistrées dans save
   char wall2[100] = "";
-  fgets(wall2, 100, save);
+  if (fgets(wall2, 100, save) == NULL)
+    errx(EXIT_FAILURE, "can't read file");
   printf("btc possess is = %s\n", wall2);
   btc->nb_possess = (float)strtod(wall2,NULL);
-  fgets(wall2, 100, save);
+  if (fgets(wall2, 100, save) == NULL)
+    errx(EXIT_FAILURE, "can't read file");
   printf("btc possess is = %s\n", wall2);
   eth->nb_possess = (float)strtod(wall2,NULL);
-  fgets(wall2, 100, save);
+  if (fgets(wall2, 100, save) == NULL)
+    errx(EXIT_FAILURE, "can't read file");
   printf("btc possess is = %s\n", wall2);
   doge->nb_possess = (float)strtod(wall2,NULL);
 
