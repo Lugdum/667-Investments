@@ -619,7 +619,7 @@ int open_interface()
 
 
   //on ouvre le fichier de sauvegarde
-  FILE* save = fopen("save.txt", "r+");
+  FILE* save = fopen("save", "r+");
   
   //on récupere les valeurs enregistrées dans save
   char wall[100] = "";
@@ -672,7 +672,7 @@ int open_interface()
   fclose(save);
   gtk_main();
   
-  save = fopen("save.txt", "w");
+  save = fopen("save", "w");
   fprintf(save, "%f\n%f\n%f\n%f", wallet_value, btc->nb_possess, eth->nb_possess, doge->nb_possess);
   fclose(save);
   
