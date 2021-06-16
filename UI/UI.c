@@ -37,6 +37,14 @@ GtkWidget *sl_entry;
 GtkWidget *sl_button;
 GtkWidget *sl_pending_label;
 
+GtkWidget *lev_entry;
+GtkWidget *lev_button;
+GtkWidget *lev_pending_label;
+
+GtkWidget *lev_btc;
+GtkWidget *lev_eth;
+GtkWidget *lev_doge;
+
 GtkWidget *l_x1_button;
 GtkWidget *l_x10_button;
 GtkWidget *l_x50_button;
@@ -252,11 +260,26 @@ void on_l_x100_button_toggled()
 void set_lev(struct Money *money)
 {
     if (strcmp(money->symbol, "BTC") == 0 && btc_lev == 1)
+    {
         btc_lev = lev;
+        char array[4];
+        sprintf(array, "x%d", btc_lev);
+        gtk_label_set_text(GTK_LABEL(lev_btc), (gchar*)array);
+    }
     else if (strcmp(money->symbol, "ETH") == 0 && eth_lev == 1)
+    {
         eth_lev = lev;
+        char array[4];
+        sprintf(array, "x%d", eth_lev);
+        gtk_label_set_text(GTK_LABEL(lev_eth), (gchar*)array);
+    }
     else if (strcmp(money->symbol, "DOGE") == 0 && doge_lev == 1)
+    {
         doge_lev = lev;
+        char array[4];
+        sprintf(array, "x%d", doge_lev);
+        gtk_label_set_text(GTK_LABEL(lev_doge), (gchar*)array);
+    }
 }
 
 // modifie la valeur de monnaie possede
@@ -563,6 +586,9 @@ int open_interface()
   eth_sl = GTK_WIDGET(gtk_builder_get_object(builder, "eth_sl"));
   doge_sl = GTK_WIDGET(gtk_builder_get_object(builder, "doge_sl"));
 
+  lev_btc = GTK_WIDGET(gtk_builder_get_object(builder, "lev_btc"));
+  lev_eth = GTK_WIDGET(gtk_builder_get_object(builder, "lev_eth"));
+  lev_doge = GTK_WIDGET(gtk_builder_get_object(builder, "lev_doge"));
   
   bot_button = GTK_WIDGET(gtk_builder_get_object(builder,"bot_button"));
   
