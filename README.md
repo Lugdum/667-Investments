@@ -5,7 +5,7 @@ CrypTrade is a crypto trading bot written in c.
 ## Features
 - [X] Fetch crypto values in real-time
 - [X] Simulate buy/sell
-- [ ] Use different algorithms
+- [X] Automatic algorithms
 - [X] Nice user interface
 - [ ] Detect Elon Musk's tweet
 - [X] Cool site
@@ -24,3 +24,4 @@ If there is a segmentation fault when executing "./UI" do "valgrind ./UI" instea
 * [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * [pip](https://pip.pypa.io/en/stable/installing/)
 * [curl](https://curl.se/download.html)
+* [sdl2](https://www.libsdl.org/download-2.0.php)
