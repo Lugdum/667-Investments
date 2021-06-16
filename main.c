@@ -7,8 +7,6 @@
 #include <sys/types.h>
 #include <string.h>
 #include <signal.h>
-#include <gtk/gtk.h>
-#include <gtk/gtkx.h>
 #include <math.h>
 #include <ctype.h>
 #include <err.h>

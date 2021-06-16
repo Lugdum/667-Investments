@@ -28,7 +28,7 @@ struct Money
   struct Money  *next;
 };
 
-double *moy(double y[], int point, int val)
+/*double *moy(double y[], int point, int val)
 {
   double z[val];
   if (point < val)
@@ -56,7 +56,7 @@ double *moy(double y[], int point, int val)
     }
   }
   return z;
-}
+}*/
 
 // executable qui transforme l'image du graph a partir des valeurs
 int main(int argc, char *argv[])

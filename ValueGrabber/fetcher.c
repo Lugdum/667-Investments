@@ -9,6 +9,7 @@
 #include "../UI/UI.h"
 #include "../UI/graph2/SDL_graph.h"
 #include "../UI/graph/plot.h"
+#include "../Algorithms/bot.h"
 
 /* money structure declaration */
 struct Money
@@ -369,7 +370,7 @@ static int exec_prog(const char **argv)
 }
 
 // bah loop quoi
-void loop()
+void loop() 
 {
   int p = 0;
   while(1)
