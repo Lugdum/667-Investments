@@ -33,5 +33,6 @@ clean:
 	${RM} hist
 	${RM} UI/graph/*.o
 	${RM} UI/graph/*.d
+	${RM} graph.png
 
 #END
