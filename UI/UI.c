@@ -259,21 +259,21 @@ void on_l_x100_button_toggled()
 // activer le levier
 void set_lev(struct Money *money)
 {
-    if (strcmp(money->symbol, "BTC") == 0 && btc_lev == 1)
+    if (strcmp(money->symbol, "BTC") == 0 && btc->usd_possess == 0)
     {
         btc_lev = lev;
         char array[10];
         sprintf(array, "x%d", btc_lev);
         gtk_label_set_text(GTK_LABEL(lev_btc), (gchar*)array);
     }
-    else if (strcmp(money->symbol, "ETH") == 0 && eth_lev == 1)
+    else if (strcmp(money->symbol, "ETH") == 0 && eth->usd_possess == 0)
     {
         eth_lev = lev;
         char array[10];
         sprintf(array, "x%d", eth_lev);
         gtk_label_set_text(GTK_LABEL(lev_eth), (gchar*)array);
     }
-    else if (strcmp(money->symbol, "DOGE") == 0 && doge_lev == 1)
+    else if (strcmp(money->symbol, "DOGE") == 0 && doge->usd_possess == 0)
     {
         doge_lev = lev;
         char array[10];
@@ -301,7 +301,6 @@ void change_crypt_amount(struct Money *strc, float volume)
         {
             int tmp = lev;
             lev = 1;
-            btc_lev = 1;
             set_lev(btc);
             lev = tmp;
         }
@@ -321,7 +320,6 @@ void change_crypt_amount(struct Money *strc, float volume)
         {
             int tmp = lev;
             lev = 1;
-            eth_lev = 1;
             set_lev(eth);
             lev = tmp;
         }
@@ -341,7 +339,6 @@ void change_crypt_amount(struct Money *strc, float volume)
         {
             int tmp = lev; 
             lev = 1;
-            doge_lev = 1;
             set_lev(doge);
             lev = tmp;
         }

@@ -120,10 +120,10 @@ void print_all_struct(struct Money **l_money, int len)
     for (int i = 0; i < len; i++)
     {
         if (*(l_money+i) == NULL)
-            {
-                printf("Struc is NULL\n");
-                continue;
-            }
+        {
+            printf("Struc is NULL\n");
+            continue;
+        }
         printstruct(*(l_money+i));
     }
     if (*(l_money+len) == NULL)
