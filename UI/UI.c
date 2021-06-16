@@ -588,9 +588,6 @@ int open_interface()
   gtk_label_set_text(GTK_LABEL(ch24), (gchar*)array2);
 
 
-  gtk_widget_modify_fg(ch24, GTK_STATE_NORMAL, &style->fg[GTK_STATE_SELECTED]);
-
-
   total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
 
   //we convert wallet_value  in char* to put in a label
