@@ -617,6 +617,17 @@ int open_interface()
   value_label= GTK_WIDGET(gtk_builder_get_object(builder,"value_label"));
   ch24= GTK_WIDGET(gtk_builder_get_object(builder,"ch24"));
 
+
+  //on ouvre le fichier de sauvegarde
+  FILE* save = fopen("save.txt", "r+");
+  
+  //on récupere les valeurs enregistrées dans save
+  char wall[100] = "";
+  fgets(wall, 100, save); 
+  printf("save wallet is = %s\n", wall);
+  wallet_value = (float)strtod(wall,NULL);
+
+
   pthread_t thread;
   int  iret;
   iret = pthread_create(&thread, NULL, (void*)begin_loop, NULL);
@@ -624,6 +635,20 @@ int open_interface()
     errx(EXIT_FAILURE, "ca bug mais c'est les thread donc c'est chelou");
   sleep(5);
   
+
+  //on récupere les valeurs enregistrées dans save
+  char wall2[100] = "";
+  fgets(wall2, 100, save);
+  printf("btc possess is = %s\n", wall2);
+  btc->nb_possess = (float)strtod(wall2,NULL);
+  fgets(wall2, 100, save);
+  printf("btc possess is = %s\n", wall2);
+  eth->nb_possess = (float)strtod(wall2,NULL);
+  fgets(wall2, 100, save);
+  printf("btc possess is = %s\n", wall2);
+  doge->nb_possess = (float)strtod(wall2,NULL);
+
+
   //show exactly the value of the BTC
 
   char array[100];
@@ -638,15 +663,18 @@ int open_interface()
 
   total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
 
-  //we convert wallet_value  in char* to put in a label
+  //on convertis wallet_value  en char* pour le mettre dans un label
   sprintf(val_txt, "%f", wallet_value);
   gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
 
- 
-  //Can't touch
+  //Pas touches!
   gtk_widget_show(window);
-
+  fclose(save);
   gtk_main();
+  
+  save = fopen("save.txt", "w");
+  fprintf(save, "%f\n%f\n%f\n%f", wallet_value, btc->nb_possess, eth->nb_possess, doge->nb_possess);
+  fclose(save);
   
   return EXIT_SUCCESS;
 }
