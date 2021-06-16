@@ -18,7 +18,7 @@ make
 ./Install_Dependencies 
 ./CrypTrade
 ```
-If there is a segmentation fault when executing "./UI" do "valgrind ./UI" instead.
+You have to be online while using CrypTrade.
 ## Software requirements
 * [C/C++ compiler](https://en.cppreference.com/w/c/language)
 * [glade](https://glade.gnome.org/)
