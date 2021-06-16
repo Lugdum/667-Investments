@@ -626,6 +626,9 @@ manually</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Changement per 24H</property>
+            <attributes>
+              <attribute name="foreground" value="#ffffffffffff"/>
+            </attributes>
           </object>
           <packing>
             <property name="x">414</property>

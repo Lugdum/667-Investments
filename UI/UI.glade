@@ -635,6 +635,39 @@ manually</property>
             <property name="y">71</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkLabel" id="lev_btc">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">label</property>
+          </object>
+          <packing>
+            <property name="x">880</property>
+            <property name="y">275</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lev_eth">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">label</property>
+          </object>
+          <packing>
+            <property name="x">880</property>
+            <property name="y">325</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lev_doge">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">label</property>
+          </object>
+          <packing>
+            <property name="x">880</property>
+            <property name="y">375</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>

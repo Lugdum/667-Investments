@@ -262,21 +262,21 @@ void set_lev(struct Money *money)
     if (strcmp(money->symbol, "BTC") == 0 && btc_lev == 1)
     {
         btc_lev = lev;
-        char array[4];
+        char array[10];
         sprintf(array, "x%d", btc_lev);
         gtk_label_set_text(GTK_LABEL(lev_btc), (gchar*)array);
     }
     else if (strcmp(money->symbol, "ETH") == 0 && eth_lev == 1)
     {
         eth_lev = lev;
-        char array[4];
+        char array[10];
         sprintf(array, "x%d", eth_lev);
         gtk_label_set_text(GTK_LABEL(lev_eth), (gchar*)array);
     }
     else if (strcmp(money->symbol, "DOGE") == 0 && doge_lev == 1)
     {
         doge_lev = lev;
-        char array[4];
+        char array[10];
         sprintf(array, "x%d", doge_lev);
         gtk_label_set_text(GTK_LABEL(lev_doge), (gchar*)array);
     }
@@ -298,7 +298,13 @@ void change_crypt_amount(struct Money *strc, float volume)
     {
         btc->usd_possess += volume;
         if (btc->usd_possess == 0)
+        {
+            int tmp = lev;
+            lev = 1;
             btc_lev = 1;
+            set_lev(btc);
+            lev = tmp;
+        }
         btc_init_pos = btc->usd_possess;
         btc->nb_possess = btc->usd_possess/strc->priceUsd;  
         printf("new bitcoin amount is %f\n", btc->nb_possess);
@@ -312,7 +318,13 @@ void change_crypt_amount(struct Money *strc, float volume)
     {
         eth->usd_possess += volume;
         if (eth->usd_possess == 0)
+        {
+            int tmp = lev;
+            lev = 1;
             eth_lev = 1;
+            set_lev(eth);
+            lev = tmp;
+        }
         eth_init_pos = eth->usd_possess;
         eth->nb_possess = eth->usd_possess/strc->priceUsd;  
         printf("new ethereum amount is %f\n", eth->nb_possess);
@@ -326,7 +338,13 @@ void change_crypt_amount(struct Money *strc, float volume)
     {
         doge->usd_possess += volume;
         if (doge->usd_possess == 0)
+        {
+            int tmp = lev; 
+            lev = 1;
             doge_lev = 1;
+            set_lev(doge);
+            lev = tmp;
+        }
         doge_init_pos = doge->usd_possess;
         doge->nb_possess = doge->usd_possess/strc->priceUsd;  
         printf("new dogecoin amount is %f\n", doge->nb_possess);
@@ -335,7 +353,6 @@ void change_crypt_amount(struct Money *strc, float volume)
         sprintf(array, "%f : %0.3f$", doge->nb_possess, doge->usd_possess);
         gtk_label_set_text(GTK_LABEL(doge_possess), (gchar*)array);
     }
-
     wallet_value -= volume;
     printf("new wallet amount is %f\n", wallet_value);
     sprintf(val_txt, "%f", wallet_value);
@@ -369,7 +386,7 @@ void sell(struct Money *strc, float n)
 void on_buy_button_clicked()
 {
     pos = 1;
-    if (amount && atof(amount) <= wallet_value && manual == 1)
+    if (amount && atof(amount) <= wallet_value && manual == 1 && atof(amount) > 0)
     {
         printf("BUYING with %d x%d\n", on_money, lev);
         switch (on_money)
@@ -407,7 +424,7 @@ void on_sell_button_clicked()
                     a = btc->usd_possess;
                 else 
                     a = atof(amount);
-                if (a <= btc->usd_possess)
+                if (a <= btc->usd_possess && a > 0)
                 {
                     if (btc->usd_possess-a < btc->limit)
                         btc->limit = 0;
@@ -419,7 +436,7 @@ void on_sell_button_clicked()
                     a = eth->usd_possess;
                 else 
                     a = atof(amount);
-                if (a <= eth->usd_possess)
+                if (a <= eth->usd_possess && a > 0)
                 {
                     if (eth->usd_possess-a < eth->limit)
                         eth->limit = 0;
@@ -431,7 +448,7 @@ void on_sell_button_clicked()
                     a = doge->usd_possess;
                 else 
                     a = atof(amount);
-                if (a <= doge->usd_possess)
+                if (a <= doge->usd_possess && a > 0)
                 {
                     if (doge->usd_possess-a < doge->limit)
                         doge->limit = 0;
@@ -618,7 +635,9 @@ int open_interface()
   char array2[100];
   sprintf(array2, "Evolution per 24H = %0.3f%% ",btc->changePercent24Hr);
   gtk_label_set_text(GTK_LABEL(ch24), (gchar*)array2);
-
+  set_lev(btc);
+  set_lev(eth);
+  set_lev(doge);
 
   total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
 
