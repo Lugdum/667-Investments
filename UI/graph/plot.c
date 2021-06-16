@@ -28,6 +28,36 @@ struct Money
   struct Money  *next;
 };
 
+double *moy(double y[], int point, int val)
+{
+  double z[val];
+  if (point < val)
+  {
+    for (int i = 0; i < point; i++)
+    {
+      z[i] = y[i];
+    }
+  }
+  else
+  {
+    int sum = 0;
+    int i = 0;
+    while (i < val)
+    {
+      z[i] = y[i];
+      sum += y[i];
+      i++;
+    }
+    while (i < point)
+    {
+      z[i] = sum/val;
+      sum += y[i];
+      sum -= y[i-val];
+    }
+  }
+  return z;
+}
+
 // executable qui transforme l'image du graph a partir des valeurs
 int main(int argc, char *argv[])
 {
@@ -73,14 +103,122 @@ int main(int argc, char *argv[])
       y[j] = ys[i];
     }
 
-  //cree l'image
-	RGBABitmapImageReference *canvasReference = CreateRGBABitmapImageReference();
+  // truc moyenne casse couilles
+  double z[point];
+  int val = 5;
+  if (point < val)
+  {
+    for (int i = 0; i < point; i++)
+    {
+      z[i] = y[i];
+    }
+  }
+  else
+  {
+    int sum = 0;
+    int i = 0;
+    while (i < val)
+    {
+      z[i] = y[i];
+      sum += y[i];
+      i++;
+    }
+    while (i < point)
+    {
+      z[i] = sum/val;
+      sum += y[i];
+      sum -= y[i-val];
+      i++;
+    }
+  }
+
+  double w[point];
+  val = 20;
+  if (point < val)
+  {
+    for (int i = 0; i < point; i++)
+    {
+      w[i] = y[i];
+    }
+  }
+  else
+  {
+    int sum = 0;
+    int i = 0;
+    while (i < val)
+    {
+      w[i] = y[i];
+      sum += y[i];
+      i++;
+    }
+    while (i < point)
+    {
+      w[i] = sum/val;
+      sum += y[i];
+      sum -= y[i-val];
+      i++;
+    }
+  }
+
+	RGBABitmapImageReference *imageReference = CreateRGBABitmapImageReference();
+
+  ScatterPlotSeries *series = GetDefaultScatterPlotSeriesSettings();
+	series->xs = xs;
+	series->xsLength = point-1;
+	series->ys = y;
+	series->ysLength = point-1;
+	series->lineThickness = 2;
+	/*series->linearInterpolation = false;
+	series->pointType = L"dots";
+	series->pointTypeLength = wcslen(series->pointType);
+	series->color = CreateRGBColor(1, 0, 0);*/
+
+	ScatterPlotSeries *series2 = GetDefaultScatterPlotSeriesSettings();
+	series2->xs = xs;
+	series2->xsLength = point-1;
+	series2->ys = z;
+	series2->ysLength = point-1;
+	/*series2->linearInterpolation = false;
+	series2->lineType = L"solid";
+	series2->lineTypeLength = wcslen(series->lineType);
+	series2->lineThickness = 2;*/
+	series2->color = CreateRGBColor(0, 1, 0);
+
+  ScatterPlotSeries *series3 = GetDefaultScatterPlotSeriesSettings();
+	series3->xs = xs;
+	series3->xsLength = point-1;
+	series3->ys = w;
+	series3->ysLength = point-1;
+	/*series2->linearInterpolation = false;
+	series2->lineType = L"solid";
+	series2->lineTypeLength = wcslen(series->lineType);
+	series2->lineThickness = 2;*/
+	series3->color = CreateRGBColor(0, 0, 1);
+
+	ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+	settings->width = 600;
+	settings->height = 400;
+	settings->autoBoundaries = true;
+	settings->autoPadding = true;
+	settings->title = L"";
+	settings->titleLength = wcslen(settings->title);
+	settings->xLabel = L"Time (s)";
+	settings->xLabelLength = wcslen(settings->xLabel);
+	settings->yLabel = L"Value ($)";
+	settings->yLabelLength = wcslen(settings->yLabel);
+	ScatterPlotSeries *s [] = {series2, series3, series};
+	settings->scatterPlotSeries = s;
+	settings->scatterPlotSeriesLength = 3;
+
+	DrawScatterPlotFromSettings(imageReference, settings);
+	/*RGBABitmapImageReference *canvasReference = CreateRGBABitmapImageReference();
 	DrawScatterPlot(canvasReference, 600, 400, xs, point-1, y, point-1);
+	DrawScatterPlot(canvasReference, 600, 400, xs, point-1, z, point-1);*/
 
 	size_t length;
-	double *pngdata = ConvertToPNG(&length, canvasReference->image);
+	double *pngdata = ConvertToPNG(&length, imageReference->image);
 	WriteToFile(pngdata, length, "graph.png");
-	DeleteImage(canvasReference->image);
+	DeleteImage(imageReference->image);
 
 	return EXIT_SUCCESS;
 }
