@@ -293,8 +293,8 @@
             </attributes>
           </object>
           <packing>
-            <property name="x">332</property>
-            <property name="y">34</property>
+            <property name="x">331</property>
+            <property name="y">1</property>
           </packing>
         </child>
         <child>
@@ -619,6 +619,20 @@ manually</property>
           <packing>
             <property name="x">760</property>
             <property name="y">680</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="ch24">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Changement per 24H</property>
+            <attributes>
+              <attribute name="foreground" value="#ffffffffffff"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">414</property>
+            <property name="y">71</property>
           </packing>
         </child>
       </object>

@@ -50,6 +50,7 @@ GtkWidget *doge_possess;
 
 GtkWidget *value_label;
 GtkWidget *total_money_label;
+GtkWidget *ch24;
 
 GtkBuilder *builder;
 
@@ -142,8 +143,11 @@ void on_btc_graph_button_toggled()
   if (1)
     {
       char array[100];
-      sprintf(array, "%0.2f (%0.3f%%) ", btc->priceUsd, btc->changePercent24Hr);
+      sprintf(array, "%0.2f", btc->priceUsd);
       gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+      char array2[100];
+      sprintf(array2, "Evolution per 24H = %0.3f%% ",btc->changePercent24Hr);
+      gtk_label_set_text(GTK_LABEL(ch24), (gchar*)array2);
     }
 }
 
@@ -154,8 +158,11 @@ void on_eth_graph_button_toggled()
   if (1)
     {
       char array[100];
-      sprintf(array, "%0.2f (%0.3f%%) ", eth->priceUsd, eth->changePercent24Hr);
+      sprintf(array, "%0.2f", eth->priceUsd);
       gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+      char array2[100];
+      sprintf(array2, "Evolution per 24H = %0.3f%% ",eth->changePercent24Hr);
+      gtk_label_set_text(GTK_LABEL(ch24), (gchar*)array2);
     }
 }  
 
@@ -167,8 +174,11 @@ void on_doge_graph_button_toggled()
   if (1) // was B
     {
       char array[100];
-      sprintf(array, "%0.5f (%0.3f%%) ", doge->priceUsd, doge->changePercent24Hr);
+      sprintf(array, "%0.5f", doge->priceUsd);
       gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
+      char array2[100];
+      sprintf(array2, "Evolution per 24H = %0.3f%% ",doge->changePercent24Hr);
+      gtk_label_set_text(GTK_LABEL(ch24), (gchar*)array2);
     }
 } 
 
@@ -559,6 +569,7 @@ int open_interface()
   doge_possess= GTK_WIDGET(gtk_builder_get_object(builder,"doge_possess"));
 
   value_label= GTK_WIDGET(gtk_builder_get_object(builder,"value_label"));
+  ch24= GTK_WIDGET(gtk_builder_get_object(builder,"ch24"));
 
   pthread_t thread;
   int  iret;
@@ -570,9 +581,16 @@ int open_interface()
   //show exactly the value of the BTC
 
   char array[100];
-  sprintf(array, "%0.2f (%0.3f%%) ", btc->priceUsd, btc->changePercent24Hr);
+  sprintf(array, "%0.2f", btc->priceUsd);
   gtk_label_set_text(GTK_LABEL(value_label), (gchar*)array);
- 
+  char array2[100];
+  sprintf(array2, "Evolution per 24H = %0.3f%% ",btc->changePercent24Hr);
+  gtk_label_set_text(GTK_LABEL(ch24), (gchar*)array2);
+
+
+  gtk_widget_modify_fg(ch24, GTK_STATE_NORMAL, &style->fg[GTK_STATE_SELECTED]);
+
+
   total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
 
   //we convert wallet_value  in char* to put in a label
