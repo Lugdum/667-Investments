@@ -15,6 +15,7 @@ CrypTrade is available on Linux
 git clone https://github.com/Viktorounet/667-Investments.git
 cd 667-Investments/UI
 make
+./Install_Dependencies 
 ./CrypTrade
 ```
 If there is a segmentation fault when executing "./UI" do "valgrind ./UI" instead.
