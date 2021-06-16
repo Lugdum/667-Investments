@@ -251,11 +251,11 @@ void on_l_x100_button_toggled()
 // activer le levier
 void set_lev(struct Money *money)
 {
-    if (strcmp(money->symbol, "BTC") == 0)
+    if (strcmp(money->symbol, "BTC") == 0 && btc_lev == 1)
         btc_lev = lev;
-    else if (strcmp(money->symbol, "ETH") == 0)
+    else if (strcmp(money->symbol, "ETH") == 0 && eth_lev == 1)
         eth_lev = lev;
-    else if (strcmp(money->symbol, "DOGE") == 0)
+    else if (strcmp(money->symbol, "DOGE") == 0 && doge_lev == 1)
         doge_lev = lev;
 }
 
@@ -274,6 +274,8 @@ void change_crypt_amount(struct Money *strc, float volume)
     if (strcmp(strc->symbol, "BTC") == 0)
     {
         btc->usd_possess += volume;
+        if (btc->usd_possess == 0)
+            btc_lev = 1;
         btc_init_pos = btc->usd_possess;
         btc->nb_possess = btc->usd_possess/strc->priceUsd;  
         printf("new bitcoin amount is %f\n", btc->nb_possess);
@@ -286,6 +288,8 @@ void change_crypt_amount(struct Money *strc, float volume)
     if (strcmp(strc->symbol, "ETH") == 0)
     {
         eth->usd_possess += volume;
+        if (eth->usd_possess == 0)
+            eth_lev = 1;
         eth_init_pos = eth->usd_possess;
         eth->nb_possess = eth->usd_possess/strc->priceUsd;  
         printf("new ethereum amount is %f\n", eth->nb_possess);
@@ -298,6 +302,8 @@ void change_crypt_amount(struct Money *strc, float volume)
     if (strcmp(strc->symbol, "DOGE") == 0)
     {
         doge->usd_possess += volume;
+        if (doge->usd_possess == 0)
+            doge_lev = 1;
         doge_init_pos = doge->usd_possess;
         doge->nb_possess = doge->usd_possess/strc->priceUsd;  
         printf("new dogecoin amount is %f\n", doge->nb_possess);
