@@ -109,7 +109,8 @@ struct Money
 
 void on_about_button_clicked()
 {
-    //a_close_button = GTK_WIDGET(gtk_builder_get_object(builder,"a_close_button"));
+    builder = gtk_builder_new_from_file("UI/UI.glade");
+    about = GTK_WIDGET(gtk_builder_get_object(builder,"about"));
     gtk_widget_show(about);
 }
 
@@ -153,11 +154,6 @@ void on_quit_button_clicked()
 {
   gtk_main_quit();
 }
-
-/*void on_a_close_button_clicked()
-{
-  gtk_widget_hide(about);
-}*/
 
 
 // choix de la monnaie bitcoin
@@ -588,7 +584,7 @@ int open_interface()
 
     window = GTK_WIDGET(gtk_builder_get_object(builder,"window")); //we pick up all the widget boxes
     about_button = GTK_WIDGET(gtk_builder_get_object(builder,"about_button"));
-    about = GTK_WIDGET(gtk_builder_get_object(builder,"about"));
+    
 
     g_signal_connect(window,"destroy", G_CALLBACK(gtk_main_quit), NULL);
 
