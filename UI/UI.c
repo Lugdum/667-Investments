@@ -99,25 +99,15 @@ void update_stoploss_display()
 {
     char buffer[100];
     printf("UPDATING STOPLOSS\n");
-    if(on_money==0){
-        printf("%f\n", btc->limit);
-        sprintf(buffer, "%f", btc->limit);
-        printf("%s\n",buffer);
-        gtk_label_set_text(GTK_LABEL(btc_sl), (gchar*)buffer);
-        printf("BUFFER: %s\n", buffer);
-    }
-    
-    if (on_money==1){
-        sprintf(buffer, "%f", eth->limit);
-        gtk_label_set_text(GTK_LABEL(eth_sl), (gchar*)buffer);
-        printf("BUFFER: %s\n", buffer);
-    }
 
-    if(on_money==2){
-        sprintf(buffer, "%f", doge->limit);
-        gtk_label_set_label(GTK_LABEL(doge_sl), (gchar*)buffer);
-        printf("BUFFER: %s\n", buffer);
-    }
+    sprintf(buffer, "%f", btc->limit);
+    gtk_label_set_text(GTK_LABEL(btc_sl), (gchar*)buffer);
+    
+    sprintf(buffer, "%f", eth->limit);
+    gtk_label_set_text(GTK_LABEL(eth_sl), (gchar*)buffer);
+
+    sprintf(buffer, "%f", doge->limit);
+    gtk_label_set_label(GTK_LABEL(doge_sl), (gchar*)buffer);
 }
 
 // update le graph
@@ -192,35 +182,32 @@ void on_value_entry_changed(GtkEntry *e)
 void on_sl_entry_changed(GtkEntry *e)
 {
   sl = gtk_entry_get_text(e);
+  printf("STOPLOSS IS %s\n", sl);
 }
 
 // stop loss setup
 void on_sl_button_clicked()
 {
-    switch (on_money)
+    if (sl)
     {
-        case 0: 
-            if (atof(sl) <= btc->usd_possess)
-            {
-                btc->limit = atof(sl);
-            }
-            update_stoploss_display();
-            break;
-        case 1: ;
-            if (atof(sl) <= eth->usd_possess)
-            {
-                eth->limit = atof(sl);
-            }
-            update_stoploss_display();
-            break;
-        case 2: ;
-            if (atof(sl) <= doge->usd_possess)
-            {
-                doge->limit = atof(sl);
-            }
-            update_stoploss_display();
-            break;
-    }
+        float new_sl = atof(sl);
+        switch (on_money)
+        {
+            case 0: 
+                if (new_sl <= btc->usd_possess)
+                    btc->limit = new_sl;
+                break;
+            case 1: ;
+                if (new_sl <= eth->usd_possess)
+                    eth->limit = new_sl;
+                break;
+            case 2: ;
+                if (new_sl <= doge->usd_possess)
+                    doge->limit = new_sl;
+                break;
+        }
+        update_stoploss_display();        
+    }   
 }
 
 // levier x1
@@ -462,9 +449,9 @@ void on_money_possess(int i_money)
     
             if (eth->limit > 0 && eth->usd_possess < eth->limit)
             {
+                printf("STOPLOSS ACTION");
                 eth->limit = 0;
                 update_stoploss_display();
-                printf("STOPLOSS ACTION");
   
                 pos = -1;
                 change_crypt_amount(eth, eth->usd_possess);
@@ -483,9 +470,9 @@ void on_money_possess(int i_money)
     
             if (doge->limit > 0 && doge->usd_possess < doge->limit)
             {
+                printf("STOPLOSS ACTION");
                 doge->limit = 0;
                 update_stoploss_display();
-                printf("STOPLOSS ACTION");
   
                 pos = -1;
                 change_crypt_amount(doge, doge->usd_possess);
@@ -556,9 +543,9 @@ int open_interface()
   l_x50_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x50_button"));
   l_x100_button = GTK_WIDGET(gtk_builder_get_object(builder,"l_x100_button"));
 
-  btc_sl = GTK_WIDGET(gtk_builder_get_object(builder, "btc_possess"));
-  eth_sl = GTK_WIDGET(gtk_builder_get_object(builder, "eth_possess"));
-  doge_sl = GTK_WIDGET(gtk_builder_get_object(builder, "doge_possess"));
+  btc_sl = GTK_WIDGET(gtk_builder_get_object(builder, "btc_sl"));
+  eth_sl = GTK_WIDGET(gtk_builder_get_object(builder, "eth_sl"));
+  doge_sl = GTK_WIDGET(gtk_builder_get_object(builder, "doge_sl"));
 
   
   bot_button = GTK_WIDGET(gtk_builder_get_object(builder,"bot_button"));
