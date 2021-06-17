@@ -7,7 +7,7 @@ void printstruct(struct Money *money);
 void update_value(char *name);
 extern struct Money *btc;
 extern struct Money *eth;
-extern struct Money *doge;
+extern struct Money *yfi;
 void loop();
 
 #endif

@@ -33,7 +33,7 @@ struct Money
 
 struct Money *btc;
 struct Money *eth;
-struct Money *doge;
+struct Money *yfi;
 
 // update struct
 void get_price()
@@ -56,15 +56,15 @@ void get_price()
   eth->limit = tmp->limit;
   }
   eth->next = tmp;
-  tmp = doge;
-  doge = get_strc("dogecoin");
+  tmp = yfi;
+  yfi = get_strc("yearn-finance");
   if(tmp != NULL)
   {
-  doge->nb_possess = tmp->nb_possess;
-  doge->usd_possess = tmp->usd_possess;
-  doge->limit = tmp->limit;
+  yfi->nb_possess = tmp->nb_possess;
+  yfi->usd_possess = tmp->usd_possess;
+  yfi->limit = tmp->limit;
   }
-  doge->next = tmp;
+  yfi->next = tmp;
 }
 
 /* read the api from "api.coincap.io" and write it into "output.txt" */
@@ -280,7 +280,7 @@ int checkspell(char *arg)
     int i = 0;
     while (*(arg+i) != '\0')
     {
-        if (!((*(arg+i) >= 'a' && *(arg+i) <= 'z') || (*(arg+i) >= 'A' && *(arg+i) <= 'Z')))
+        if (!((*(arg+i) >= 'a' && *(arg+i) <= 'z') || (*(arg+i) >= 'A' && *(arg+i) <= 'Z') || *(arg+i)=='-'))
             return 0;
         i++;
     }
@@ -356,7 +356,7 @@ void loop()
   {
     update_value("bitcoin");
     update_value("ethereum");
-    update_value("dogecoin");
+    update_value("yearn-finance");
     get_price();
     if (p > 4)
     {
@@ -377,9 +377,9 @@ void loop()
                     write_history(eth);
             break;
         case 2:
-            on_doge_graph_button_toggled();
+            on_yfi_graph_button_toggled();
                 if (p)
-                    write_history(doge);
+                    write_history(yfi);
             break;
         default:
             break;

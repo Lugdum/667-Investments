@@ -96,7 +96,7 @@ void average_crossover(struct Money *money)
         i = 0;
     else if (strcmp(money->symbol,"ETH") == 0)
         i = 1;
-    else if (strcmp(money->symbol,"DOGE") == 0)
+    else if (strcmp(money->symbol,"YFI") == 0)
         i = 2;
     printf("Average5: %f    Average20: %f   Indic: %d\n", av1, av2, indic[i]);
     if (av1 > 0 && av2 > 0)
