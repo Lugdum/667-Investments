@@ -1,3 +1,8 @@
+/**
+ * @author Victor
+ * @details Get values
+ */
+
 #include "fetcher.h"
 #include <stdio.h>
 #include <err.h>
@@ -35,7 +40,9 @@ struct Money *btc;
 struct Money *eth;
 struct Money *yfi;
 
-// update struct
+/** @brief  Update structure
+ * @return void
+ */
 void get_price()
 {
   struct Money *tmp = btc;
@@ -67,7 +74,10 @@ void get_price()
   yfi->next = tmp;
 }
 
-/* read the api from "api.coincap.io" and write it into "output.txt" */
+/** @brief  Read the api from "api.coincap.io" and write it into "output.txt"
+ * @param[in] *char         The name of the crypto
+ * @return void
+ */
 void update_value(char *name)
 {
     CURL *curl;
@@ -105,7 +115,10 @@ void update_value(char *name)
     }
 }
 
-/* print the struct money */
+/** @brief  Print the struct money
+ * @param[in] struct Money          The money struct
+ * @return void
+ */
 void printstruct(struct Money *money)
 {
     printf("---------------------------------------------------------------------\nid = %s\nrank = %d\nsymbol = '%s'\nname = '%s'\nsupply = %f\nmaxSupply = %f\nmarketCapUsd = '%f'\nvolumeUsd24Hr = '%f'\npriceUsd = %f\nchangePercent24Hr = '%f'\nvwap24Hr = '%f'\n---------------------------------------------------------------------\n",
@@ -114,7 +127,11 @@ void printstruct(struct Money *money)
 	 money.id, money.rank, money.symbol, money.name, money.supply, money.maxSupply, money.marketCapUsd, money.volumeUsd24Hr, money.priceUsd, money.changePercent24Hr, money.vwap24Hr);*/
 }
 
-/* print all struct money */
+/** @brief  Print all struct money
+ * @param[in] struct Money      The money struct list
+ * @param[in] int               The lenght of the list
+ * @return void
+ */
 void print_all_struct(struct Money **l_money, int len)
 {
     for (int i = 0; i < len; i++)
@@ -130,7 +147,11 @@ void print_all_struct(struct Money **l_money, int len)
         printf("---------------------------------------------------------------------\n");
 }
 
-/* copy a string and return it */
+/** @brief  Copy a string and return it
+ * @param[in] char*         The string
+ * @param[in] size_t        The lenght of the string
+ * @return char*
+ */
 char *strcopy(char *tmp, size_t len)
 {
     char *str = calloc(len, sizeof(char));
@@ -140,7 +161,10 @@ char *strcopy(char *tmp, size_t len)
 }
 
 
-// analyse le fichier telecharge de l'api pour le mettre dans une struct
+/** @brief  Analyse the downloaded file from API to put it into a structure
+ * @param[in] char*         The buffer
+ * @return struct Money
+ */
 struct Money *getmoney(char *buf)
 {
     int pick_data = 0;
@@ -244,7 +268,10 @@ struct Money *getmoney(char *buf)
     return money;
 }
 
-/* get data in file and write it into buffer */
+/** @brief  Get data in file and write it into buffer
+ * @param char*             The filename
+ * @return struct Money
+ */
 struct Money *Get_from_File(char *fname)
 {
     struct Money *money = NULL;
@@ -274,7 +301,10 @@ struct Money *Get_from_File(char *fname)
     return money;
 }
 
-// verifie si c'est dans l'alphabet
+/** @brief  Verify if it is on alphabet
+ * @param[in] char*             The money name to check
+ * @return int
+ */
 int checkspell(char *arg)
 {
     int i = 0;
@@ -287,7 +317,10 @@ int checkspell(char *arg)
     return i;
 }
 
-// recupere la structure
+/** @brief  Get the structure
+ * @param[in] char*             The name of the struct
+ * @return struct Money
+ */
 struct Money *get_strc(char* name)
 {
     if (checkspell(name) == 0)
@@ -317,7 +350,11 @@ struct Money *get_strc(char* name)
     return money;
 }
 
-// recupere une liste de structure
+/** @brief  Get a list of structures
+ * @param[in] argv              The list of structs
+ * @param[in] argc              The number of struct
+ * @return struct void
+ */
 struct Money **get_strc_list(int argc, char** argv)
 {
   struct Money **l_money = malloc((argc)*sizeof(struct Money *));
@@ -333,7 +370,10 @@ struct Money **get_strc_list(int argc, char** argv)
   return l_money;
 }
 
-// pour executer le programme
+/** @brief  Execute an extern program
+ * @param[in] argv          The file path and arguments
+ * @return int
+ */
 static int exec_prog(const char **argv)
 {
     pid_t   my_pid;
@@ -348,7 +388,9 @@ static int exec_prog(const char **argv)
     return 0;
 }
 
-// bah loop quoi
+/** @brief  Loop function
+ * @return void
+ */
 void loop() 
 {
   int p = 0;

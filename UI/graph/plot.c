@@ -1,3 +1,8 @@
+/**
+ * @author Victor
+ * @details Graph Program
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "pbPlots.h"
@@ -58,7 +63,9 @@ struct Money
   return z;
 }*/
 
-// executable qui transforme l'image du graph a partir des valeurs
+/** @brief Program that create graph image based on historic values
+ * @return int
+ */ 
 int main(int argc, char *argv[])
 {
   // lis le fichier ou est l'historique

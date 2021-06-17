@@ -1,3 +1,9 @@
+/**
+ * @file main.c
+ * @author Victor
+ * @brief Main function
+ */
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <math.h>
@@ -20,6 +26,9 @@
     launch();
 }*/
 
+/** @brief Launch program
+ * @return int
+ */
 int main()
 {
     /*pthread_t thread;

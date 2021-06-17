@@ -1,3 +1,8 @@
+/**
+ * @author Joris
+ * @details User interface
+ */
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <math.h>
@@ -70,7 +75,8 @@ GtkBuilder *builder;
 
 GtkWidget *w_graph;
 
-//initiation of the wallet's value to 1000 
+/** @brief Initiation of the global variables
+ */
 float wallet_value = 1000;
 char val_txt[8*sizeof(long)];
 int pos = 1;
@@ -90,6 +96,8 @@ float btc_init_pos;
 float eth_init_pos;
 float yfi_init_pos;
 
+/** @brief The money structure
+ */
 struct Money
 {
   char          *id;
@@ -109,6 +117,9 @@ struct Money
   struct Money  *next;
 };
 
+/** @brief About button
+ * @return void
+ */
 void on_about_button_clicked()
 {
     builder = gtk_builder_new_from_file("UI/UI.glade");
@@ -116,7 +127,9 @@ void on_about_button_clicked()
     gtk_widget_show(about);
 }
 
-// affichage du stoplost
+/** @brief Stoplost display
+ * @return void
+ */
 void update_stoploss_display()
 {
     char buffer[100];
@@ -132,7 +145,9 @@ void update_stoploss_display()
     gtk_label_set_label(GTK_LABEL(yfi_sl), (gchar*)buffer);
 }
 
-// update le graph
+/** @brief Graph update
+ * @return void
+ */
 void update_image(int len)
 {
   w_graph = GTK_WIDGET(gtk_builder_get_object(builder, "graph"));
@@ -166,12 +181,17 @@ void on_bot_entry_changed(GtkEntry *e)
   bot_volume = gtk_entry_get_text(e);
 }
 
+/** @brief Quit button
+ * @return void
+ */
 void on_quit_button_clicked()
 {
   gtk_main_quit();
 }
 
-// choix de la monnaie bitcoin
+/** @brief Choose bitcoin money
+ * @return void
+ */
 void on_btc_graph_button_toggled()
 {
   on_money = 0;
@@ -186,7 +206,9 @@ void on_btc_graph_button_toggled()
     }
 }
 
-// choix de la monnaie ethereum
+/** @brief Choose ethereum money
+ * @return void
+ */
 void on_eth_graph_button_toggled()
 {
   on_money = 1;
@@ -201,7 +223,9 @@ void on_eth_graph_button_toggled()
     }
 }  
 
-// choix de la monnaie yfi
+/** @brief Choose yean-finance money
+ * @return void
+ */
 void on_yfi_graph_button_toggled()
 {
   // Argument was "GtkRadioButton *b"
@@ -217,20 +241,26 @@ void on_yfi_graph_button_toggled()
     }
 } 
 
-// nombre de monnaie entre
+/** @brief Number of money entenred
+ * @return void
+ */
 void on_value_entry_changed(GtkEntry *e)
 {
   amount = gtk_entry_get_text(e);
 }
 
-// stop loss nb
+/** @brief Stop-Loss number
+ * @return void
+ */
 void on_sl_entry_changed(GtkEntry *e)
 {
   sl = gtk_entry_get_text(e);
   printf("STOPLOSS IS %s\n", sl);
 }
 
-// stop loss setup
+/** @brief Stop-Loss set-up
+ * @return void
+ */
 void on_sl_button_clicked()
 {
     if (sl)
@@ -255,35 +285,46 @@ void on_sl_button_clicked()
     }   
 }
 
-// levier x1
+/** @brief x1 Lever
+ * @return void
+ */
 void on_l_x1_button_toggled()
 {
     printf("x1 active\n");
     lev = 1;
 }
 
-// levier x10
+/** @brief x10 Lever
+ * @return void
+ */
 void on_l_x10_button_toggled()
 {
     printf("x10 active\n");
     lev = 10;
 }
 
-// levier x50
+/** @brief x50 Lever
+ * @return void
+ */
 void on_l_x50_button_toggled()
 {
     printf("x50 active\n");
     lev = 50;
 }
 
-// levier x100
+/** @brief x100 Lever
+ * @return void
+ */
 void on_l_x100_button_toggled()
 {
     printf("x100 active\n");
     lev = 100;
 }
 
-// activer le levier
+/** @brief Activate Lever
+ * @param[in] money     The money structure to activate lever to
+ * @return void
+ */
 void set_lev(struct Money *money)
 {
     if (strcmp(money->symbol, "BTC") == 0 && btc->usd_possess == 0)
@@ -309,7 +350,11 @@ void set_lev(struct Money *money)
     }
 }
 
-// modifie la valeur de monnaie possede
+/** @brief Modify money possess value
+ * @param[in] money    The money structure to modifiy
+ * @param[in] volume   How much volume
+ * @return void
+ */
 void change_crypt_amount(struct Money *strc, float volume)
 {
     if (volume == -1)
@@ -384,7 +429,11 @@ void change_crypt_amount(struct Money *strc, float volume)
     printf("DONE\n");
 }
 
-// appel de change_crypt_amount a l'achat
+/** @brief Call of change_crypt_amount on buy
+ * @param[in] mney     The monney to buy
+ * @param[in] n            How much it have to buy
+ * @return void
+ */
 void buy(struct Money *strc, float n)
 {
     printf("Buying %f %s...\n", n, strc->symbol);
@@ -396,7 +445,11 @@ void buy(struct Money *strc, float n)
     }
 }
 
-// appel de change_crypt_amount a la vente
+/** @brief Call of change_crypt_amount on sell
+ * @param[in] money      The money to sell
+ * @param[in] n          How much it have to sell
+ * @return void
+ */
 void sell(struct Money *strc, float n)
 {
     printf("Selling %f %s...\n", n, strc->symbol);
@@ -406,7 +459,9 @@ void sell(struct Money *strc, float n)
     update_stoploss_display();
 }
 
-// quand on clique manuellement sur buy
+/** @brief Manual buy
+ * @return void
+ */
 void on_buy_button_clicked()
 {
     pos = 1;
@@ -433,7 +488,9 @@ void on_buy_button_clicked()
     }
 }
 
-// quand on clique manuellement sur sell
+/** @brief Manual sell
+ * @return void
+ */
 void on_sell_button_clicked()
 {
     pos = -1;
@@ -488,7 +545,10 @@ void on_sell_button_clicked()
 
 void on_value_entry();
 
-// update le nb de monnaie possede
+/** @brief Update money possess number
+ * @param[in] i_money   Which money
+ * @return void
+ */
 void on_money_possess(int i_money)
 {   
     float init_pos = 0;
@@ -565,6 +625,9 @@ void on_money_possess(int i_money)
     }
 }
 
+/** @brief Update UI money possess
+ * @return void
+ */
 void update_possess_money_price()
 {
     if (btc->nb_possess > 0)
@@ -584,13 +647,17 @@ void update_possess_money_price()
     }
 }
 
-// thread qui appelle la fonction loop
+/** @brief Thread calling loop
+ * @return void
+ */
 void begin_loop()
 {
     loop();
 }
 
-// fonction primaire ouvre l'interface et lance les bails
+/** @brief Open interface and setting up function
+ * @return void
+ */
 int open_interface()
 {
     gtk_init(NULL,NULL); //we initialize the interface
@@ -652,10 +719,10 @@ int open_interface()
   
   bot_entry_button = GTK_WIDGET(gtk_builder_get_object(builder,"bot_entry_button"));
 
-  //on ouvre le fichier de sauvegarde
+  // @brief Open save file
   FILE* save = fopen("save", "r+");
   
-  //on récupere les valeurs enregistrées dans save
+  // @brief Getting save values
   char wall[100] = "";
   if (fgets(wall, 100, save) == NULL)
     errx(EXIT_FAILURE, "can't read file");
@@ -671,7 +738,7 @@ int open_interface()
   sleep(5);
   
 
-  //on récupere les valeurs enregistrées dans save
+  // @brief Getting saved values
   char wall2[100] = "";
   if (fgets(wall2, 100, save) == NULL)
     errx(EXIT_FAILURE, "can't read file");
@@ -684,7 +751,7 @@ int open_interface()
   yfi->nb_possess = (float)strtod(wall2,NULL);
 
 
-  //show exactly the value of the BTC
+  // @brief Show exactly the value of the BTC
 
   char array[100];
   sprintf(array, "%0.2f", btc->priceUsd);
@@ -698,7 +765,7 @@ int open_interface()
 
   total_money_label= GTK_WIDGET(gtk_builder_get_object(builder,"total_money_label"));
 
-  //on convertis wallet_value  en char* pour le mettre dans un label
+  // @brief Wallet_value to *char to put it on a label
   sprintf(val_txt, "%f", wallet_value);
   gtk_label_set_text(GTK_LABEL(total_money_label), (gchar*)val_txt);
 
