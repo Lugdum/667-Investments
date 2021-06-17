@@ -2,6 +2,54 @@
 <!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-help</property>
+  </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-help</property>
+  </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-help</property>
+  </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-help</property>
+  </object>
+  <object class="GtkTextBuffer" id="textbuffer1">
+    <property name="text" translatable="yes">1 - If you activate the auto-trading bot, 
+you will no longer be able to trade 
+manually .
+2 - Enter the amount of money (in $) the bot 
+will trade with, then,
+ click on the button to apply for all value.</property>
+  </object>
+  <object class="GtkTextBuffer" id="textbuffer2">
+    <property name="text" translatable="yes">1 - Choose the currency to buy/sell.
+2 - Enter your amount to buy/sell (in $)
+(Please for float enter "," not " .").
+3 - You can type "all" for sell all of the choosen currency.</property>
+  </object>
+  <object class="GtkTextBuffer" id="textbuffer3">
+    <property name="text" translatable="yes">A stop-loss is the limit at which all of your funds 
+will be sold. This limit determines the minimum 
+value that a currency can reach.
+1 - Choose the currency to place stop-loss .
+2 - Enter a limit value (in $), then, 
+click on the button to apply stop loss.</property>
+  </object>
+  <object class="GtkTextBuffer" id="textbuffer4">
+    <property name="text" translatable="yes">Leverage will multiply your gains and losses
+ by the value of the leverage.
+1 - Choose the currency to place leverage.
+2 - Choose your leverage</property>
+  </object>
   <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
     <child type="titlebar">
@@ -121,7 +169,7 @@
             </attributes>
           </object>
           <packing>
-            <property name="x">8</property>
+            <property name="x">20</property>
             <property name="y">142</property>
           </packing>
         </child>
@@ -329,29 +377,29 @@
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="width_request">202</property>
-            <property name="height_request">37</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Enter your amount to buy/sell ($)
-(Please for float enter "," not " .")</property>
+            <property name="label" translatable="yes">Manual Trade</property>
+            <attributes>
+              <attribute name="scale" value="2"/>
+            </attributes>
           </object>
           <packing>
-            <property name="x">20</property>
+            <property name="x">30</property>
             <property name="y">555</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="width_request">100</property>
-            <property name="height_request">39</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">	           STOP-LOSS
-Please enter a limit value ($)</property>
+            <property name="label" translatable="yes">Stop-Loss</property>
+            <attributes>
+              <attribute name="scale" value="2"/>
+            </attributes>
           </object>
           <packing>
-            <property name="x">270</property>
+            <property name="x">295</property>
             <property name="y">555</property>
           </packing>
         </child>
@@ -389,11 +437,14 @@ Please enter a limit value ($)</property>
             <property name="height_request">43</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">	    LEVERAGE
-Please enter a leverage</property>
+            <property name="label" translatable="yes">LEVERAGE</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 10"/>
+              <attribute name="scale" value="1"/>
+            </attributes>
           </object>
           <packing>
-            <property name="x">510</property>
+            <property name="x">525</property>
             <property name="y">555</property>
           </packing>
         </child>
@@ -462,14 +513,16 @@ Please enter a leverage</property>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="height_request">24</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">  PENDING Stop-Loss</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 10"/>
+            </attributes>
           </object>
           <packing>
-            <property name="x">695</property>
-            <property name="y">560</property>
+            <property name="x">687</property>
+            <property name="y">568</property>
           </packing>
         </child>
         <child>
@@ -496,34 +549,21 @@ Please enter a leverage</property>
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">428</property>
+            <property name="y">356</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">AUTO TRADE</property>
+            <property name="label" translatable="yes">Auto Trade</property>
             <attributes>
               <attribute name="scale" value="2"/>
             </attributes>
           </object>
           <packing>
-            <property name="x">8</property>
-            <property name="y">317</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">If you activate the auto-trading bot, 
-you will no longer be able to trade 
-manually</property>
-          </object>
-          <packing>
-            <property name="x">8</property>
-            <property name="y">364</property>
+            <property name="x">26</property>
+            <property name="y">318</property>
           </packing>
         </child>
         <child>
@@ -691,7 +731,7 @@ manually</property>
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">460</property>
+            <property name="y">386</property>
           </packing>
         </child>
         <child>
@@ -706,7 +746,138 @@ manually</property>
           </object>
           <packing>
             <property name="x">20</property>
-            <property name="y">500</property>
+            <property name="y">423</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="bot_help">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="image">image1</property>
+            <property name="relief">none</property>
+            <property name="always_show_image">True</property>
+            <signal name="enter" handler="on_bot_help_enter" swapped="no"/>
+            <signal name="leave" handler="on_bot_help_leave" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">171</property>
+            <property name="y">319</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkTextView" id="bot_text">
+            <property name="width_request">262</property>
+            <property name="height_request">62</property>
+            <property name="can_focus">True</property>
+            <property name="can_default">True</property>
+            <property name="justification">center</property>
+            <property name="left_margin">4</property>
+            <property name="right_margin">4</property>
+            <property name="top_margin">4</property>
+            <property name="bottom_margin">4</property>
+            <property name="buffer">textbuffer1</property>
+          </object>
+          <packing>
+            <property name="x">214</property>
+            <property name="y">277</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkTextView" id="manual_text">
+            <property name="width_request">100</property>
+            <property name="can_focus">True</property>
+            <property name="can_default">True</property>
+            <property name="justification">center</property>
+            <property name="left_margin">5</property>
+            <property name="right_margin">5</property>
+            <property name="top_margin">4</property>
+            <property name="bottom_margin">4</property>
+            <property name="buffer">textbuffer2</property>
+          </object>
+          <packing>
+            <property name="x">226</property>
+            <property name="y">475</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="manual_help">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="image">image2</property>
+            <property name="relief">none</property>
+            <signal name="enter" handler="on_manual_help_enter" swapped="no"/>
+            <signal name="leave" handler="on_manual_help_leave" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">214</property>
+            <property name="y">558</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkTextView" id="sl_text">
+            <property name="can_focus">True</property>
+            <property name="can_default">True</property>
+            <property name="justification">center</property>
+            <property name="left_margin">5</property>
+            <property name="right_margin">5</property>
+            <property name="top_margin">4</property>
+            <property name="bottom_margin">4</property>
+            <property name="buffer">textbuffer3</property>
+          </object>
+          <packing>
+            <property name="x">444</property>
+            <property name="y">441</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="sl_help">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="image">image3</property>
+            <property name="relief">none</property>
+            <signal name="enter" handler="on_sl_help_enter" swapped="no"/>
+            <signal name="leave" handler="on_sl_help_leave" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">438</property>
+            <property name="y">558</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="lev_help">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="can_default">True</property>
+            <property name="receives_default">True</property>
+            <property name="image">image4</property>
+            <property name="relief">none</property>
+            <signal name="enter" handler="on_lev_help_enter" swapped="no"/>
+            <signal name="leave" handler="on_lev_help_leave" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">621</property>
+            <property name="y">558</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkTextView" id="lev_text">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="can_focus">True</property>
+            <property name="can_default">True</property>
+            <property name="editable">False</property>
+            <property name="justification">center</property>
+            <property name="left_margin">5</property>
+            <property name="right_margin">5</property>
+            <property name="top_margin">5</property>
+            <property name="buffer">textbuffer4</property>
+          </object>
+          <packing>
+            <property name="x">630</property>
+            <property name="y">471</property>
           </packing>
         </child>
       </object>
@@ -720,7 +891,7 @@ manually</property>
     <property name="program_name">CrypTrade</property>
     <property name="version">0.1</property>
     <property name="copyright" translatable="yes">© 2020 - 2021 667-Investments</property>
-    <property name="website">www.cryptrade.fr</property>
+    <property name="website">https://www.cryptrade.fr</property>
     <property name="website_label" translatable="yes">Visit our website</property>
     <property name="authors">Buthod Victor
 Mayer Julien

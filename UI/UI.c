@@ -25,6 +25,11 @@ GtkWidget *a_close_button;
 
 GtkWidget *quit_button;
 
+GtkWidget *bot_text;
+GtkWidget *manual_text;
+GtkWidget *sl_text;
+GtkWidget *lev_text;
+
 GtkWidget *btc_graph_button;
 GtkWidget *eth_graph_button;
 GtkWidget *yfi_graph_button;
@@ -109,6 +114,8 @@ struct Money
   struct Money  *next;
 };
 
+
+
 void on_about_button_clicked()
 {
     builder = gtk_builder_new_from_file("UI/UI.glade");
@@ -166,9 +173,50 @@ void on_bot_entry_changed(GtkEntry *e)
   bot_volume = gtk_entry_get_text(e);
 }
 
+//affichage de tout les différents textes d'aide
 void on_quit_button_clicked()
 {
   gtk_main_quit();
+}
+
+void on_bot_help_enter()
+{
+    gtk_widget_show(bot_text);
+}
+
+void on_bot_help_leave()
+{
+    gtk_widget_hide(bot_text);
+}
+
+void on_manual_help_enter()
+{
+    gtk_widget_show(manual_text);
+}
+
+void on_manual_help_leave()
+{
+    gtk_widget_hide(manual_text);
+}
+
+void on_sl_help_enter()
+{
+    gtk_widget_show(sl_text);
+}
+
+void on_sl_help_leave()
+{
+    gtk_widget_hide(sl_text);
+}
+
+void on_lev_help_enter()
+{
+    gtk_widget_show(lev_text);
+}
+
+void on_lev_help_leave()
+{
+    gtk_widget_hide(lev_text);
 }
 
 // choix de la monnaie bitcoin
@@ -651,6 +699,11 @@ int open_interface()
   bot_entry = GTK_WIDGET(gtk_builder_get_object(builder,"bot_entry"));
   
   bot_entry_button = GTK_WIDGET(gtk_builder_get_object(builder,"bot_entry_button"));
+
+  bot_text = GTK_WIDGET(gtk_builder_get_object(builder,"bot_text"));
+  manual_text = GTK_WIDGET(gtk_builder_get_object(builder,"manual_text"));
+  sl_text = GTK_WIDGET(gtk_builder_get_object(builder,"sl_text"));
+  lev_text = GTK_WIDGET(gtk_builder_get_object(builder,"lev_text"));
 
   //on ouvre le fichier de sauvegarde
   FILE* save = fopen("save", "r+");
