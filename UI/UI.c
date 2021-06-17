@@ -122,14 +122,11 @@ struct Money
   struct Money  *next;
 };
 
-<<<<<<< HEAD
 
 
-=======
 /** @brief About button
  * @return void
  */
->>>>>>> 7972d79dd7992c214b19eac9ca90a36111ab735c
 void on_about_button_clicked()
 {
     builder = gtk_builder_new_from_file("UI/UI.glade");
