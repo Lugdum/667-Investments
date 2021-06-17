@@ -1,33 +1,219 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Acceuil</title>
-     <link rel="stylesheet" media="screen" type="text/css" title="style" href="site/css/acceuil.css"/>
+	<meta name="viewport" content="width=device-width, intial-scale=1.0">
+	<meta charset="utf-8">
+	<title>Cryptrade</title>
+	<link rel="stylesheet" href="index.css">
+	<link rel="icon" type="image/png" href="img/logo_cryptrade.png" />
 </head>
 <body>
-    <div id="body">
-        <h3>
-            <a href="index.html" class="lien" >Accueil</a> |
-            <a href="membres.html" class="lien">Le Groupe</a> |
-            <a href="reseaux.html" class="lien"> Nos Réseaux sociaux</a> |
-            <a href="FAQ.html" class="lien">FAQ</a> |
-            <a href="liensutiles.html" class="lien">Les liens utiles</a> |
-            <a href="chrono.html" class="lien">Chronologie de la réalisation</a> |
-            <a href="telechargements.html" class="lien">Téléchargement</a>
-        </h3>
 
-        <img src="img/line-money.png" alt="img_crypto"><br><br>
+	<div class="banner">
+		<header>
+			<a href="#" class="logo"> CrypTrade</a>
+			<div class="toggle"></div>
+		</header>
+		<img src="img/logo_cryptrade.png">
+		<div class="content" data-0-top="opacity:0;left:100px;" data-200-top="opacity:1;left:0px;">
+			<h2>Investir dans les cryptommonaies n'a jamais été si facile</h2>
+			<p>Grâce à notre logiciel de finance et notre intelligence artificielle,
+			investir dans les cryptomonnaies n'a jamais été aussi simple et aussi sécurisé.<br>
+			L'équipe 667-investments vous propose de devenir riche en peu de temps.</p>
+		</div>
+	</div>
 
-        <h2>Les dernières actualités.</h2>
-        <ul id="menu">
-            <li class="lia">Rajout des graphiques sur l'interface</li>
-            <li class="lia">Rajout de la fonctionnalité de Stop-Loss</li>
-            <li class="lia">Rajout de la fonctionnalité de levier</li>
-            <li class="lia">Refonte de la récupération de monnaie</li>
-            <li class="lia">Création des graphes de monnaie</li>
-        </ul>
+	<section class="about">
+		<div class="contentBx">
+			<h2 class="heading" data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:0;left:500px;"> A propos de nous</h2>
+			<h3 data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:0;left:-500px;">Victor Buthod</h3><br>
+			<p class="text" data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:0;left:-500px;">Bonjour à tous! Moi c'est Victor Buthod, je fais partie de 667_investments. 
+			J'ai découvert le monde de l'informatique quand j'avais 10 ans grâce au célèbre 
+			jeu "Minecraft" qui m'a fait découvrir le monde des jeux vidéo et, très vite, 
+			l'informatique en général. J'ai vite apprécié me plonger dans des projets personnels 
+			en essayant de coder par moi-même ou en regardant des tutoriels Open classroom. J'ai 
+			effectué ma première année d'étude supérieure à EPITA, ou j'ai participé à la création 
+			du jeu vidéo "Blue Beam". J'ai adoré faire ce projet en groupe et j'ai confirmé mon goût 
+			pour l'informatique. J'ai compris que ce secteur est celui dans lequel je veux travailler 
+			plus tard. Même si je ne suis encore qu'un novice dans ce monde qu'est l'informatique, ce 
+			projet me permet de m'y plonger de façon plus sérieuse, en partant de rien et en rendant 
+			un projet complet.</p><br>
 
-    </div>
+			<h3 data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:0;left:-500px;">Joris Faure</h3><br>
+			<p class="text" data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:0;left:-500px;">Bonjour, je suis Joris Faure, cofondateur de 667 investments ainsi que 
+			développeur de l'application CrypTrade. Etant en 2eme annee d'etude a Epita, j'ai pu 
+			realiser differents projets. Notamment le jeu vidéo "Blue Beam'" ou encore un logiciel de 
+			reconnaissance de caractères. Ces projets m'ont permis de confirmer ma passion pour le code. 
+			J'ai adoré voir mes idées prendre vie, plus particulièrement sur Blue Beam qui nous a permis 
+			d'exprimer toutes nos envies créatives. Je porte un grand intérêt à la réalisation de CrypTrade 
+			et tout particulièrement à son intérêt utilitaire dans le cadre du trading car aimant le monde de 
+			la finance et de l'informatique, j'ai pu m'intéresser assez tot (dès la 3e) au monde de la 
+			crypto-monnaie. En effet, je passe beaucoup de temps sur les forums de finance et j'ai aussi miné 
+			par le passé de l'Ethereum, 2e plus gros crypto actuellement juste derrière le Bitcoin. Ce projet 
+			me permet aussi de consolider mes compétences en programmation et notamment en C, car elles seront 
+			essentielles pour la suite de mes études à Epita.</p><br>
+
+			<h3 data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:0;left:-500px;">Julien Mayer</h3><br>
+			<p class="text" data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:0;left:-500px;">Pendant la première partie de la réalisation du projet CrypTrade, je me suis occupé 
+			de la partie "Récupération des Données" avec Victor. Les données récupérées via l'API de coinbase 
+			sont stockées sous forme de document text propre à chaque monnaies. Mon rôle était de récupérer ce 
+			fichier afin de le parcourir pour detecter les champs importants tels que le nom de la monnaie, son rang, 
+			son symbol, son prix ... Je me suis chargé d'organiser toutes ces informations dans une structure Money. 
+			Après cela, j'ai pu mettre en place un fonction get_strc qui prend le nom d'une monnaie en paramètre et 
+			renvoie la structure correspondante avec les prix les plus récents. Cette fonction va permettre de faciliter 
+			les manipulations sur les crypto-monnaies pour la suite du projet.</p><br>
+
+			<h3 data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:0;left:-500px;">Jacques Masson</h3><br>
+			<p class="text" data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:0;left:-500px;">Je m'appelle Jacques Masson, je suis en deuxième année à Epita et je suis le quatrième 
+			membre de l'équipe qui s'occupera de la réalisation de CrypTrade. Je suis très intéressé par le projet et 
+			suis impatient de commencer à coder pour la construction de ce logiciel. Le fait qu'on essaye de rentrer dans 
+			le monde de l'économie et des crypto-monnaies me permet d'en apprendre beaucoup plus sur des sujets que je 
+			trouve assez mystérieux et difficile d'accès quand on ne s'y connaît pas trop. Je vais aussi m'occuper du 
+			site internet et je pense que ça va être un très bon investissement pour mon niveau de C qui va grandement 
+			s'améliorer au fil du projet. Ayant déjà fait un jeu vidéo et un OCR, ce dernier projet me permet d'avoir 
+			une nouvelle vision de ce que nous pouvons faire en fin de classe préparatoire d'Epita.</p><br>
+
+
+		</div>
+		<div class="imgBx" data-center-center="opacity:1;left:0;" data-0-top="opacity:0;left:200px;"></div>
+
+	</section>
+
+	<section class="services">
+		<h2 class="heading" data-center-center="opacity:1;left:0;" data-0-bottom="opacity:0;left:500px;"> Nos Services</h2>
+		<p class="text" data-center-center="opacity:1;right:0;" 
+		data-0-bottom="opacity:1;right:500px;">Le logiciel Cryptrade vous propose une panoplie d'option et fonctionnalités connus des plus 
+		grands sites de trading du monde, de plus notre logiciel possède une interface simple d'utilisation 
+		où tout utilisateur peut s'y retrouver peu importe son niveau de connaissance en crypto-monnaie.</p>
+		<div class="container">
+			<div class="serviceBx" data-center-center="opacity:1;left:0;" 
+			data-0-bottom="opacity:1;left:-400px;">
+				<div>
+					<img src="img/icon1.png">
+					<h2>les fonctionnalités de base d'un site de Trading</h2>
+				</div>
+			</div>
+			<div class="serviceBx" data-center-center="opacity:1;right:0;" 
+			data-0-bottom="opacity:1;right:-400px;">
+				<div>
+					<img src ="img/icon2.png">
+					<h2> Le Bot</h2>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="technologie">
+		<div class="contentBx" data-center-center="opacity:1;left:0;" 
+		data-0-bottom="opacity:1;left:-400px;">
+			<h2 class="heading"> Les technologies utilisés</h2>
+			<p class="text"> Les différentes technologies que nous avons utilisés sont Glade pour l'interface, une API 
+			qui récupère les donnés du site <a href="https://goldprice.org/" class="lien" target="_blank">Gold Price</a> 
+			et le langage C, ainsi que l'aide de site comme <a href="https://openclassrooms.com/fr/" class="lien" target="_blank"> openclassroom</a> 
+			ou encore <a href="https://stackoverflow.com/" class="lien" target="_blank">stackoverflow</a>.</p>
+		</div>
+		<div class="imgBx" class="contentBx" data-center-center="opacity:1;right:0;" 
+		data-0-bottom="opacity:1;right:-400px;">
+			<img src="img/logo.png">
+		</div>
+	</section>
+
+	<section class="reseaux">
+		<h2 class="heading" class="contentBx" data-center-center="opacity:1;top:0;" 
+		data-0-bottom="opacity:1;top:-100px;"> Nos réseaux sociaux</h2>
+		<p class="text" data-center-center="opacity:1;bottom:0;" 
+		data-0-bottom="opacity:1;bottom:-100px;">Voici nos différents réseaux sociaux sur lesquels vous pourriez voir l'avancé du projet ainsi que, 
+		si vous le voulez, nous contacter.</p>
+		<div class="imgBx">
+			<a href="https://twitter.com/667investments?" class="lien" target="_blank"><img src="img/twitter.png" data-center-center="top:0;" data-0-bottom="top:100px;"></a>
+			<a href="https://instagram.com/cryptrade667?utm_medium=copy_link" class="lien" target="_blank"><img src="img/insta.png" data-center-center="top:0;" data-0-bottom="top:150px;"></a>
+		</div>
+	</section>
+
+	<section class="histo">
+		<h2 class="heading">L'historique du projet</h2>
+		<div class="container">
+			<div class="contentBx" data-center-center="opacity:1;left:0;" data-0-bottom="opacity:1;left:-400px;">
+				<div>
+					<h3>Interface Graphique</h3><br>
+					<ul class="list">
+						<li>Refonte des graphiques des monnaies</li>
+			            <li>Création du bouton Stop-Loss.</li>
+			            <li>Création du bouton levier.</li>
+			            <li>Création des boutons Buy et Sell.</li>
+			            <li>Création des graphiques de monnaie.</li>
+			            <li>Récupération des données en temps réel sur l'interface.</li>
+			            <li>Création de l'interface graphique.</li>
+			        </ul>
+				</div>
+			</div>
+
+			<div class="contentBx" data-center-center="opacity:1;right:0;" data-0-bottom="opacity:1;right:-400px;">
+				<div>
+					<h3>Le Bot et autres algorithmes</h3><br>
+					<ul class="list">
+						<li>Création du Bot.</li>
+						<li>Création des stratégies du Bot.</li>
+			            <li>Rajout de la fonctionnalité de Stop-Loss.</li>
+			            <li>Rajout de la fonctionnalité de levier.</li>
+			            <li>Création des fonctionnalités d'achat et de vente.</li>
+			            <li>Refonte de la récupération de monnaie.</li>
+			            <li>Récupération des données en temps réel.</li>
+			        </ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="contact">
+		<div data-center-center="opacity:1;left:0;" data-0-bottom="opacity:1;left:-400px;">
+			<h2 class="heading">Nous Contactez et Télécharger nos travaux.</h2>
+			<p class="text">cette partie est faite pour que vous puissez nous contactez par mail, ainsi que pour télécharger nos travaux.</p>
+		</div>
+		<div class="container">
+			<div class="contentBx" >
+				<div>
+					<h3>Les adresses mails des différents membres.</h3><br>
+					<ul class="list">
+						<li>Adresse de Victor BUTHOD: <a href="mailto:victor.buthod@epita.fr" class="lien">victor.buthod@epita.fr</a></li>
+			            <li>Adresse de Joris FAURE: <a href="mailto:joris.faure@epita.fr" class="lien">joris.faure@epita.fr</a></li>
+			            <li>Adresse de Julien MAYER: <a href="mailto:julien.mayer@epita.fr" class="lien">julien.mayer@epita.fr</a></li>
+			            <li>Adresse de Jacques MASSON: <a href="mailto:jacques.masson@epita.fr" class="lien">jacques.masson@epita.fr</a></li>
+			        </ul>
+				</div>
+			</div>
+			<div class="contentBx" >
+				<div>
+					<h3>Nos Travaux</h3><br>
+					<ul class="list">
+						<li>lien vers <a href="file/Synopsis_CrypTrade.pdf" class="lien" target="_blank"> le synopsis.</a></li>
+			            <li>lien vers <a href="file/CrypTrade_Cahier_des_charges.pdf" class="lien" target="_blank">le cahier des charges.</a> </li>
+			            <li>lien vers <a href="file/CrypTrade__Rapport_de_soutenance_1.pdf" class="lien" target="_blank">le premier rapport de soutenance.</a></li>
+			            <li>lien vers <a href="file/CrypTrade_Soutenance_2.pdf" class="lien" target="_blank">le deuxième rapport de soutenance.</a></li>
+			            <li>lien vers le logiciel.</li>
+			        </ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="footer">
+		<p class="text"> Développé et designé par la 667_investments.</p>
+	</section>
+
+	<script src="skrollr.js"></script>
+	<script type="text/javascript">
+		var s = skrollr.init();
+	</script>
 </body>
 </html>
