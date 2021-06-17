@@ -1,3 +1,8 @@
+/**
+ * @author Julien Victor
+ * @details Bot
+ */
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <math.h>
@@ -42,7 +47,10 @@ struct Money
   struct Money  *next;
 };
 
-// parcours la structure monney pour creer l'historique sous forme de liste
+/** @brief Convert struct money to a list of history
+ * @param[in] money     The money struct to convert in histo list
+ * @return int*
+ */
 int* get_history(struct Money *money)
 {
   hist_len++;
@@ -60,7 +68,10 @@ int* get_history(struct Money *money)
   return hist;
 }
 
-// ecrit la liste historique dans un fichier
+/** @brief Write history list into a file
+ * @param[in] money      The money struct to write histo into a file
+ * @return void
+ */
 void write_history(struct Money *money)
 {
   int* hist = get_history(money);
@@ -70,7 +81,11 @@ void write_history(struct Money *money)
   free(hist);
 }
 
-// calcul de la moyenne des x valeurs
+/** @brief Calculate the avrage of x values
+ * @param[in] nb_val                  Number of value to avrage
+ * @param[in] money         The money struct
+ * @return float
+ */
 float moyen(struct Money *money, int nb_val)
 {
     float sum = 0;
@@ -84,6 +99,10 @@ float moyen(struct Money *money, int nb_val)
     return sum/(float)nb_val;
 }
 
+/** @brief The bot function
+ * @param[in] money      The money struct to work on
+ * @return void
+ */
 void average_crossover(struct Money *money)
 {
     // Le moving average trading consiste à acheter si les valeurs dépasses la courbe des moyennes 
