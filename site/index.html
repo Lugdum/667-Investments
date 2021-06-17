@@ -10,10 +10,10 @@
 </head>
 <body>
 
-	<div class="banner">
+	<div class="banner" id="sec">
 		<header>
 			<a href="#" class="logo"> CrypTrade</a>
-			<div class="toggle"></div>
+			<div id="toggle" onclick="toggle()"></div>
 		</header>
 		<img src="img/logo_cryptrade.png">
 		<div class="content" data-0-top="opacity:0;left:100px;" data-200-top="opacity:1;left:0px;">
@@ -23,8 +23,19 @@
 			L'équipe 667-investments vous propose de devenir riche en peu de temps.</p>
 		</div>
 	</div>
+	<div id="navigation">
+		<ul>
+			<li><a href="#" onclick="toggle()">Home</a></li>
+			<li><a href="#about" onclick="toggle()">A propos de nous</a></li>
+			<li><a href="#services" onclick="toggle()">Services</a></li>
+			<li><a href="#technologie" onclick="toggle()">Technologie</a></li>
+			<li><a href="#reseaux" onclick="toggle()">Réseaux</a></li>
+			<li><a href="#histo" onclick="toggle()">Historique</a></li>
+			<li><a href="#contact" onclick="toggle()">Contact</a></li>
+		</ul>
+	</div>
 
-	<section class="about">
+	<section class="about" id="about">
 		<div class="contentBx">
 			<h2 class="heading" data-center-center="opacity:1;left:0;" 
 			data-0-bottom="opacity:0;left:500px;"> A propos de nous</h2>
@@ -89,7 +100,7 @@
 
 	</section>
 
-	<section class="services">
+	<section class="services" id="services">
 		<h2 class="heading" data-center-center="opacity:1;left:0;" data-0-bottom="opacity:0;left:500px;"> Nos Services</h2>
 		<p class="text" data-center-center="opacity:1;right:0;" 
 		data-0-bottom="opacity:1;right:500px;">Le logiciel Cryptrade vous propose une panoplie d'option et fonctionnalités connus des plus 
@@ -113,7 +124,7 @@
 		</div>
 	</section>
 
-	<section class="technologie">
+	<section class="technologie" id="technologie">
 		<div class="contentBx" data-center-center="opacity:1;left:0;" 
 		data-0-bottom="opacity:1;left:-400px;">
 			<h2 class="heading"> Les technologies utilisés</h2>
@@ -128,7 +139,7 @@
 		</div>
 	</section>
 
-	<section class="reseaux">
+	<section class="reseaux" id="reseaux">
 		<h2 class="heading" class="contentBx" data-center-center="opacity:1;top:0;" 
 		data-0-bottom="opacity:1;top:-100px;"> Nos réseaux sociaux</h2>
 		<p class="text" data-center-center="opacity:1;bottom:0;" 
@@ -140,7 +151,7 @@
 		</div>
 	</section>
 
-	<section class="histo">
+	<section class="histo" id="histo">
 		<h2 class="heading">L'historique du projet</h2>
 		<div class="container">
 			<div class="contentBx" data-center-center="opacity:1;left:0;" data-0-bottom="opacity:1;left:-400px;">
@@ -175,7 +186,7 @@
 		</div>
 	</section>
 
-	<section class="contact">
+	<section class="contact" id="contact">
 		<div data-center-center="opacity:1;left:0;" data-0-bottom="opacity:1;left:-400px;">
 			<h2 class="heading">Nous Contactez et Télécharger nos travaux.</h2>
 			<p class="text">cette partie est faite pour que vous puissez nous contactez par mail, ainsi que pour télécharger nos travaux.</p>
@@ -214,6 +225,12 @@
 	<script src="skrollr.js"></script>
 	<script type="text/javascript">
 		var s = skrollr.init();
+		function toggle(){
+			var sec = document.getElementById('sec');
+			var nav = document.getElementById('navigation');
+			sec.classList.toggle('active');
+			nav.classList.toggle('active');
+		}
 	</script>
 </body>
 </html>
