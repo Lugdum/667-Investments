@@ -722,7 +722,8 @@ int open_interface()
 
     gtk_builder_connect_signals(builder,NULL);
 
- 
+    gtk_window_set_icon_from_file(GTK_WINDOW(window), "logo_cryptrade.png", NULL);
+
 
 
   //Can touch
