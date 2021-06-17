@@ -1,5 +1,5 @@
 /**
- * @author Joris
+ * @author Joris Jacques Julien Victor
  * @details User interface
  */
 

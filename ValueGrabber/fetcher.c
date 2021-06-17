@@ -1,5 +1,5 @@
 /**
- * @author Victor
+ * @author Victor Julien
  * @details Get values
  */
 
