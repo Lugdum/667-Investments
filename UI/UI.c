@@ -55,6 +55,8 @@ GtkWidget *l_x50_button;
 GtkWidget *l_x100_button;
 
 GtkWidget *bot_button;
+GtkWidget *bot_entry;
+GtkWidget *bot_entry_button;
 
 GtkWidget *btc_possess;
 GtkWidget *eth_possess;
@@ -81,7 +83,8 @@ int on_money = 0;
 
 int manual = 1;
 
-char *amount;
+const char *bot_volume;
+const char *amount;
 const char *sl;
 float btc_init_pos;
 float eth_init_pos;
@@ -148,12 +151,25 @@ void on_bot_button_clicked()
   else
     manual = 1;
 }
+void on_bot_amount_clicked()
+{
+    float tmp = atof(bot_volume);
+    if (tmp > 0)
+    {
+        volume = tmp;
+        printf("Bot trading volume is %f\n", volume);
+    }
+}
+
+void on_bot_entry_changed(GtkEntry *e)
+{
+  bot_volume = gtk_entry_get_text(e);
+}
 
 void on_quit_button_clicked()
 {
   gtk_main_quit();
 }
-
 
 // choix de la monnaie bitcoin
 void on_btc_graph_button_toggled()
@@ -632,6 +648,9 @@ int open_interface()
   value_label= GTK_WIDGET(gtk_builder_get_object(builder,"value_label"));
   ch24= GTK_WIDGET(gtk_builder_get_object(builder,"ch24"));
 
+  bot_entry = GTK_WIDGET(gtk_builder_get_object(builder,"bot_entry"));
+  
+  bot_entry_button = GTK_WIDGET(gtk_builder_get_object(builder,"bot_entry_button"));
 
   //on ouvre le fichier de sauvegarde
   FILE* save = fopen("save", "r+");
