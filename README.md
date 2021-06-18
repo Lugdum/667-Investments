@@ -14,8 +14,8 @@ CrypTrade is available on Linux
 ```shell
 git clone https://github.com/Viktorounet/667-Investments.git
 cd 667-Investments/UI
-make
 ./Install_Dependencies 
+make
 ./CrypTrade
 ```
 You have to be online while using CrypTrade.
